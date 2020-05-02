@@ -1,0 +1,9 @@
+<h1 mat-dialog-title>{{ title }}</h1>
+<p>{{ subTitle }}</p>
+<div mat-dialog-content [ngClass]="classCss" class="mat-elevation-z8">
+    <mat-card-content><p>{{ message }}</p></mat-card-content>
+</div>
+<div mat-dialog-actions>
+    <button mat-raised-button color="warn" status="warn" (click)="onCancel()">{{ btnCancel }}</button>
+    <button mat-raised-button color="primary" status="primary" [mat-dialog-close]="true" cdkFocusInitial>{{ btnConfirm }}</button>
+</div>

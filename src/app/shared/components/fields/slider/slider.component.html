@@ -1,0 +1,19 @@
+﻿<mat-card class="example-result-card">
+    <mat-card-content>
+        <mat-label [attr.for]="id">{{ label }}: {{ value }}</mat-label>
+        <mat-slider [color]="color"
+                    [disabled]="disabled"
+                    [id]="id"
+                    [invert]="invert"
+                    [max]="max"
+                    [min]="min"
+                    [ngClass]="classCss"
+                    [(ngModel)]="value"
+                    [readonly]="!!isReadOnly"
+                    [step]="step"
+                    [thumbLabel]="thumbLabel"
+                    [tickInterval]="getSliderTickInterval()"
+                    [vertical]="vertical">
+        </mat-slider>
+    </mat-card-content>
+</mat-card>

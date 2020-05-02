@@ -1,0 +1,31 @@
+.example-container-login {
+    display: flex;
+    flex-direction: column;
+    font-style: oblique;
+    font-size: medium;
+    overflow: hidden;
+}
+
+.example-container-login > * {
+    width: 100%;
+}
+
+.logo-simaf-login {
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: center;
+    overflow: hidden;
+    position: absolute;
+    width: 45%;
+    left: 30%;
+    top: 18%;
+}
+
+h1 {
+    text-align: center;
+}
+
+h2 {
+    text-align: center;
+}
+

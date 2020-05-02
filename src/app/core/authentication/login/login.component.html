@@ -1,0 +1,33 @@
+﻿<div class="logo-simaf-login">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Login</mat-card-title>
+            <mat-card-subtitle></mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="example-container-login">
+                <wbr>
+                <mat-form-field>
+                    <input [(ngModel)]="theAutenticacao.login" [formControl]="email" matInput placeholder="Digite o seu email" required>
+                    <mat-error *ngIf="email.invalid">{{getErrorMessageEmail()}}</mat-error>
+                </mat-form-field>
+                <wbr>
+                <mat-form-field>
+                    <input [(ngModel)]="theAutenticacao.senha" [formControl]="senha" matInput placeholder="Digite a sua senha" [type]="hide ? 'password' : 'text'" required>
+                    <mat-error *ngIf="senha.invalid">{{getErrorMessageSenha()}}</mat-error>
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                </mat-form-field>
+                <wbr>
+                <button mat-raised-button color="primary" status="primary" shape="semi-round" (click)="logar()">Entrar</button>
+                <wbr>
+                <wbr>
+                <button mat-raised-button color="accent" status="primary" shape="semi-round" (click)="registrar()">Registrar-se</button>
+                <wbr>
+                <wbr>
+            </div>
+            <a mat-raised-button routerLink="/esquecisenha" color="warn">Esqueci Minha Senha ...</a>
+        </mat-card-content>
+    </mat-card>
+</div>

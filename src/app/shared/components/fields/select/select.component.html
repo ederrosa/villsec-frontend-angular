@@ -1,0 +1,14 @@
+﻿<mat-form-field [appearance]="appearance">
+    <mat-label>{{ label }}</mat-label>
+    <select matNativeControl
+            [id]="id"
+            [readonly]="!!isReadOnly"
+            [(ngModel)]="value"
+            [ngClass]="classCss">
+        <option disabled label="--Escolha uma opção--"></option>
+        <option *ngFor="let option of options" [ngValue]="option.value">
+            <mat-icon matSuffix>{{ icon }}</mat-icon>{{option.option}}
+        </option>
+    </select>
+    <mat-hint><strong>{{ hint }}</strong></mat-hint>
+</mat-form-field>

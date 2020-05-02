@@ -1,0 +1,18 @@
+﻿<mat-form-field [appearance]="appearance">
+    <mat-label [attr.for]="id">{{ label }}</mat-label>
+    <input [id]="id"
+           [minlength]="minlength"
+           [maxlength]="maxlength"
+           [placeholder]="placeholder"
+           [type]="type"
+           [readonly]="!!isReadOnly"
+           [(ngModel)]="value"
+           [ngClass]="classCss"
+           [disabled]="disabled"
+           (blur)="onBlur()"
+           matInput
+           #input>
+    <mat-hint align="end">{{input.value?.length || minlength}}/{{ maxlength }}</mat-hint>
+    <mat-hint align="start"><strong>{{ hint }}</strong> </mat-hint>
+    <mat-icon matSuffix>{{ icon }}</mat-icon>
+</mat-form-field>

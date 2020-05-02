@@ -1,0 +1,11 @@
+﻿<h1 mat-dialog-title>{{ title }}</h1>
+<div class="container" mat-dialog-content>
+    <p>{{ subTitle }}</p>
+    <mat-progress-spinner [ngClass]="classCss"
+                          [color]="color"
+                          [mode]="mode"
+                          [value]="value"
+                          [diameter]="diameter"
+                          [strokeWidth]="strokeWidth">
+    </mat-progress-spinner>
+</div>

@@ -1,0 +1,15 @@
+﻿<mat-form-field [appearance]="appearance">
+    <mat-label [attr.for]="id">{{ label }}</mat-label>
+    <textarea [id]="id"
+              [minlength]="minlength"
+              [maxlength]="maxlength"
+              [placeholder]="placeholder"
+              [readonly]="!!isReadOnly"
+              [(ngModel)]="value"
+              [ngClass]="classCss"
+              matInput
+              #textarea>
+    </textarea>
+    <mat-hint align="end">{{textarea.value?.length || minlength}}/{{ maxlength }}</mat-hint>
+    <mat-hint align="start"><strong>{{ hint }}</strong> </mat-hint>
+</mat-form-field>

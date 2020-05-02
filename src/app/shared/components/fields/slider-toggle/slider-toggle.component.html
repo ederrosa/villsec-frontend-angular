@@ -1,0 +1,16 @@
+﻿<mat-card class="result">
+    <mat-card-content>
+        <mat-label [attr.for]="id">{{ label }}: {{ (value)? 'Sim' : 'Não'  }}</mat-label>
+        <section class="example-section">
+            <mat-slide-toggle [color]="color"
+                              [disabled]="disabled"
+                              [id]="id"
+                              [checked]="checked"
+                              [ngClass]="classCss"
+                              [(ngModel)]="value"
+                              [readonly]="!!isReadOnly">
+                {{ text }}
+            </mat-slide-toggle>
+        </section>
+    </mat-card-content>
+</mat-card>

@@ -1,0 +1,64 @@
+// Import library functions for theme creation.
+@import '~@angular/material/theming';
+
+// Include non-theme styles for core.
+@include mat-core();
+
+// Define your application's custom theme.
+$primary: mat-palette($mat-light-blue, 900);
+$accent: mat-palette($mat-light-blue, A400, A100, A700);
+$warn: mat-palette($mat-red, A700, A400, A100);
+$theme: mat-light-theme($primary, $accent, $warn);
+$light: mat-palette($mat-grey, 100);
+$dark: mat-palette($mat-grey, 900);
+
+$success: mat-palette($mat-light-green, A400);
+$warning: mat-palette($mat-amber, A400);
+$info: mat-palette($mat-light-blue, A400);
+$dark: mat-palette($mat-grey, 900);
+$dark: mat-palette($mat-grey, 900);
+$dark: mat-palette($mat-grey, 900);
+
+.color-primary {
+    background-color: mat-color($primary);
+    color: mat-color($light);
+}
+
+.color-secondary {
+    background-color: mat-color($accent);
+    color: mat-color($light);
+}
+
+.color-success {
+    background-color: mat-color($success);
+    color: mat-color($dark);
+}
+
+.color-danger {
+    background-color: mat-color($warn);
+    color: mat-color($light);
+}
+
+.color-warning {
+    background-color: mat-color($warning);
+    color: mat-color($dark);
+}
+
+.color-info {
+    background-color: mat-color($info);
+    color: mat-color($light);
+}
+
+.color-light {
+    background-color: mat-color($mat-grey, 100);
+    color: mat-color($dark);
+}
+
+.color-dark {
+    background-color: mat-color($mat-grey, 900);
+    color: mat-color($light);
+}
+
+
+// Include theme styles for Angular Material components.
+@include angular-material-theme($theme);
