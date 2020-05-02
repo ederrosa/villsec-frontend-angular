@@ -1,5 +1,4 @@
 import { BrowserModule } from '@angular/platform-browser';
-<<<<<<< HEAD
 import { NgModule, LOCALE_ID, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import localePt from '@angular/common/locales/pt';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -57,24 +56,5 @@ const MATERIAL_MODULES_LIST = [
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ]
-=======
-import { NgModule } from '@angular/core';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-@NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
->>>>>>> 693e69643bfad85477a797f4b8532cb28a9bc310
 })
 export class AppModule { }
