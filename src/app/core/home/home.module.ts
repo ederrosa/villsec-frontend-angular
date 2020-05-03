@@ -1,31 +1,33 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { MainModule } from './main/main.module';
 import { MaterialModule } from '../configurations/material/material.module';
+import { AdminModule } from './admin/admin.module';
+import { DefaultModule } from './default/default.module';
+import { ProprietarioModule } from './proprietario/proprietario.module';
+import { SeguidorModule } from './seguidor/seguidor.module';
+import { MainComponent } from './main/main.component';
 
-const SIMAF_HOME_MODULES_LIST = [
-    MainModule    
+const HOME_MODULES_LIST = [
+  AdminModule,
+  DefaultModule,
+  ProprietarioModule,
+  SeguidorModule
 ]
-const MATERIAL_LIST = [
-
-]
-
 
 @NgModule({
-    declarations: [],
-    imports: [
-        CommonModule,
-        MaterialModule,
-        ...MATERIAL_LIST,
-        ...SIMAF_HOME_MODULES_LIST,
-    ],
-    exports: [
-        ...MATERIAL_LIST,
-        ...SIMAF_HOME_MODULES_LIST,
-    ],
-    schemas: [
-        CUSTOM_ELEMENTS_SCHEMA
-    ]
+  declarations: [MainComponent],
+  imports: [
+    CommonModule,
+    MaterialModule,
+    ...HOME_MODULES_LIST,
+  ],
+  exports: [
+    MainComponent,
+    ...HOME_MODULES_LIST,
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
+  ]
 })
 export class HomeModule { }

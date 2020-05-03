@@ -1,16 +1,16 @@
 ﻿<ng-container *ngIf="user === ADMIN">
-    
+    <app-admin></app-admin>
 </ng-container>
 
 <ng-container *ngIf="user === PROPRIETARIO">
-    
+    <app-proprietario></app-proprietario>
 </ng-container>
 
 <ng-container *ngIf="user === SEGUIDOR">
-    
+    <app-seguidor></app-seguidor>
 </ng-container>
 
 <ng-container *ngIf="user === 0">
-  
+    <app-default></app-default>
 </ng-container>
 

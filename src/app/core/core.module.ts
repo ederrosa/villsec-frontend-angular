@@ -6,7 +6,6 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { HomeModule } from './home/home.module';
 import { StorageService } from './services/storage.service';
 import { FileUtilitiesService } from './services/file-utilities.service';
-import { MaterialModule } from './configurations/material/material.module';
 import { GuardsModule } from './guards/guards.module';
 import { CepService } from './services/cep.service';
 import { UnsubscribeControlService } from './services/unsubscribe-control.service';
@@ -15,8 +14,7 @@ const CORE_MODULES_LIST = [
     AuthenticationModule,
     GuardsModule,
     HomeModule,
-    InterceptorsModule,
-    MaterialModule
+    InterceptorsModule
 ]
 
 const CORE_SERVICES_LIST = [
