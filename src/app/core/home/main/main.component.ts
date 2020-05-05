@@ -12,7 +12,7 @@ export class MainComponent implements OnInit {
   readonly ADMIN = 1;
   readonly PROPRIETARIO = 2;
   readonly SEGUIDOR = 3;
-  user: number = 0;
+  user: number = 1;
   private localUser: ILocalUser;
 
   constructor(private theAuthenticationServices: AuthenticationService) { }
@@ -22,11 +22,5 @@ export class MainComponent implements OnInit {
     if (this.localUser != null) {
       this.user = this.localUser.theTipoUsuario;
     }
-
   }
-
-  logout() {
-    this.theAuthenticationServices.logout();
-  }
-
 }
