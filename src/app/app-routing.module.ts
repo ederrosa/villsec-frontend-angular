@@ -8,7 +8,12 @@ const routes: Routes = [
   {
     path: '',
     component: MainComponent,
-    children: []
+    children: [
+      {
+        path: 'albuns',
+        loadChildren: () => import('./modules/album/album.module').then(m => m.AlbumModule)
+      },      
+    ]
   }
 ];
 

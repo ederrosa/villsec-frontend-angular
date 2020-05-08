@@ -1,0 +1,76 @@
+﻿<mat-card class="example-card">
+    <mat-card-header>
+        <mat-card-title>
+            <h4>Formularios de registros de álbuns.</h4>
+        </mat-card-title>
+        <mat-card-subtitle>V1LLSEC</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="example-container mat-elevation-z8">
+            <form class="example-form" [formGroup]="theForm">
+                <table class="example-full-width" cellspacing="0">
+                    <tr>
+                        <td>
+                            <img [src]="url" *ngIf="format==='image' && url" height="20%"> <br />
+                            <wbr />
+                            <p>
+                                <input formControlName="file" type='file' (change)="onSelectFile($event)" accept=".jpg,.png" />
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+                <wbr />
+                <table>
+                    <tr>
+                        <td>
+                            <app-input formControlName="nome"
+                                       id="nome"
+                                       label="Nome do Album"
+                                       minlength="1"
+                                       maxlength="100"
+                                       placeholder="Insira o nome do album."
+                                       hint="Ex.: Guetta Blaster">
+                            </app-input>
+                        </td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <td>
+                            <app-input formControlName="genero"
+                                       id="genero"
+                                       label="Genero"
+                                       minlength="1"
+                                       maxlength="100"
+                                       placeholder="Insira o genero do album"
+                                       hint="Ex.: Axe ... lol">
+                            </app-input>
+                        </td>
+                        <td>
+                            <app-datepicker formControlName="ano"
+                                            id="ano"
+                                            startView="year"
+                                            label="Data de lançamento"
+                                            placeholder="Informe a data de lançamento do álbum">
+                            </app-datepicker>
+                        </td>
+                    </tr>
+                </table>
+                <table class="example-full-width" cellspacing="0">
+                    <tr>
+                        <td>
+                            <button class="full-width" mat-button color="primary" status="primary" [disabled]="theForm.invalid" (click)="onSave()"><mat-icon>save</mat-icon>Salvar</button>
+                        </td>
+                        <td>
+                            <button class="full-width" mat-button color="accent" status="primary" (click)="onClear()"><mat-icon>clear</mat-icon>Limpar</button>
+                        </td>
+                        <td>
+                            <button class="full-width" mat-button color="warn" status="warn" routerLink="/albuns"><mat-icon>keyboard_return</mat-icon>Voltar</button>
+                        </td>
+                    </tr>
+                </table>
+                <wbr />
+            </form>
+        </div>
+    </mat-card-content>
+</mat-card>

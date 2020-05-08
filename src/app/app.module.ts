@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import { MaterialModule } from './core/configurations/material/material.module';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
+import { ErrorModule } from './modules/error/error.module';
 
 registerLocaleData(localePt);
 
@@ -24,6 +25,7 @@ const COMPONENTS_LIST = [
 
 const MODULES_LIST = [
   CoreModule,
+  ErrorModule,
   SharedModule
 ]
 
