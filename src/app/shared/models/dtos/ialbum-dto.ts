@@ -6,6 +6,7 @@ export interface IAlbumDTO extends IEntidadeDominioDTO {
   capaNome: String;
   capaUrl: String;
   codigo: String;
+  descricao: String;
   genero: String;
   nome: String;
 }

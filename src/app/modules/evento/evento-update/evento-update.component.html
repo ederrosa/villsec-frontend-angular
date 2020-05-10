@@ -1,0 +1,190 @@
+﻿<mat-card class="example-card">
+    <mat-card-header>
+        <mat-card-title>
+            <h4>Formularios de registros de Eventos.</h4>
+        </mat-card-title>
+        <mat-card-subtitle>V1LLSEC</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="example-container mat-elevation-z8">
+            <form class="example-form" [formGroup]="theForm">
+                <table class="example-full-width" cellspacing="0">
+                    <tr>
+                        <td>
+                            <img [src]="url" *ngIf="format==='image' && url" height="20%"> <br />
+                            <wbr />
+                            <p>
+                                <input formControlName="file" type='file' (change)="onSelectFile($event)" accept=".jpg,.png" />
+                            </p>
+                        </td>
+                        <td>
+                            <app-input formControlName="id"
+                                       id="id"
+                                       label="Codígo"
+                                       hint="Codígo do treinamento"
+                                       isReadyOnly="false"
+                                       disabled="true">
+                            </app-input>
+                            <app-input formControlName="dtCriacao"
+                                       id="dtCriacao"
+                                       label="Data de Cadastro no Sistema"
+                                       hint="Data de realização do cadastro!"
+                                       isReadyOnly="false"
+                                       disabled="true">
+                            </app-input>
+                        </td>
+                    </tr>
+                </table>
+                <wbr />
+                <table>
+                    <tr>
+                        <td>
+                            <app-input formControlName="nome"
+                                       id="nome"
+                                       label="Nome do Evento"
+                                       minlength="1"
+                                       maxlength="100"
+                                       placeholder="Insira o nome do Evento."
+                                       hint="Ex.: Tomorrowland">
+                            </app-input>
+                        </td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <td>
+                            <app-textarea formControlName="descricao"
+                                          id="descricao"
+                                          label="Descrição do Álbum"
+                                          maxlength="50"
+                                          placeholder="Insira uma descrição do álbum">
+                            </app-textarea>
+                        </td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <td>
+                            <app-input formControlName="duracao"
+                                       id="duracao"
+                                       label="Duração do Evento"
+                                       minlength="1"
+                                       maxlength="100"
+                                       placeholder="Informe a duração do Evento"
+                                       hint="Ex.: 5 horas | 1 Mês | 1 Noite | etc...">
+                            </app-input>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <app-select formControlName="tipoEvento"
+                                        id="tipoEvento"
+                                        label="Tipo do Evento"
+                                        hint="Selecione um dos tipos."
+                                        [options]="optionsTipoEvento">
+                            </app-select>
+                        </td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <td>
+                            <app-input formControlName="classificacao"
+                                       id="classificacao"
+                                       label="Classificação"
+                                       minlength="1"
+                                       maxlength="100"
+                                       placeholder="Informe a classificação do evento"
+                                       hint="Ex.: Livre | 18 anos | etc...">
+                            </app-input>
+                        </td>
+                        <td>
+                            <app-datepicker formControlName="data"
+                                            id="data"
+                                            startView="year"
+                                            label="Dia do Evento"
+                                            placeholder="Informe a data de início do evento">
+                            </app-datepicker>
+                        </td>
+                    </tr>
+                </table>
+                <table class="example-full-width" cellspacing="0">
+                    <tr>
+                        <td>
+                            <app-input formControlName="logradouro"
+                                       id="logradouro"
+                                       label="Logradouro"
+                                       minlength="1"
+                                       maxlength="100"
+                                       placeholder="Insira o logradouro"
+                                       hint="Ex.: Avenida Paulista, 1000">
+                            </app-input>
+                        </td>
+                    </tr>
+                </table>
+                <table class="example-full-width" cellspacing="0">
+                    <tr>
+                        <td>
+                            <app-input formControlName="cidade"
+                                       id="cidade"
+                                       label="Cidade"
+                                       minlength="1"
+                                       maxlength="50"
+                                       placeholder="Insira a cidade"
+                                       hint="Ex.: São Paulo">
+                            </app-input>
+                        </td>
+                        <td>
+                            <app-input formControlName="bairro"
+                                       id="bairro"
+                                       label="Bairro"
+                                       minlength="1"
+                                       maxlength="50"
+                                       placeholder="Insira a cidade"
+                                       hint="Ex.: Bela Vista">
+                            </app-input>
+                        </td>
+                    </tr>
+                </table>
+                <table class="example-full-width" cellspacing="0">
+                    <tr>
+                        <td>
+                            <app-input formControlName="estado"
+                                       id="estado"
+                                       label="Estado"
+                                       minlength="1"
+                                       maxlength="50"
+                                       placeholder="Insira o estado."
+                                       hint="Ex.: São Paulo">
+                            </app-input>
+                        </td>
+                        <td>
+                            <app-input formControlName="pais"
+                                       id="pais"
+                                       label="Pais"
+                                       minlength="1"
+                                       maxlength="50"
+                                       placeholder="Insira o pais."
+                                       hint="Ex.: Brasil">
+                            </app-input>
+                        </td>
+                    </tr>
+                </table>
+                <table class="example-full-width" cellspacing="0">
+                    <tr>
+                        <td>
+                            <button class="full-width" mat-button color="primary" status="primary" [disabled]="theForm.invalid" (click)="onSave()"><mat-icon>save</mat-icon>Salvar</button>
+                        </td>
+                        <td>
+                            <button class="full-width" mat-button color="accent" status="primary" (click)="onClear()"><mat-icon>clear</mat-icon>Limpar</button>
+                        </td>
+                        <td>
+                            <button class="full-width" mat-button color="warn" status="warn" routerLink="/eventos"><mat-icon>keyboard_return</mat-icon>Voltar</button>
+                        </td>
+                    </tr>
+                </table>
+                <wbr />
+            </form>
+        </div>
+    </mat-card-content>
+</mat-card>

@@ -2,13 +2,13 @@
     <mat-card-header>
         <mat-card-title>
             <div>
-                <button routerLink="/albuns/novo" [disabled]="!!disabledNew" mat-raised-button color="primary">
-                    <mat-icon>add</mat-icon> Cadastrar um novo álbum
+                <button routerLink="/eventos/novo" [disabled]="!!disabledNew" mat-raised-button color="primary">
+                    <mat-icon>add</mat-icon> Cadastrar um novo evento
                 </button>
             </div>
         </mat-card-title>
         <mat-card-subtitle>
-            <h5>Lista de Álbuns</h5>
+            <h5>Lista de Eventos</h5>
         </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
@@ -28,7 +28,7 @@
                              [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
                             <div class="example-element-diagram">
                                 <div class="example-element-img mat-elevation-z8">
-                                    <img class="example-element-img" src="{{ element.capaUrl }}">
+                                    <img class="example-element-img" src="{{ element.folderUrl }}">
                                 </div>
                             </div>
                             <div class="example-element-description">
@@ -38,28 +38,52 @@
                                             <mat-label><strong>Nome: </strong> {{ element.nome }}</mat-label>
                                         </td>
                                         <td mat-cell>
-                                            <mat-label><strong>Genero: </strong> {{ element.genero }}</mat-label>
+                                            <mat-label><strong>Tipo do Evento: </strong> {{ element.tipoEvento }}</mat-label>
                                         </td>
                                         <td mat-cell>
-                                            <mat-label><strong>Ano de Lançamento: </strong> {{ element.ano | date: 'mediumDate' }}</mat-label>
+                                            <mat-label><strong>Data do Evento: </strong> {{ element.data | date: 'mediumDate' }}</mat-label>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td mat-cell>
-                                            <mat-label><strong>Codígo: </strong> {{ element.codigo }}</mat-label>
+                                            <mat-label><strong>Classificação: </strong> {{ element.classificacao }}</mat-label>
                                         </td>
                                         <td mat-cell>
-                                            <mat-label><strong>Data de Cadastro: </strong> {{ element.dtCriacao | date: 'mediumDate' }}</mat-label>
+                                            <mat-label><strong>Duração: </strong> {{ element.duracao }}</mat-label>
                                         </td>
                                         <td mat-cell>
-                                            <mat-label><strong>Data da Ultima Alteração no Sistema: </strong> {{ element.dtUltimaAlteracao | date: 'mediumDate' }}</mat-label>
+                                            <mat-label><strong>Endereço: </strong> {{ element.logradouro }}</mat-label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td mat-cell>
+                                            <mat-label><strong>CEP: </strong> {{ element.cep }}</mat-label>
+                                        </td>
+                                        <td mat-cell>
+                                            <mat-label><strong>Bairro: </strong> {{ element.bairro }}</mat-label>
+                                        </td>
+                                        <td mat-cell>
+                                            <mat-label><strong>Cidade: </strong> {{ element.cidade }}</mat-label>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td mat-cell>
+                                            <mat-label><strong>Estado: </strong> {{ element.estado }}</mat-label>
+                                        </td>
+                                        <td mat-cell>
+                                            <mat-label><strong>Pais: </strong> {{ element.pais }}</mat-label>
+                                        </td>
+                                        <td mat-cell>
+                                            <mat-label><strong>cidade: </strong> {{ element.cidade }}</mat-label>
+
                                         </td>
                                     </tr>
                                     <tr>
                                         <td mat-cell>
                                             <mat-label><strong>Descrição: </strong> {{ element.descricao }}</mat-label>
                                         </td>
-                                       
+
                                     </tr>
                                 </table>
                                 <div class="example-button-row">

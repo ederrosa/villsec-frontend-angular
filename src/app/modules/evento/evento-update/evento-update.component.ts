@@ -5,35 +5,42 @@ import { HttpEventType, HttpEvent } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs';
-import { AlbumService } from '../album.service';
+import { EventoService } from '../evento.service';
 import { UnsubscribeControlService } from 'src/app/core/services/unsubscribe-control.service';
 import { ProgressSpinnerOverviewComponent } from 'src/app/shared/components/progress-spinner/progress-spinner-overview/progress-spinner-overview.component';
 import { InformativeAlertComponent } from 'src/app/shared/components/alerts/informative-alert/informative-alert.component';
 import { ConfirmationAlertComponent } from 'src/app/shared/components/alerts/confirmation-alert/confirmation-alert.component';
 import { FieldsService } from 'src/app/shared/components/fields/fields.service';
 import { switchMap, map } from 'rxjs/operators';
-import { IAlbumDTO } from 'src/app/shared/models/dtos/ialbum-dto';
+import { IEventoDTO } from 'src/app/shared/models/dtos/ievento-dto';
+import { IOptions } from 'src/app/shared/components/fields/select/select.component';
 
 
 @Component({
-  selector: 'app-album-update',
-  templateUrl: './album-update.component.html',
-  styleUrls: ['./album-update.component.scss']
+  selector: 'app-evento-update',
+  templateUrl: './evento-update.component.html',
+  styleUrls: ['./evento-update.component.scss']
 })
-export class AlbumUpdateComponent implements OnInit {
+export class EventoUpdateComponent implements OnInit {
 
   theForm: FormGroup;
   url: any;
   format: string;
   private theFile: File;
   private theInscricao: Subscription[] = new Array<Subscription>();
+  optionsTipoEvento: IOptions[] = [
+    { value: 1, option: 'tipo 1' },
+    { value: 2, option: 'tipo 2' },
+    { value: 3, option: 'tipo 3' },
+    { value: 4, option: 'tipo 4' },
+    { value: 5, option: 'tipo 5' },
+    { value: 6, option: 'tipo 6' }];
 
   constructor(
-    private theAcademiaService: AlbumService,
+    private theEventoService: EventoService,
     private theActivatedRoute: ActivatedRoute,
     private theFieldsService: FieldsService,
     private theFormBuilder: FormBuilder,
-    private theAlbumService: AlbumService,
     private dialog: MatDialog,
     private theUnsubscribeControl: UnsubscribeControlService
   ) { }
@@ -43,18 +50,26 @@ export class AlbumUpdateComponent implements OnInit {
       id: [''],
       dtCriacao: [''],
       file: [''],
-      nome: ['', [Validators.required]],
+      classificacao: ['', [Validators.required]],
+      duracao: ['', [Validators.required]],
+      data: ['', [Validators.required]],
       descricao: ['', [Validators.required]],
-      ano: ['', [Validators.required]],
-      genero: ['', [Validators.required]]
+      nome: ['', [Validators.required]],
+      tipoEvento: ['', [Validators.required]],
+      logradouro: ['', [Validators.required]],
+      cep: ['', [Validators.required]],
+      bairro: ['', [Validators.required]],
+      cidade: ['', [Validators.required]],
+      estado: ['', [Validators.required]],
+      pais: ['', [Validators.required]]   
     });
-    if (this.theAcademiaService.theAlbum == null) {
+    if (this.theEventoService.theEvento == null) {
       this.theActivatedRoute.params.pipe(
         map((params: any) => params['id']),
-        switchMap(id => this.theAcademiaService.find(id))
-      ).subscribe(theAlbum => this.onFormUpdate(theAlbum));
+        switchMap(id => this.theEventoService.find(id))
+      ).subscribe(theEvento => this.onFormUpdate(theEvento));
     } else {
-      this.onFormUpdate(this.theAlbumService.theAlbum);
+      this.onFormUpdate(this.theEventoService.theEvento);
     }
   }
 
@@ -63,17 +78,25 @@ export class AlbumUpdateComponent implements OnInit {
     this.theUnsubscribeControl.unsubscribe(this.theInscricao);
   }
 
-  onFormUpdate(theAlbum: IAlbumDTO): void {
+  onFormUpdate(theEvento: IEventoDTO): void {
     this.format = 'image';
-    this.url = theAlbum.capaUrl;
+    this.url = theEvento.folderUrl;
     this.theForm.patchValue({
-      id: theAlbum.id,
-      dtCriacao: theAlbum.dtCriacao,
+      id: theEvento.id,
+      dtCriacao: theEvento.dtCriacao,
       file: '',
-      nome: theAlbum.nome,
-      descricao: theAlbum.descricao,
-      ano: new Date(theAlbum.ano.toString()),
-      genero: theAlbum.genero,
+      classificacao: theEvento.classificacao,
+      duracao: theEvento.duracao,
+      data: new Date(theEvento.data.toString()),
+      descricao: theEvento.descricao,
+      nome: theEvento.nome,
+      tipoEvento: this.theFieldsService.getItemOfSelect(this.optionsTipoEvento, theEvento.tipoEvento),
+      logradouro: theEvento.logradouro,
+      cep: theEvento.cep,
+      bairro: theEvento.bairro,
+      cidade: theEvento.cidade,
+      estado: theEvento.estado,
+      pais: theEvento.pais   
     });
   }
 
@@ -108,14 +131,22 @@ export class AlbumUpdateComponent implements OnInit {
     this.theInscricao.push(dialogRef.afterClosed().subscribe(result => {
       if (result) {
         let formData: FormData = new FormData();
-        formData.append('ano', this.theForm.get('ano').value);
+        formData.append('classificacao', this.theForm.get('classificacao').value);
+        formData.append('duracao', this.theForm.get('duracao').value);
+        formData.append('data', new Date(this.theForm.get('data').value).toLocaleDateString());
         formData.append('descricao', this.theForm.get('descricao').value);
-        formData.append('genero', this.theForm.get('genero').value);
+        formData.append('tipoEvento', this.theForm.get('tipoEvento').value);
+        formData.append('logradouro', this.theForm.get('logradouro').value);
         formData.append('nome', this.theForm.get('nome').value);
+        formData.append('cep', this.theForm.get('cep').value);
+        formData.append('bairro', this.theForm.get('bairro').value);
+        formData.append('cidade', this.theForm.get('cidade').value);
+        formData.append('estado', this.theForm.get('estado').value);
+        formData.append('pais', this.theForm.get('pais').value);    
         if (this.theFile) {
           formData.append('file', this.theFile, this.theFile.name);
         }
-        this.theInscricao.push(this.theAlbumService.update(formData, this.theForm.get('id').value)
+        this.theInscricao.push(this.theEventoService.update(formData, this.theForm.get('id').value)
           .subscribe((event: HttpEvent<Object>) => {
             if (event.type === HttpEventType.Response) {
               this.dialog.closeAll();
@@ -124,8 +155,8 @@ export class AlbumUpdateComponent implements OnInit {
               instance.title = "Status: " + event.status;
               instance.subTitle = 'Alterado!...';
               instance.classCss = 'color-success';
-              instance.message = event.statusText + '!! O Album foi alterada com sucesso!';
-              instance.urlNavigate = '/albuns';
+              instance.message = event.statusText + '!! O Evento foi alterada com sucesso!';
+              instance.urlNavigate = '/eventos';
             } else if (event.type === HttpEventType.UploadProgress) {
               this.dialog.closeAll();
               let dialogRef = this.dialog.open(ProgressSpinnerOverviewComponent, { disableClose: true, width: '350px', height: '350px' });

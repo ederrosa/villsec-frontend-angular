@@ -12,7 +12,11 @@ const routes: Routes = [
       {
         path: 'albuns',
         loadChildren: () => import('./modules/album/album.module').then(m => m.AlbumModule)
-      },      
+      }, 
+      {
+        path: 'eventos',
+        loadChildren: () => import('./modules/evento/evento.module').then(m => m.EventoModule)
+      }, 
     ]
   }
 ];
