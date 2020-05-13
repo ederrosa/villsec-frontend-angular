@@ -12,11 +12,18 @@ import { MaterialModule } from './core/configurations/material/material.module';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
 import { ErrorModule } from './modules/error/error.module';
+import { AuthGuard } from './core/guards/can-activate/auth-guard';
+import { AuthenticationService } from './core/authentication/authentication.service';
+import { ErrorInterceptorProvider } from './core/interceptors/error-interceptor.service';
+import { AuthInterceptorProvider } from './core/interceptors/auth-interceptor.service';
 
 registerLocaleData(localePt);
 
 const SERVICES_LIST = [
-  
+  //AuthGuard,
+  //AuthenticationService,
+  //AuthInterceptorProvider,
+  ErrorInterceptorProvider,
 ]
 
 const COMPONENTS_LIST = [

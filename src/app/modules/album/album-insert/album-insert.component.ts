@@ -83,7 +83,6 @@ export class AlbumInsertComponent implements OnInit {
           instance.subTitle = 'OK!...';
           instance.classCss = 'color-success';
           instance.message = event.statusText + '!! O novo Album foi cadastrado com sucesso!';
-          console.log(this.theForm);
           this.onClear();
         } else if (event.type === HttpEventType.UploadProgress) {
           let instance = dialogRef.componentInstance;

@@ -2,13 +2,13 @@
     <mat-card-header>
         <mat-card-title>
             <div>
-                <button routerLink="/eventos/novo" [disabled]="!!disabledNew" mat-raised-button color="primary">
-                    <mat-icon>add</mat-icon> Cadastrar um novo evento
+                <button routerLink="/elementos/novo" [disabled]="!!disabledNew" mat-raised-button color="primary">
+                    <mat-icon>add</mat-icon> Cadastrar um novo Arquivo
                 </button>
             </div>
         </mat-card-title>
         <mat-card-subtitle>
-            <h5>Lista de Eventos</h5>
+            <h5>Lista de Arquivos</h5>
         </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
@@ -28,61 +28,28 @@
                              [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
                             <div class="example-element-diagram">
                                 <div class="example-element-img mat-elevation-z8">
-                                    <img class="example-element-img" src="{{ element.folderUrl }}">
+                                    <video class="example-element-img" src="{{ element.elementoUrl }}" controls></video>
                                 </div>
                             </div>
                             <div class="example-element-description">
                                 <table class="example-full-width" cellspacing="0">
                                     <tr>
                                         <td mat-cell>
-                                            <mat-label><strong>Nome: </strong> {{ element.nome }}</mat-label>
-                                        </td>
-                                        <td mat-cell>
-                                            <mat-label><strong>Tipo do Evento: </strong> {{ element.tipoEvento }}</mat-label>
-                                        </td>
-                                        <td mat-cell>
-                                            <mat-label><strong>Data do Evento: </strong> {{ element.data | date: 'mediumDate' }}</mat-label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td mat-cell>
-                                            <mat-label><strong>Classificação: </strong> {{ element.classificacao }}</mat-label>
-                                        </td>
-                                        <td mat-cell>
-                                            <mat-label><strong>Duração: </strong> {{ element.duracao }}</mat-label>
-                                        </td>
-                                        <td mat-cell>
-                                            <mat-label><strong>Endereço: </strong> {{ element.logradouro }}</mat-label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td mat-cell>
-                                            <mat-label><strong>CEP: </strong> {{ element.cep }}</mat-label>
-                                        </td>
-                                        <td mat-cell>
-                                            <mat-label><strong>Bairro: </strong> {{ element.bairro }}</mat-label>
-                                        </td>
-                                        <td mat-cell>
-                                            <mat-label><strong>Cidade: </strong> {{ element.cidade }}</mat-label>
-
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td mat-cell>
-                                            <mat-label><strong>Estado: </strong> {{ element.estado }}</mat-label>
-                                        </td>
-                                        <td mat-cell>
-                                            <mat-label><strong>Pais: </strong> {{ element.pais }}</mat-label>
-                                        </td>
-                                        <td>                                       
-
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td mat-cell>
                                             <mat-label><strong>Descrição: </strong> {{ element.descricao }}</mat-label>
                                         </td>
-
+                                    </tr>
+                                    <tr>
+                                        <td mat-cell>
+                                            <mat-label><strong>Título do Arquivo: </strong> {{ element.titulo }}</mat-label>
+                                        </td>                                        
+                                    </tr>
+                                    <tr>
+                                        <td mat-cell>
+                                            <mat-label><strong>Tipo do Arquivo: </strong> {{ element.tipoElemento }}</mat-label>
+                                        </td>
+                                        <td mat-cell>
+                                            <mat-label><strong>Status do Arquivo: </strong> {{ (element.status)? 'Ativo' : 'Inativo' }}</mat-label>
+                                        </td>
                                     </tr>
                                 </table>
                                 <div class="example-button-row">

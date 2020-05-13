@@ -2,7 +2,7 @@ import { IEntidadeDominioDTO } from './ientidade-dominio-dto';
 
 export interface IElementoDTO extends IEntidadeDominioDTO {
 
-  nome: String;
+  descricao: String;
   elementoNome: String;
   elementoUrl: String;
   tipoElemento: String;
