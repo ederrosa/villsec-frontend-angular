@@ -2,18 +2,18 @@ import { IEntidadeDominioDTO } from './ientidade-dominio-dto';
 
 export interface IEventoDTO extends IEntidadeDominioDTO{
 
-  classificacao: String;
-  duracao: String;
-  data: String;
-  descricao: String;
-  folderName: String;
-  folderUrl: String;
-  nome: String;
-  tipoEvento: String;
-  logradouro: String;
-  cep: String;
-  bairro: String;
-  cidade: String;
-  estado: String;
-  pais: String;
+  classificacao: string;
+  duracao: string;
+  data: string;
+  descricao: string;
+  folderName: string;
+  folderUrl: string;
+  nome: string;
+  tipoEvento: string;
+  logradouro: string;
+  cep: string;
+  bairro: string;
+  cidade: string;
+  estado: string;
+  pais: string;
 }

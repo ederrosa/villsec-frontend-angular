@@ -15,6 +15,10 @@ import { ElementoService } from '../elemento.service';
 import { UnsubscribeControlService } from 'src/app/core/services/unsubscribe-control.service';
 import { ConfirmationAlertComponent } from 'src/app/shared/components/alerts/confirmation-alert/confirmation-alert.component';
 import { InformativeAlertComponent } from 'src/app/shared/components/alerts/informative-alert/informative-alert.component';
+import { DialogOverviewImageComponent } from 'src/app/shared/components/dialog-overview/dialog-overview-image/dialog-overview-image.component';
+import { DialogOverviewAudioComponent } from 'src/app/shared/components/dialog-overview/dialog-overview-audio/dialog-overview-audio.component';
+import { DialogOverviewVideoComponent } from 'src/app/shared/components/dialog-overview/dialog-overview-video/dialog-overview-video.component';
+import { DialogOverviewIframeComponent } from 'src/app/shared/components/dialog-overview/dialog-overview-iframe/dialog-overview-iframe.component';
 
 @Component({
   selector: 'app-elemento-find-page',
@@ -30,9 +34,9 @@ import { InformativeAlertComponent } from 'src/app/shared/components/alerts/info
 })
 export class ElementoFindPageComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  disabledNew: boolean = false;
-  disabledEdit: boolean = false;
-  disabledDel: boolean = false;
+  disabledNew: boolean = true;
+  disabledEdit: boolean = true;
+  disabledDel: boolean = true;
   private theLocalUser: ILocalUser;
   private theInscricao: Subscription[] = new Array<Subscription>();
   dataSource: MatTableDataSource<IElementoDTO> = new MatTableDataSource();
@@ -150,5 +154,41 @@ export class ElementoFindPageComponent implements OnInit, OnDestroy, AfterViewIn
         this.dataSource = new MatTableDataSource(x['content']);
       })
     ));
+  }
+
+  openDialogAudio(theElemento: IElementoDTO): void {
+    this.dialog.closeAll();
+    let dialogRef = this.dialog.open(DialogOverviewAudioComponent, { });
+    let instance = dialogRef.componentInstance;
+    instance.title = theElemento.titulo;
+    instance.subtitle = theElemento.descricao;
+    instance.url = theElemento.elementoUrl;
+  }
+
+  openDialogImage(theElemento: IElementoDTO): void {
+    this.dialog.closeAll();
+    let dialogRef = this.dialog.open(DialogOverviewImageComponent, { });
+    let instance = dialogRef.componentInstance;
+    instance.title = theElemento.titulo;
+    instance.subtitle = theElemento.descricao;
+    instance.url = theElemento.elementoUrl;
+  }
+
+  openDialogVideo(theElemento: IElementoDTO): void {
+    this.dialog.closeAll();
+    let dialogRef = this.dialog.open(DialogOverviewVideoComponent, { });
+    let instance = dialogRef.componentInstance;
+    instance.title = theElemento.titulo;
+    instance.subtitle = theElemento.descricao;
+    instance.url = theElemento.elementoUrl;
+  }
+
+  openDialogIframe(theElemento: IElementoDTO): void {
+    this.dialog.closeAll();
+    let dialogRef = this.dialog.open(DialogOverviewIframeComponent, { });
+    let instance = dialogRef.componentInstance;
+    instance.title = theElemento.titulo;
+    instance.subtitle = theElemento.descricao;
+    instance.url = theElemento.embed;
   }
 }

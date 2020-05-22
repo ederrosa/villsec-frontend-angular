@@ -3,13 +3,13 @@ import { IEntidadeDominioDTO } from './ientidade-dominio-dto';
 
 export interface IMusicaDTO extends IEntidadeDominioDTO{
 
-  nome: String;
-  bpm: String;
-  autor: String;
-  coautor: String;
-  duracao: String;
-  arquivoNome: String;
-  arquivoUrl: String;
+  nome: string;
+  bpm: string;
+  autor: string;
+  coautor: string;
+  duracao: string;
+  arquivoNome: string;
+  arquivoUrl: string;
   copyryght: boolean;
-  idioma: String;
+  idioma: string;
 }

@@ -11,14 +11,6 @@
                 <table class="example-full-width" cellspacing="0">
                     <tr>
                         <td>
-                            <img [src]="url" *ngIf="format==='image' && url" height="75%"> <br />
-                            <video [src]="url" *ngIf="format==='video' && url" height="75%" controls></video> <br />
-                            <wbr />
-                            <p>
-                                <input formControlName="file" type='file' (change)="onSelectFile($event)" accept=".jpg,.png,.mp4,.avi" />
-                            </p>
-                        </td>
-                        <td>
                             <app-input formControlName="id"
                                        id="id"
                                        label="Codígo"
@@ -26,6 +18,8 @@
                                        isReadyOnly="false"
                                        disabled="true">
                             </app-input>
+                        </td>
+                        <td>
                             <app-input formControlName="dtCriacao"
                                        id="dtCriacao"
                                        label="Data de Cadastro no Sistema"
@@ -36,8 +30,37 @@
                         </td>
                     </tr>
                 </table>
+                <table class="example-full-width" cellspacing="0">
+                    <tr>
+                        <td>
+                            <img [src]="url" *ngIf="format==='image' && url" height="75%"> <br />
+                            <video [src]="url" *ngIf="format==='video' && url" height="75%" controls></video> <br />
+                            <audio [src]="url" *ngIf="format==='audio' && url" height="75%" controls></audio> <br />
+                            <iframe [src]=" url | safe " *ngIf="url" width="640px" height="360px"></iframe> <br />
+                            <wbr />
+                            <p>
+                                <input formControlName="file" type='file' (change)="onSelectFile($event)" accept=".jpg,.png,.mp4,.avi" />
+                            </p>
+                        </td>
+                    </tr>
+                </table>
                 <wbr />
                 <table>
+                    <tr>
+                        <td>
+                            <p>
+                                <app-input formControlName="embed"
+                                           id="embed"
+                                           label="Url do arquivo"
+                                           minlength="0"
+                                           maxlength="1000"
+                                           placeholder="Informe a url"
+                                           hint="Use esse campo caso o arquivo seja muito pesado, colocando apenas no link para armazenamento!"
+                                           (theBlur)="setUrl()">
+                                </app-input>
+                            </p>
+                        </td>
+                    </tr>
                     <tr>
                         <td>
                             <app-textarea formControlName="descricao"

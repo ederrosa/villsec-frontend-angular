@@ -23,12 +23,11 @@ export class ElementoInsertComponent implements OnInit {
   private theFile: File;
   private theInscricao: Subscription[] = new Array<Subscription>();
   optionsTipoElemento: IOptions[] = [
-    { value: 1, option: 'tipo 1' },
-    { value: 2, option: 'tipo 2' },
-    { value: 3, option: 'tipo 3' },
-    { value: 4, option: 'tipo 4' },
-    { value: 5, option: 'tipo 5' },
-    { value: 6, option: 'tipo 6' }];
+    { value: 1, option: 'Imagem' },
+    { value: 2, option: 'Vídeo' },
+    { value: 3, option: 'LiveStream' },
+    { value: 4, option: 'Show' },
+    { value: 5, option: 'Áudio' }];
   optionsStatus: IOptions[] = [
     { value: true, option: 'Ativo' },
     { value: false, option: 'Inativo' }];
@@ -42,17 +41,18 @@ export class ElementoInsertComponent implements OnInit {
 
   ngOnInit() {
     this.theForm = this.theFormBuilder.group({
-      file: ['', [Validators.required]],
+      file: [''],
       descricao: ['', [Validators.required]],
+      embed: [''],
       tipoElemento: ['', [Validators.required]],
       titulo: ['', [Validators.required]],
       status: ['', [Validators.required]],
-    });
+    });    
   }
 
   ngOnDestroy() {
     this.onClear();
-    this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+    this.theUnsubscribeControl.unsubscribe(this.theInscricao);    
   }
 
   onSelectFile(event) {
@@ -64,6 +64,8 @@ export class ElementoInsertComponent implements OnInit {
         this.format = 'image';
       } else if (this.theFile.type.indexOf('video') > -1) {
         this.format = 'video';
+      } else if (this.theFile.type.indexOf('audio') > -1) {
+        this.format = 'audio';
       }
       reader.onload = (event) => {
         this.url = (<FileReader>event.target).result;
@@ -80,7 +82,11 @@ export class ElementoInsertComponent implements OnInit {
 
   onSave() {
     let formData: FormData = new FormData();
-    formData.append('file', this.theFile, this.theFile.name);
+    if (this.theFile) {
+      formData.append('file', this.theFile, this.theFile.name);
+    } else if (this.theForm.get('embed').valid) {
+      formData.append('embed', this.theForm.get('embed').value);
+    }
     formData.append('descricao', this.theForm.get('descricao').value);
     formData.append('tipoElemento', this.theForm.get('tipoElemento').value);
     formData.append('titulo', this.theForm.get('titulo').value);
@@ -106,5 +112,9 @@ export class ElementoInsertComponent implements OnInit {
       }, error => {
 
       }));
+  }
+
+  setUrl() {
+    this.url = this.theForm.get('embed').value;
   }
 }

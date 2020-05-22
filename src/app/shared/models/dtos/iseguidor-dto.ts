@@ -2,24 +2,24 @@ import { IEntidadeDominioDTO } from './ientidade-dominio-dto';
 
 export interface ISeguidorDto extends IEntidadeDominioDTO{
 
-  senha: String;
-  login: String;
-  matricula: String;
-  urlImgPerfil: String;
-  tipoUsuario: String;
-  email: String;
-  logradouro: String;
-  cep: String;
-  bairro: String;
-  cidade: String;
-  estado: String;
-  pais: String;
-  numeroTelefone1: String;
-  tipoTelefone1: String;
-  numeroTelefone2: String;
-  tipoTelefone2: String;
-  nome: String;
-  genero: String;
+  senha: string;
+  login: string;
+  matricula: string;
+  urlImgPerfil: string;
+  tipoUsuario: string;
+  email: string;
+  logradouro: string;
+  cep: string;
+  bairro: string;
+  cidade: string;
+  estado: string;
+  pais: string;
+  numeroTelefone1: string;
+  tipoTelefone1: string;
+  numeroTelefone2: string;
+  tipoTelefone2: string;
+  nome: string;
+  genero: string;
   statusPessoa: boolean;
-  dataNascimento: String;
+  dataNascimento: string;
 }

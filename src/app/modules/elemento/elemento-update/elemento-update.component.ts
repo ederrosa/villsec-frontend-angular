@@ -32,7 +32,7 @@ export class ElementoUpdateComponent implements OnInit {
     { value: 2, option: 'Vídeo' },
     { value: 3, option: 'LiveStream' },
     { value: 4, option: 'Show' },
-    { value: 5, option: 'Músuca'}];
+    { value: 5, option: 'Áudio' }];
   optionsStatus: IOptions[] = [
     { value: true, option: 'Ativo' },
     { value: false, option: 'Inativo' }];
@@ -52,6 +52,7 @@ export class ElementoUpdateComponent implements OnInit {
       dtCriacao: [''],
       file: [''],
       descricao: ['', [Validators.required]],
+      embed: [''],
       tipoElemento: ['', [Validators.required]],
       titulo: ['', [Validators.required]],
       status: ['', [Validators.required]],
@@ -72,15 +73,21 @@ export class ElementoUpdateComponent implements OnInit {
   }
 
   onFormUpdate(theElemento: IElementoDTO): void {
-    this.url = theElemento.elementoUrl;
+    if (theElemento.elementoUrl != null && theElemento.elementoUrl != '') {
+      this.url = theElemento.elementoUrl;
+    } else if (theElemento.embed != null && theElemento.embed != '') {
+      this.url = theElemento.embed;
+    }
+   
     this.theForm.patchValue({
       id: theElemento.id,
       dtCriacao: theElemento.dtCriacao,
       file: '',
       titulo: theElemento.titulo,
       descricao: theElemento.descricao,
+      embed: theElemento.embed,
       tipoElemento: this.theFieldsService.getItemOfSelect(this.optionsTipoElemento, theElemento.tipoElemento),
-      tipoStatus: this.theFieldsService.getItemOfSelect(this.optionsStatus, theElemento.status),      
+      status: this.theFieldsService.getItemOfSelect(this.optionsStatus, theElemento.status),
     });
   }
 
@@ -91,6 +98,10 @@ export class ElementoUpdateComponent implements OnInit {
       reader.readAsDataURL(this.theFile);
       if (this.theFile.type.indexOf('image') > -1) {
         this.format = 'image';
+      } else if (this.theFile.type.indexOf('video') > -1) {
+        this.format = 'video';
+      } else if (this.theFile.type.indexOf('audio') > -1) {
+        this.format = 'audio';
       }
       reader.onload = (event) => {
         this.url = (<FileReader>event.target).result;
@@ -115,6 +126,11 @@ export class ElementoUpdateComponent implements OnInit {
     this.theInscricao.push(dialogRef.afterClosed().subscribe(result => {
       if (result) {
         let formData: FormData = new FormData();
+        if (this.theFile) {
+          formData.append('file', this.theFile, this.theFile.name);
+        } else if (this.theForm.get('embed').valid) {
+          formData.append('embed', this.theForm.get('embed').value);
+        }
         formData.append('descricao', this.theForm.get('descricao').value);
         formData.append('tipoElemento', this.theForm.get('tipoElemento').value);
         formData.append('titulo', this.theForm.get('titulo').value);
@@ -146,5 +162,9 @@ export class ElementoUpdateComponent implements OnInit {
           }));
       }
     }));
+  }
+
+  setUrl() {
+    this.url = this.theForm.get('embed').value;
   }
 }

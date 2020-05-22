@@ -3,17 +3,19 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
-import { SharedModule } from 'src/app/shared/shared.module';
 import { MaterialModule } from 'src/app/core/configurations/material/material.module';
 import { ElementoInsertComponent } from './elemento-insert.component';
+import { PipesModule } from 'src/app/shared/pipes/pipes.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
   declarations: [ElementoInsertComponent],
   imports: [
     CommonModule,
-    MaterialModule,
     FormsModule,
+    MaterialModule,
+    PipesModule,    
     ReactiveFormsModule,
     RouterModule,
     SharedModule

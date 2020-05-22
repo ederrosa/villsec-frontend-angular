@@ -19,15 +19,12 @@ import { AuthInterceptorProvider } from './core/interceptors/auth-interceptor.se
 
 registerLocaleData(localePt);
 
-const SERVICES_LIST = [
-  //AuthGuard,
-  //AuthenticationService,
-  //AuthInterceptorProvider,
-  ErrorInterceptorProvider,
-]
-
 const COMPONENTS_LIST = [
 
+]
+
+const MATERIAL_MODULES_LIST = [
+  MaterialModule,
 ]
 
 const MODULES_LIST = [
@@ -36,15 +33,19 @@ const MODULES_LIST = [
   SharedModule
 ]
 
-const MATERIAL_MODULES_LIST = [
-  MaterialModule,
+
+
+const SERVICES_LIST = [
+  //AuthGuard,
+  //AuthenticationService,
+  //AuthInterceptorProvider,
+  ErrorInterceptorProvider,
 ]
 
 @NgModule({
   declarations: [
     AppComponent,
-    ...COMPONENTS_LIST
-
+    ...COMPONENTS_LIST,
   ],
   imports: [
     BrowserModule,

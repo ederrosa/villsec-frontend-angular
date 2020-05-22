@@ -1,8 +1,7 @@
 ﻿<h1 mat-dialog-title>{{ title }}</h1>
 <p>{{ subTitle }}</p>
 <div mat-dialog-content [ngClass]="classCss" class="mat-elevation-z8">
-    <mat-card-content  [innerHTML]="message"></mat-card-content>
-    
+    <mat-card-content  [innerHTML]="message"></mat-card-content>    
 </div>
 <div mat-dialog-actions >
     <button mat-raised-button color="primary" status="primary" (click)="onOk()" cdkFocusInitial>{{ btnMessage }}</button>

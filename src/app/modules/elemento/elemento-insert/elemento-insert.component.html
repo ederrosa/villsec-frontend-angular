@@ -11,11 +11,28 @@
                 <table class="example-full-width" cellspacing="0">
                     <tr>
                         <td>
-                            <img [src]="url" *ngIf="format==='image' && url" height="75%"> <br />
-                            <video [src]="url" *ngIf="format==='video' && url" height="75%" controls></video> <br />
+                            <img [src]="url" *ngIf="format==='image' && url"width="640px" height="360px"> <br />
+                            <video [src]="url" *ngIf="format==='video' && url" width="640px" height="360px" controls></video> <br />
+                            <audio [src]="url" *ngIf="format==='audio' && url" width="640px" height="360px" controls></audio> <br />
+                            <iframe [src]=" url | safe " *ngIf="url" width="640px" height="360px"></iframe> <br />
                             <wbr />
                             <p>
-                                <input formControlName="file" type='file' (change)="onSelectFile($event)" accept=".jpg,.png,.mp4,.avi" />
+                                <input formControlName="file" type='file' (change)="onSelectFile($event)" accept=".jpg,.png,.mp4,.avi,.mp3,.wave" />
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>
+                                <app-input formControlName="embed"
+                                           id="embed"
+                                           label="Url do arquivo"
+                                           minlength="0"
+                                           maxlength="1000"
+                                           placeholder="Informe a url"
+                                           hint="Use esse campo caso o arquivo seja muito pesado, colocando apenas no link para armazenamento!"
+                                           (theBlur)="setUrl()">
+                                </app-input>
                             </p>
                         </td>
                     </tr>
@@ -59,7 +76,7 @@
                                         id="status"
                                         label="Status do Arquivo"
                                         hint="Selecione um dos status."
-                                        [options]="optionsStatus">
+                                        [options]="optionsStatus" >
                             </app-select>
                         </td>
                     </tr>                    

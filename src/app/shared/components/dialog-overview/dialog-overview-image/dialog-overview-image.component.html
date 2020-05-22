@@ -1,0 +1,13 @@
+﻿<mat-card [ngClass]="classCss">
+    <mat-card-header>
+        <mat-card-title>Título: {{ title }}</mat-card-title>
+        <mat-card-subtitle>Subtítulo: {{ subtitle }} </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <div mat-dialog-actions >
+            <img download="w3logo" src='{{ url }}' width="auto" height="420px">
+        </div>
+        <wbr />
+        <p>{{ descricao }}</p>
+    </mat-card-content>
+</mat-card>
