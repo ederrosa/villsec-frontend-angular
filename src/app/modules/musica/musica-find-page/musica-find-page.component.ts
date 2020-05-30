@@ -9,18 +9,20 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { tap } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
-
 import { ILocalUser } from 'src/app/shared/models/domain/ilocal-user';
-import { AlbumService } from '../album.service';
+import { IMusicaDTO } from 'src/app/shared/models/dtos/imusica-dto';
+import { MusicaService } from '../musica.service';
 import { UnsubscribeControlService } from 'src/app/core/services/unsubscribe-control.service';
 import { ConfirmationAlertComponent } from 'src/app/shared/components/alerts/confirmation-alert/confirmation-alert.component';
 import { InformativeAlertComponent } from 'src/app/shared/components/alerts/informative-alert/informative-alert.component';
-import { IAlbumDTO } from 'src/app/shared/models/dtos/ialbum-dto';
+import { DialogOverviewAudioComponent } from 'src/app/shared/components/dialog-overview/dialog-overview-audio/dialog-overview-audio.component';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { AlbumService } from '../../album/album.service';
 
 @Component({
-  selector: 'app-album-find-page',
-  templateUrl: './album-find-page.component.html',
-  styleUrls: ['./album-find-page.component.scss'],
+  selector: 'app-musica-find-page',
+  templateUrl: './musica-find-page.component.html',
+  styleUrls: ['./musica-find-page.component.scss'],
   animations: [
     trigger('detailExpand', [
       state('collapsed', style({ height: '0px', minHeight: '0' })),
@@ -29,16 +31,17 @@ import { IAlbumDTO } from 'src/app/shared/models/dtos/ialbum-dto';
     ]),
   ],
 })
-export class AlbumFindPageComponent implements OnInit, OnDestroy, AfterViewInit {
+export class MusicaFindPageComponent implements OnInit, OnDestroy, AfterViewInit {
 
   disabledNew: boolean = true;
   disabledEdit: boolean = true;
   disabledDel: boolean = true;
+  theIAlbum: FormGroup;
   private theLocalUser: ILocalUser;
   private theInscricao: Subscription[] = new Array<Subscription>();
-  dataSource: MatTableDataSource<IAlbumDTO> = new MatTableDataSource();
-  columnsToDisplay = ['codigo', 'nome', 'genero'];
-  expandedElement: IAlbumDTO | null;
+  dataSource: MatTableDataSource<IMusicaDTO> = new MatTableDataSource();
+  columnsToDisplay = ['faixa', 'nome', 'autor', 'duracao'];
+  expandedElement: IMusicaDTO | null;
   pageEvent: PageEvent;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -46,8 +49,10 @@ export class AlbumFindPageComponent implements OnInit, OnDestroy, AfterViewInit 
 
   constructor(
     private theActivatedRoute: ActivatedRoute,
+    private theIAlbumService: AlbumService,
+    private theFormBuilder: FormBuilder,
     private dialog: MatDialog,
-    private theAlbumService: AlbumService,
+    private theMusicaService: MusicaService,
     private theRouter: Router,
     private theUnsubscribeControl: UnsubscribeControlService
   ) {
@@ -59,34 +64,42 @@ export class AlbumFindPageComponent implements OnInit, OnDestroy, AfterViewInit 
           this.disabledEdit = false;
           this.disabledNew = false;
           break;
-        case 2:
-          this.disabledDel = false;
-          this.disabledEdit = true;
-          this.disabledNew = false;
-          break;
       }
     }
-    this.theInscricao.push(this.theAlbumService.findPage().subscribe(
-      (x => {
-        this.paginator.pageSizeOptions = [12, 24, 48, 100];
-        this.paginator.length = x['totalElements'];
-        this.paginator.showFirstLastButtons = true;
-        this.paginator.pageSize = x['size'];
-        this.paginator.pageIndex = x['number'];
-        this.dataSource = new MatTableDataSource(x['content']);
-      })
+  }
+
+  ngAfterViewInit() {
+    this.theInscricao.push(this.theIAlbumService.eventEmitter.subscribe(
+      theIAlbum => {
+        this.theIAlbum.patchValue({
+          theIAlbum: theIAlbum.id
+        });
+        this.theInscricao.push(this.theMusicaService.findPage(
+          0,
+          12,
+          'faixa',
+          'ASC',
+          theIAlbum.id).subscribe(
+            (x => {
+              this.paginator.pageSizeOptions = [12, 24, 48, 100];
+              this.paginator.length = x['totalElements'];
+              this.paginator.showFirstLastButtons = true;
+              this.paginator.pageSize = x['size'];
+              this.paginator.pageIndex = x['number'];
+              this.paginator.pageIndex = x['number'];
+              this.dataSource = new MatTableDataSource(x['content']);
+            })
+          )
+        );
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      }
     ));
-  }
 
-  ngOnInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
-
-  ngOnDestroy() {
-    this.dataSource = null;
-    this.expandedElement = null;
-    this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+    this.theInscricao.push(this.paginator.page
+      .pipe(
+        tap(() => this.loadPage())
+      ).subscribe());
   }
 
   applyFilter(filterValue: string) {
@@ -96,7 +109,7 @@ export class AlbumFindPageComponent implements OnInit, OnDestroy, AfterViewInit 
     }
   }
 
-  delete(theAlbum: IAlbumDTO) {
+  delete(theIMusicaDTO: IMusicaDTO) {
     this.dialog.closeAll();
     let dialogRef = this.dialog.open(ConfirmationAlertComponent, { disableClose: true, width: '40%' });
     let instance = dialogRef.componentInstance;
@@ -105,7 +118,7 @@ export class AlbumFindPageComponent implements OnInit, OnDestroy, AfterViewInit 
     instance.classCss = 'color-danger';
     this.theInscricao.push(dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.theInscricao.push(this.theAlbumService.delete(theAlbum.id)
+        this.theInscricao.push(this.theMusicaService.delete(theIMusicaDTO.id)
           .subscribe((event: HttpEvent<Object>) => {
             if (event.type == HttpEventType.Response) {
               this.dialog.closeAll();
@@ -114,8 +127,8 @@ export class AlbumFindPageComponent implements OnInit, OnDestroy, AfterViewInit 
               instance.title = "Status: " + event.status;
               instance.subTitle = 'Deletando!...';
               instance.classCss = 'color-success';
-              instance.message = event.statusText + '!! O Album foi Deletado com sucesso!';
-              instance.urlNavigate = '/albuns';
+              instance.message = event.statusText + '!! A avaliação física foi Deletado com sucesso!';
+              instance.urlNavigate = '/musicas';
               this.theRouter.navigate(['/']);
             }
           }, error => {
@@ -125,31 +138,47 @@ export class AlbumFindPageComponent implements OnInit, OnDestroy, AfterViewInit 
     }));
   }
 
-  update(theIAlbumDTO: IAlbumDTO) {
-    this.theAlbumService.setIAlbumDTO(theIAlbumDTO);
+  ngOnInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    this.theIAlbum = this.theFormBuilder.group({
+      theIAlbum: ['', [Validators.required]]
+    });
+  }
+
+  ngOnDestroy() {
+    this.dataSource = null;
+    this.expandedElement = null;
+    this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+  }
+
+  update(theIMusicaDTO: IMusicaDTO) {
+    this.theMusicaService.setIMusicaDTO(theIMusicaDTO);
     this.theRouter.navigate(
-      ['editar', theIAlbumDTO.id],
-      { relativeTo: this.theActivatedRoute }
+      ['musicas/editar', theIMusicaDTO.id]
     );
   }
 
-  ngAfterViewInit() {
-    this.theInscricao.push(this.paginator.page
-      .pipe(
-        tap(() => this.loadPage())
-      ).subscribe());
+  loadPage() {
+    this.theInscricao.push(this.theMusicaService.findPage(
+      0,
+      12,
+      'faixa',
+      'ASC',
+      this.theIAlbum.get('theIAlbum').value).subscribe(
+        (x => {
+          this.dataSource = new MatTableDataSource(x['content']);
+        })
+      )
+    );
   }
 
-  loadPage() {
-    this.theInscricao.push(this.theAlbumService.findPage(
-      this.paginator.pageIndex,
-      this.paginator.pageSize,
-      'nome',
-      'ASC'
-    ).subscribe(
-      (x => {
-        this.dataSource = new MatTableDataSource(x['content']);
-      })
-    ));
+  openDialogAudio(theIMusicaDTO: IMusicaDTO): void {
+    this.dialog.closeAll();
+    let dialogRef = this.dialog.open(DialogOverviewAudioComponent, {});
+    let instance = dialogRef.componentInstance;
+    instance.title = theIMusicaDTO.nome;
+    instance.subtitle = theIMusicaDTO.autor;
+    instance.url = theIMusicaDTO.arquivoUrl;
   }
 }

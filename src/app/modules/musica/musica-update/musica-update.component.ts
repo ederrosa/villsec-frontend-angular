@@ -1,43 +1,42 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { HttpEventType, HttpEvent } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs';
-import { EventoService } from '../evento.service';
+import { MusicaService } from '../musica.service';
 import { UnsubscribeControlService } from 'src/app/core/services/unsubscribe-control.service';
 import { ProgressSpinnerOverviewComponent } from 'src/app/shared/components/progress-spinner/progress-spinner-overview/progress-spinner-overview.component';
 import { InformativeAlertComponent } from 'src/app/shared/components/alerts/informative-alert/informative-alert.component';
 import { ConfirmationAlertComponent } from 'src/app/shared/components/alerts/confirmation-alert/confirmation-alert.component';
 import { FieldsService } from 'src/app/shared/components/fields/fields.service';
 import { switchMap, map } from 'rxjs/operators';
-import { IEventoDTO } from 'src/app/shared/models/dtos/ievento-dto';
+import { IMusicaDTO } from 'src/app/shared/models/dtos/imusica-dto';
 import { IOptions } from 'src/app/shared/components/fields/select/select.component';
-
+import { AlbumService } from '../../album/album.service';
 
 @Component({
-  selector: 'app-evento-update',
-  templateUrl: './evento-update.component.html',
-  styleUrls: ['./evento-update.component.scss']
+  selector: 'app-musica-update',
+  templateUrl: './musica-update.component.html',
+  styleUrls: ['./musica-update.component.scss']
 })
-export class EventoUpdateComponent implements OnInit {
+export class MusicaUpdateComponent implements OnInit, OnDestroy, AfterViewInit{
 
+  isLinear = true;
   theForm: FormGroup;
+  theAlbumForm: FormGroup;
   url: any;
   format: string;
   private theFile: File;
   private theInscricao: Subscription[] = new Array<Subscription>();
-  optionsTipoEvento: IOptions[] = [
-    { value: 1, option: 'tipo 1' },
-    { value: 2, option: 'tipo 2' },
-    { value: 3, option: 'tipo 3' },
-    { value: 4, option: 'tipo 4' },
-    { value: 5, option: 'tipo 5' },
-    { value: 6, option: 'tipo 6' }];
+  optionsCopyright: IOptions[] = [
+    { value: true, option: 'Sim' },
+    { value: false, option: 'Não' }];
 
   constructor(
-    private theEventoService: EventoService,
+    private theMusicaService: MusicaService,
+    private theAlbumService: AlbumService,
     private theActivatedRoute: ActivatedRoute,
     private theFieldsService: FieldsService,
     private theFormBuilder: FormBuilder,
@@ -45,31 +44,40 @@ export class EventoUpdateComponent implements OnInit {
     private theUnsubscribeControl: UnsubscribeControlService
   ) { }
 
+  ngAfterViewInit(): void {
+    this.theInscricao.push(this.theAlbumService.eventEmitter.subscribe(
+      theAlbum => {
+        this.theAlbumForm.patchValue({
+          theAlbumID: theAlbum.id
+        });
+      }
+    ));
+  }
+
   ngOnInit() {
     this.theForm = this.theFormBuilder.group({
       id: [''],
       dtCriacao: [''],
-      file: [''],
-      classificacao: ['', [Validators.required]],
+      autor: ['', [Validators.required]],
+      bpm: ['', [Validators.required]],
+      coautor: ['', [Validators.required]],
+      copyright: ['', [Validators.required]],
       duracao: ['', [Validators.required]],
-      data: ['', [Validators.required]],
-      descricao: ['', [Validators.required]],
-      nome: ['', [Validators.required]],
-      tipoEvento: ['', [Validators.required]],
-      logradouro: ['', [Validators.required]],
-      cep: ['', [Validators.required]],
-      bairro: ['', [Validators.required]],
-      cidade: ['', [Validators.required]],
-      estado: ['', [Validators.required]],
-      pais: ['', [Validators.required]]   
+      faixa: ['', [Validators.required]],
+      file: [''],
+      idioma: ['', [Validators.required]],
+      nome: ['', [Validators.required]],        
     });
-    if (this.theEventoService.getIEventoDTO() == null) {
+    this.theAlbumForm = this.theFormBuilder.group({
+      theAlbumID: ['', [Validators.required]]
+    });
+    if (this.theMusicaService.getIMusicaDTO() == null) {
       this.theActivatedRoute.params.pipe(
         map((params: any) => params['id']),
-        switchMap(id => this.theEventoService.find(id))
-      ).subscribe(theIEventoDTO => this.onFormUpdate(theIEventoDTO));
+        switchMap(id => this.theMusicaService.find(id))
+      ).subscribe(theIMusicaDTO => this.onFormUpdate(theIMusicaDTO));
     } else {
-      this.onFormUpdate(this.theEventoService.getIEventoDTO());
+      this.onFormUpdate(this.theMusicaService.getIMusicaDTO());
     }
   }
 
@@ -78,25 +86,21 @@ export class EventoUpdateComponent implements OnInit {
     this.theUnsubscribeControl.unsubscribe(this.theInscricao);
   }
 
-  onFormUpdate(theIEventoDTO: IEventoDTO): void {
-    this.format = 'image';
-    this.url = theIEventoDTO.folderUrl;
+  onFormUpdate(theIMusicaDTO: IMusicaDTO): void {
+    this.url = theIMusicaDTO.arquivoUrl;
+    this.format = 'audio';
     this.theForm.patchValue({
-      id: theIEventoDTO.id,
-      dtCriacao: theIEventoDTO.dtCriacao,
+      id: theIMusicaDTO.id,
+      dtCriacao: theIMusicaDTO.dtCriacao,
+      autor: theIMusicaDTO.autor,
+      bpm: theIMusicaDTO.bpm,
+      coautor: theIMusicaDTO.coautor,
+      copyright: this.theFieldsService.getItemOfSelect(this.optionsCopyright, theIMusicaDTO.copyright),
+      duracao: theIMusicaDTO.duracao,
       file: '',
-      classificacao: theIEventoDTO.classificacao,
-      duracao: theIEventoDTO.duracao,
-      data: new Date(theIEventoDTO.data.toString()),
-      descricao: theIEventoDTO.descricao,
-      nome: theIEventoDTO.nome,
-      tipoEvento: this.theFieldsService.getItemOfSelect(this.optionsTipoEvento, theIEventoDTO.tipoEvento),
-      logradouro: theIEventoDTO.logradouro,
-      cep: theIEventoDTO.cep,
-      bairro: theIEventoDTO.bairro,
-      cidade: theIEventoDTO.cidade,
-      estado: theIEventoDTO.estado,
-      pais: theIEventoDTO.pais   
+      faixa: theIMusicaDTO.faixa,
+      idioma: theIMusicaDTO.idioma,
+      nome: theIMusicaDTO.nome,     
     });
   }
 
@@ -105,8 +109,8 @@ export class EventoUpdateComponent implements OnInit {
     if (this.theFile) {
       var reader = new FileReader();
       reader.readAsDataURL(this.theFile);
-      if (this.theFile.type.indexOf('image') > -1) {
-        this.format = 'image';
+      if (this.theFile.type.indexOf('audio') > -1) {
+        this.format = 'audio';
       }
       reader.onload = (event) => {
         this.url = (<FileReader>event.target).result;
@@ -131,22 +135,20 @@ export class EventoUpdateComponent implements OnInit {
     this.theInscricao.push(dialogRef.afterClosed().subscribe(result => {
       if (result) {
         let formData: FormData = new FormData();
-        formData.append('classificacao', this.theForm.get('classificacao').value);
+        formData.append('autor', this.theForm.get('autor').value);
+        formData.append('bpm', this.theForm.get('bpm').value);
+        formData.append('coautor', this.theForm.get('coautor').value);
+        formData.append('copyright', this.theForm.get('copyright').value);
         formData.append('duracao', this.theForm.get('duracao').value);
-        formData.append('data', new Date(this.theForm.get('data').value).toLocaleDateString());
-        formData.append('descricao', this.theForm.get('descricao').value);
-        formData.append('tipoEvento', this.theForm.get('tipoEvento').value);
-        formData.append('logradouro', this.theForm.get('logradouro').value);
-        formData.append('nome', this.theForm.get('nome').value);
-        formData.append('cep', this.theForm.get('cep').value);
-        formData.append('bairro', this.theForm.get('bairro').value);
-        formData.append('cidade', this.theForm.get('cidade').value);
-        formData.append('estado', this.theForm.get('estado').value);
-        formData.append('pais', this.theForm.get('pais').value);    
+        formData.append('idioma', this.theForm.get('idioma').value);
+        formData.append('faixa', this.theForm.get('faixa').value);
         if (this.theFile) {
           formData.append('file', this.theFile, this.theFile.name);
-        }
-        this.theInscricao.push(this.theEventoService.update(formData, this.theForm.get('id').value)
+        } 
+        formData.append('idioma', this.theForm.get('idioma').value);
+        formData.append('nome', this.theForm.get('nome').value);
+        formData.append('albumID', this.theAlbumForm.get('theAlbumID').value);
+        this.theInscricao.push(this.theMusicaService.update(formData, this.theForm.get('id').value)
           .subscribe((event: HttpEvent<Object>) => {
             if (event.type === HttpEventType.Response) {
               this.dialog.closeAll();
@@ -155,8 +157,8 @@ export class EventoUpdateComponent implements OnInit {
               instance.title = "Status: " + event.status;
               instance.subTitle = 'Alterado!...';
               instance.classCss = 'color-success';
-              instance.message = event.statusText + '!! O Evento foi alterada com sucesso!';
-              instance.urlNavigate = '/eventos';
+              instance.message = event.statusText + '!! A Musica foi alterada com sucesso!';
+              instance.urlNavigate = '/musicas';
             } else if (event.type === HttpEventType.UploadProgress) {
               this.dialog.closeAll();
               let dialogRef = this.dialog.open(ProgressSpinnerOverviewComponent, { disableClose: true, width: '350px', height: '350px' });
@@ -171,5 +173,4 @@ export class EventoUpdateComponent implements OnInit {
       }
     }));
   }
-
 }

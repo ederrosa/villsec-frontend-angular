@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { API_CONFIGURATION } from 'src/configurations/api.configuration';
 import { IAlbumDTO } from 'src/app/shared/models/dtos/ialbum-dto';
@@ -11,10 +11,20 @@ import { Observable } from 'rxjs';
 export class AlbumService {
 
   private readonly API = API_CONFIGURATION.baseUrl + '/albuns';
-  theAlbum: IAlbumDTO;
+  private theIAlbumDTO: IAlbumDTO;
+  eventEmitter = new EventEmitter<IAlbumDTO>();
 
-  constructor(protected http: HttpClient) { }
-  
+  constructor(public http: HttpClient) { }
+
+  getIAlbumDTO(): IAlbumDTO {
+    return this.theIAlbumDTO;
+  }
+
+  setIAlbumDTO(theIAlbumDTO: IAlbumDTO): void {
+    this.theIAlbumDTO = theIAlbumDTO;
+    this.eventEmitter.emit(this.theIAlbumDTO);
+  }
+
   delete(id: number) {
     return this.http.delete(`${this.API}/${id}`,
       {

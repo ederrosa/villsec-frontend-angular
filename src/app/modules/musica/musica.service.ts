@@ -1,29 +1,30 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { API_CONFIGURATION } from 'src/configurations/api.configuration';
-import { IElementoDTO } from 'src/app/shared/models/dtos/ielemento-dto';
 import { take } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+
+import { API_CONFIGURATION } from 'src/configurations/api.configuration';
+import { IMusicaDTO } from 'src/app/shared/models/dtos/imusica-dto';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ElementoService {
+export class MusicaService {
 
-  private readonly API = API_CONFIGURATION.baseUrl + '/elementos';
-  private theIElementoDTO: IElementoDTO;
-  eventEmitter = new EventEmitter<IElementoDTO>();
+  private readonly API = API_CONFIGURATION.baseUrl + '/musicas';
+  theIMusicaDTO: IMusicaDTO;
+  eventEmitter = new EventEmitter<IMusicaDTO>();
 
   constructor(public http: HttpClient) { }
 
-  getIElementoDTO(): IElementoDTO {
-    return this.theIElementoDTO;
+  getIMusicaDTO(): IMusicaDTO {
+    return this.theIMusicaDTO;
   }
 
-  setIElementoDTO(theIElementoDTO: IElementoDTO): void {
-    this.theIElementoDTO = theIElementoDTO;
-    this.eventEmitter.emit(this.theIElementoDTO);
+  setIMusicaDTO(theIMusicaDTO: IMusicaDTO): void {
+    this.theIMusicaDTO = theIMusicaDTO;
+    this.eventEmitter.emit(this.theIMusicaDTO);
   }
 
   delete(id: number) {
@@ -35,16 +36,17 @@ export class ElementoService {
   }
 
   find(id: number) {
-    return this.http.get<IElementoDTO>(`${this.API}/${id}`).pipe(take(1));
+    return this.http.get<IMusicaDTO>(`${this.API}/${id}`).pipe(take(1));
   }
 
   findPage(
     page: number = 0,
     linesPerPage: number = 12,
-    orderBy: string = 'titulo',
-    direction: string = 'ASC'): Observable<IElementoDTO[]> {
-    return this.http.get<IElementoDTO[]>(
-      `${this.API}/?page=${page}&linesPerPage=${linesPerPage}&orderBy=${orderBy}&direction=${direction}`).pipe(take(1)
+    orderBy: string = 'index',
+    direction: string = 'ASC',
+    theAlbum: number): Observable<IMusicaDTO[]> {
+    return this.http.get<IMusicaDTO[]>(
+      `${this.API}/?page=${page}&linesPerPage=${linesPerPage}&orderBy=${orderBy}&direction=${direction}&theAlbum=${theAlbum}`).pipe(take(1)
       );
   }
 

@@ -61,7 +61,7 @@ export class EventoFindPageComponent implements OnInit, OnDestroy, AfterViewInit
           break;
         case 2:
           this.disabledDel = false;
-          this.disabledEdit = true;
+          this.disabledEdit = false;
           this.disabledNew = false;
           break;
       }
@@ -125,10 +125,10 @@ export class EventoFindPageComponent implements OnInit, OnDestroy, AfterViewInit
     }));
   }
 
-  update(theEvento: IEventoDTO) {
-    this.theEventoService.theEvento = theEvento;
+  update(theIEventoDTO: IEventoDTO) {
+    this.theEventoService.setIEventoDTO(theIEventoDTO);
     this.theRouter.navigate(
-      ['editar', theEvento.id],
+      ['editar', theIEventoDTO.id],
       { relativeTo: this.theActivatedRoute }
     );
   }

@@ -29,11 +29,10 @@ export class AlbumUpdateComponent implements OnInit {
   private theInscricao: Subscription[] = new Array<Subscription>();
 
   constructor(
-    private theAcademiaService: AlbumService,
+    private theAlbumService: AlbumService,
     private theActivatedRoute: ActivatedRoute,
     private theFieldsService: FieldsService,
     private theFormBuilder: FormBuilder,
-    private theAlbumService: AlbumService,
     private dialog: MatDialog,
     private theUnsubscribeControl: UnsubscribeControlService
   ) { }
@@ -48,13 +47,13 @@ export class AlbumUpdateComponent implements OnInit {
       ano: ['', [Validators.required]],
       genero: ['', [Validators.required]]
     });
-    if (this.theAcademiaService.theAlbum == null) {
+    if (this.theAlbumService.getIAlbumDTO() == null) {
       this.theActivatedRoute.params.pipe(
         map((params: any) => params['id']),
-        switchMap(id => this.theAcademiaService.find(id))
-      ).subscribe(theAlbum => this.onFormUpdate(theAlbum));
+        switchMap(id => this.theAlbumService.find(id))
+      ).subscribe(theIAlbumDTO => this.onFormUpdate(theIAlbumDTO));
     } else {
-      this.onFormUpdate(this.theAlbumService.theAlbum);
+      this.onFormUpdate(this.theAlbumService.getIAlbumDTO());
     }
   }
 
@@ -63,17 +62,17 @@ export class AlbumUpdateComponent implements OnInit {
     this.theUnsubscribeControl.unsubscribe(this.theInscricao);
   }
 
-  onFormUpdate(theAlbum: IAlbumDTO): void {
+  onFormUpdate(theIAlbumDTO: IAlbumDTO): void {
     this.format = 'image';
-    this.url = theAlbum.capaUrl;
+    this.url = theIAlbumDTO.capaUrl;
     this.theForm.patchValue({
-      id: theAlbum.id,
-      dtCriacao: theAlbum.dtCriacao,
+      id: theIAlbumDTO.id,
+      dtCriacao: theIAlbumDTO.dtCriacao,
       file: '',
-      nome: theAlbum.nome,
-      descricao: theAlbum.descricao,
-      ano: new Date(theAlbum.ano.toString()),
-      genero: theAlbum.genero,
+      nome: theIAlbumDTO.nome,
+      descricao: theIAlbumDTO.descricao,
+      ano: new Date(theIAlbumDTO.ano.toString()),
+      genero: theIAlbumDTO.genero,
     });
   }
 

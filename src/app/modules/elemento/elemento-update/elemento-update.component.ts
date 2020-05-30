@@ -57,13 +57,13 @@ export class ElementoUpdateComponent implements OnInit {
       titulo: ['', [Validators.required]],
       status: ['', [Validators.required]],
     });
-    if (this.theElementoService.theElemento == null) {
+    if (this.theElementoService.getIElementoDTO() == null) {
       this.theActivatedRoute.params.pipe(
         map((params: any) => params['id']),
         switchMap(id => this.theElementoService.find(id))
-      ).subscribe(theElemento => this.onFormUpdate(theElemento));
+      ).subscribe(theIElementoDTO => this.onFormUpdate(theIElementoDTO));
     } else {
-      this.onFormUpdate(this.theElementoService.theElemento);
+      this.onFormUpdate(this.theElementoService.getIElementoDTO());
     }
   }
 
@@ -72,22 +72,22 @@ export class ElementoUpdateComponent implements OnInit {
     this.theUnsubscribeControl.unsubscribe(this.theInscricao);
   }
 
-  onFormUpdate(theElemento: IElementoDTO): void {
-    if (theElemento.elementoUrl != null && theElemento.elementoUrl != '') {
-      this.url = theElemento.elementoUrl;
-    } else if (theElemento.embed != null && theElemento.embed != '') {
-      this.url = theElemento.embed;
+  onFormUpdate(theIElementoDTO: IElementoDTO): void {
+    if (theIElementoDTO.elementoUrl != null && theIElementoDTO.elementoUrl != '') {
+      this.url = theIElementoDTO.elementoUrl;
+    } else if (theIElementoDTO.embed != null && theIElementoDTO.embed != '') {
+      this.url = theIElementoDTO.embed;
     }
    
     this.theForm.patchValue({
-      id: theElemento.id,
-      dtCriacao: theElemento.dtCriacao,
+      id: theIElementoDTO.id,
+      dtCriacao: theIElementoDTO.dtCriacao,
       file: '',
-      titulo: theElemento.titulo,
-      descricao: theElemento.descricao,
-      embed: theElemento.embed,
-      tipoElemento: this.theFieldsService.getItemOfSelect(this.optionsTipoElemento, theElemento.tipoElemento),
-      status: this.theFieldsService.getItemOfSelect(this.optionsStatus, theElemento.status),
+      titulo: theIElementoDTO.titulo,
+      descricao: theIElementoDTO.descricao,
+      embed: theIElementoDTO.embed,
+      tipoElemento: this.theFieldsService.getItemOfSelect(this.optionsTipoElemento, theIElementoDTO.tipoElemento),
+      status: this.theFieldsService.getItemOfSelect(this.optionsStatus, theIElementoDTO.status),
     });
   }
 
@@ -135,9 +135,6 @@ export class ElementoUpdateComponent implements OnInit {
         formData.append('tipoElemento', this.theForm.get('tipoElemento').value);
         formData.append('titulo', this.theForm.get('titulo').value);
         formData.append('status', this.theForm.get('status').value);
-        if (this.theFile) {
-          formData.append('file', this.theFile, this.theFile.name);
-        }
         this.theInscricao.push(this.theElementoService.update(formData, this.theForm.get('id').value)
           .subscribe((event: HttpEvent<Object>) => {
             if (event.type === HttpEventType.Response) {
@@ -147,7 +144,7 @@ export class ElementoUpdateComponent implements OnInit {
               instance.title = "Status: " + event.status;
               instance.subTitle = 'Alterado!...';
               instance.classCss = 'color-success';
-              instance.message = event.statusText + '!! O Elemento foi alterada com sucesso!';
+              instance.message = event.statusText + '!! O Elemento foi alterado com sucesso!';
               instance.urlNavigate = '/elementos';
             } else if (event.type === HttpEventType.UploadProgress) {
               this.dialog.closeAll();

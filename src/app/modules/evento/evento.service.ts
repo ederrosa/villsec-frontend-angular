@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { API_CONFIGURATION } from 'src/configurations/api.configuration';
 import { IEventoDTO } from 'src/app/shared/models/dtos/ievento-dto';
@@ -11,10 +11,20 @@ import { Observable } from 'rxjs';
 export class EventoService {
 
   private readonly API = API_CONFIGURATION.baseUrl + '/eventos';
-  theEvento: IEventoDTO;
+  private theIEventoDTO: IEventoDTO;
+  eventEmitter = new EventEmitter<IEventoDTO>();
 
-  constructor(protected http: HttpClient) { }
-  
+  constructor(public http: HttpClient) { }
+
+  getIEventoDTO(): IEventoDTO {
+    return this.theIEventoDTO;
+  }
+
+  setIEventoDTO(theIEventoDTO: IEventoDTO): void {
+    this.theIEventoDTO = theIEventoDTO;
+    this.eventEmitter.emit(this.theIEventoDTO);
+  }
+
   delete(id: number) {
     return this.http.delete(`${this.API}/${id}`,
       {

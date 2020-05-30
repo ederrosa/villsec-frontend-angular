@@ -1,0 +1,160 @@
+﻿<mat-card class="example-card">
+    <mat-card-header>
+        <mat-card-title>
+            <h4>Formulario de alteração de música.</h4>
+        </mat-card-title>
+        <mat-card-subtitle>V1LLSEC</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-horizontal-stepper [linear]="isLinear" labelPosition="bottom" #stepper>
+            <mat-step [stepControl]="theAlbumForm">
+                <form>
+                    <ng-template matStepLabel>PASSO 1: Selecione o Album.</ng-template>
+                    <app-album-table></app-album-table>
+                </form>
+            </mat-step>
+            <mat-step [stepControl]="theForm">
+                <div class="example-container mat-elevation-z8">
+                    <form class="example-form" [formGroup]="theForm">
+                        <ng-template matStepLabel>PASSO 2: Dados da Música.</ng-template>
+                        <table class="example-full-width" cellspacing="0">
+                            <tr>
+                                <td>
+                                    <br />
+                                    <audio [src]="url" *ngIf="format==='audio' && url" controls></audio> <br />
+                                    <br />
+                                    <p>
+                                        <input formControlName="file" type='file' (change)="onSelectFile($event)" accept=".mp3" />
+                                    </p>
+                                </td>
+                                <td>
+                                    <app-input formControlName="id"
+                                               id="id"
+                                               label="Codígo"
+                                               hint="Codígo do treinamento"
+                                               isReadyOnly="false"
+                                               disabled="true">
+                                    </app-input>
+                                    <app-input formControlName="dtCriacao"
+                                               id="dtCriacao"
+                                               label="Data de Cadastro no Sistema"
+                                               hint="Data de realização do cadastro!"
+                                               isReadyOnly="false"
+                                               disabled="true">
+                                    </app-input>
+                                </td>
+                            </tr>
+                        </table>
+                        <wbr />
+                        <table>
+                            <tr>
+                                <td>
+                                    <app-input formControlName="nome"
+                                               id="nome"
+                                               label="Nome da Música"
+                                               minlength="1"
+                                               maxlength="100"
+                                               placeholder="Insira o nome da música."
+                                               hint="Ex.: Blaster">
+                                    </app-input>
+                                </td>
+                            </tr>
+                        </table>
+                        <table>
+                            <tr>
+                                <td>
+                                    <app-input formControlName="autor"
+                                               id="autor"
+                                               label="Autor da Música"
+                                               minlength="1"
+                                               maxlength="100"
+                                               placeholder="Insira o nome do autor da música."
+                                               hint="Ex.: David Guetta">
+                                    </app-input>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <app-input formControlName="coautor"
+                                               id="coautor"
+                                               label="Coautor da Música"
+                                               minlength="1"
+                                               maxlength="100"
+                                               placeholder="Insira o nome do coautor da música."
+                                               hint="Ex.: David Guetta">
+                                    </app-input>
+                                </td>
+                            </tr>
+                        </table>
+                        <table>
+                            <tr>
+                                <td>
+                                    <app-input formControlName="bpm"
+                                               id="bpm"
+                                               label="BPM"
+                                               minlength="1"
+                                               maxlength="4"
+                                               placeholder="Informe o BPM">
+                                    </app-input>
+                                </td>
+                                <td>
+                                    <app-input formControlName="duracao"
+                                               id="duracao"
+                                               label="Duração da Música"
+                                               type="time"
+                                               placeholder="Informe a duração da música ">
+                                    </app-input>
+                                </td>
+                                <td>
+                                    <app-select formControlName="copyright"
+                                                id="copyright"
+                                                label="Copyright"
+                                                hint="Selecione..."
+                                                [options]="optionsCopyright">
+                                    </app-select>
+                                </td>
+                            </tr>
+                        </table>
+                        <table>
+                            <tr>
+                                <td>
+                                    <app-input formControlName="idioma"
+                                               id="idioma"
+                                               label="Idioma"
+                                               minlength="1"
+                                               maxlength="100"
+                                               placeholder="Informe o idioma.">
+                                    </app-input>
+                                </td>
+                                <td>
+                                    <app-input formControlName="faixa"
+                                               id="faixa"
+                                               label="Faixa"
+                                               maxlength="2"
+                                               type="number">
+                                    </app-input>
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="example-full-width" cellspacing="0">
+                            <tr>
+                                <td>
+                                    <button class="full-width" mat-button color="primary" status="primary" [disabled]="theForm.invalid" (click)="onSave()"><mat-icon>save</mat-icon>Salvar</button>
+                                </td>
+                                <td>
+                                    <button class="full-width" mat-button color="accent" status="primary" (click)="onClear()"><mat-icon>clear</mat-icon>Limpar</button>
+                                </td>
+                                <td>
+                                    <button class="full-width" mat-button color="warn" status="warn" routerLink="/musicas"><mat-icon>keyboard_return</mat-icon>Voltar</button>
+                                </td>
+                            </tr>
+                        </table>
+                        <wbr />
+                    </form>
+                </div>
+            </mat-step>
+        </mat-horizontal-stepper>
+    </mat-card-content>
+</mat-card>
+
+

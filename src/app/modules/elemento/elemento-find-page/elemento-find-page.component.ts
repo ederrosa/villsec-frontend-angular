@@ -99,7 +99,7 @@ export class ElementoFindPageComponent implements OnInit, OnDestroy, AfterViewIn
     }
   }
 
-  delete(theElemento: IElementoDTO) {
+  delete(theIElementoDTO: IElementoDTO) {
     this.dialog.closeAll();
     let dialogRef = this.dialog.open(ConfirmationAlertComponent, { disableClose: true, width: '40%' });
     let instance = dialogRef.componentInstance;
@@ -108,7 +108,7 @@ export class ElementoFindPageComponent implements OnInit, OnDestroy, AfterViewIn
     instance.classCss = 'color-danger';
     this.theInscricao.push(dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.theInscricao.push(this.theElementoService.delete(theElemento.id)
+        this.theInscricao.push(this.theElementoService.delete(theIElementoDTO.id)
           .subscribe((event: HttpEvent<Object>) => {
             if (event.type == HttpEventType.Response) {
               this.dialog.closeAll();
@@ -128,10 +128,10 @@ export class ElementoFindPageComponent implements OnInit, OnDestroy, AfterViewIn
     }));
   }
 
-  update(theElemento: IElementoDTO) {
-    this.theElementoService.theElemento = theElemento;
+  update(theIElementoDTO: IElementoDTO) {
+    this.theElementoService.setIElementoDTO(theIElementoDTO);
     this.theRouter.navigate(
-      ['editar', theElemento.id],
+      ['editar', theIElementoDTO.id],
       { relativeTo: this.theActivatedRoute }
     );
   }
@@ -156,39 +156,39 @@ export class ElementoFindPageComponent implements OnInit, OnDestroy, AfterViewIn
     ));
   }
 
-  openDialogAudio(theElemento: IElementoDTO): void {
+  openDialogAudio(theIElementoDTO: IElementoDTO): void {
     this.dialog.closeAll();
     let dialogRef = this.dialog.open(DialogOverviewAudioComponent, { });
     let instance = dialogRef.componentInstance;
-    instance.title = theElemento.titulo;
-    instance.subtitle = theElemento.descricao;
-    instance.url = theElemento.elementoUrl;
+    instance.title = theIElementoDTO.titulo;
+    instance.subtitle = theIElementoDTO.descricao;
+    instance.url = theIElementoDTO.elementoUrl;
   }
 
-  openDialogImage(theElemento: IElementoDTO): void {
+  openDialogImage(theIElementoDTO: IElementoDTO): void {
     this.dialog.closeAll();
     let dialogRef = this.dialog.open(DialogOverviewImageComponent, { });
     let instance = dialogRef.componentInstance;
-    instance.title = theElemento.titulo;
-    instance.subtitle = theElemento.descricao;
-    instance.url = theElemento.elementoUrl;
+    instance.title = theIElementoDTO.titulo;
+    instance.subtitle = theIElementoDTO.descricao;
+    instance.url = theIElementoDTO.elementoUrl;
   }
 
-  openDialogVideo(theElemento: IElementoDTO): void {
+  openDialogVideo(theIElementoDTO: IElementoDTO): void {
     this.dialog.closeAll();
     let dialogRef = this.dialog.open(DialogOverviewVideoComponent, { });
     let instance = dialogRef.componentInstance;
-    instance.title = theElemento.titulo;
-    instance.subtitle = theElemento.descricao;
-    instance.url = theElemento.elementoUrl;
+    instance.title = theIElementoDTO.titulo;
+    instance.subtitle = theIElementoDTO.descricao;
+    instance.url = theIElementoDTO.elementoUrl;
   }
 
-  openDialogIframe(theElemento: IElementoDTO): void {
+  openDialogIframe(theIElementoDTO: IElementoDTO): void {
     this.dialog.closeAll();
     let dialogRef = this.dialog.open(DialogOverviewIframeComponent, { });
     let instance = dialogRef.componentInstance;
-    instance.title = theElemento.titulo;
-    instance.subtitle = theElemento.descricao;
-    instance.url = theElemento.embed;
+    instance.title = theIElementoDTO.titulo;
+    instance.subtitle = theIElementoDTO.descricao;
+    instance.url = theIElementoDTO.embed;
   }
 }

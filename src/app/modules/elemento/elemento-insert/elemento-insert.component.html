@@ -1,7 +1,7 @@
 ﻿<mat-card class="example-card">
     <mat-card-header>
         <mat-card-title>
-            <h4>Formularios armazenamento de arquivos.</h4>
+            <h4>Formulario armazenamento de arquivos.</h4>
         </mat-card-title>
         <mat-card-subtitle>V1LLSEC</mat-card-subtitle>
     </mat-card-header>
@@ -13,7 +13,7 @@
                         <td>
                             <img [src]="url" *ngIf="format==='image' && url"width="640px" height="360px"> <br />
                             <video [src]="url" *ngIf="format==='video' && url" width="640px" height="360px" controls></video> <br />
-                            <audio [src]="url" *ngIf="format==='audio' && url" width="640px" height="360px" controls></audio> <br />
+                            <audio [src]="url" *ngIf="format==='audio' && url" controls></audio> <br />
                             <iframe [src]=" url | safe " *ngIf="url" width="640px" height="360px"></iframe> <br />
                             <wbr />
                             <p>
