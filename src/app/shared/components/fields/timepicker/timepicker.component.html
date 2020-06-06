@@ -1,0 +1,17 @@
+﻿<mat-form-field [appearance]="appearance">
+    <mat-label [attr.for]="id">{{ label }}</mat-label>
+    <div class="custom-theme-example">
+        <input matInput
+               #input
+               [id]="id"
+               [placeholder]="placeholder"
+               [readonly]="!!isReadOnly"
+               [(ngModel)]="value"
+               [ngClass]="classCss"
+               [disabled]="disabled"
+               aria-label="Custom theme"
+               [ngxTimepicker]="darkPicker">
+        <ngx-material-timepicker #darkPicker [theme]="darkTheme"></ngx-material-timepicker>
+    </div>
+</mat-form-field>
+

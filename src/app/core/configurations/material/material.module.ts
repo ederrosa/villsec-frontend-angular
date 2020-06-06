@@ -25,47 +25,50 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+
 
 const MATERIAL_MODULES_LIST = [
-    MatBadgeModule,
-    MatButtonModule,
-    MatCardModule,
-    MatChipsModule,
-    MatDatepickerModule,
-    MatDialogModule,   
-    MatFormFieldModule,
-    MatGridListModule,
-    MatIconModule,
-    MatInputModule,
-    MatListModule,
-    MatMenuModule,
-    MatNativeDateModule,
-    MatPaginatorModule,
-    MatProgressSpinnerModule,
-    MatRadioModule,
-    MatSelectModule,
-    MatSidenavModule,
-    MatSliderModule,
-    MatSlideToggleModule,
-    MatStepperModule,
-    MatTableModule,
-    MatTabsModule,
-    MatToolbarModule,
-    MatTooltipModule,    
- ]
+  MatBadgeModule,
+  MatButtonModule,
+  MatCardModule,
+  MatChipsModule,
+  MatDatepickerModule,
+  MatDialogModule,
+  MatFormFieldModule,
+  MatGridListModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatMenuModule,
+  MatNativeDateModule,
+  MatPaginatorModule,
+  MatProgressSpinnerModule,
+  MatRadioModule,
+  MatSelectModule,
+  MatSidenavModule,
+  MatSliderModule,
+  MatSlideToggleModule,
+  MatStepperModule,
+  MatTableModule,
+  MatTabsModule,
+  MatToolbarModule,
+  MatTooltipModule,
+  NgxMaterialTimepickerModule
+]
 
 
 @NgModule({
-    imports: [
-        CommonModule,
-        ...MATERIAL_MODULES_LIST,
-        
-    ],
-    exports: [
-        ...MATERIAL_MODULES_LIST
-    ],
-    providers: [
-        
-    ]
+  imports: [
+    CommonModule,
+    ...MATERIAL_MODULES_LIST,
+
+  ],
+  exports: [
+    ...MATERIAL_MODULES_LIST
+  ],
+  providers: [
+
+  ]
 })
 export class MaterialModule { }

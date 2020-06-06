@@ -49,16 +49,6 @@
                 <table>
                     <tr>
                         <td>
-                            <app-input formControlName="duracao"
-                                       id="duracao"
-                                       label="Duração do Evento"
-                                       minlength="1"
-                                       maxlength="100"
-                                       placeholder="Informe a duração do Evento"
-                                       hint="Ex.: 5 horas | 1 Mês | 1 Noite | etc...">
-                            </app-input>
-                        </td>
-                        <td>
                             <app-select formControlName="tipoEvento"
                                         id="tipoEvento"
                                         label="Tipo do Evento"
@@ -66,10 +56,6 @@
                                         [options]="optionsTipoEvento">
                             </app-select>
                         </td>
-                    </tr>                    
-                </table>
-                <table>
-                    <tr>
                         <td>
                             <app-input formControlName="classificacao"
                                        id="classificacao"
@@ -80,13 +66,41 @@
                                        hint="Ex.: Livre | 18 anos | etc...">
                             </app-input>
                         </td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
                         <td>
-                            <app-datepicker formControlName="data"
-                                            id="data"
+                            <app-datepicker formControlName="diaInicio"
+                                            id="diaInicio"
                                             startView="year"
-                                            label="Dia do Evento"
+                                            label="Dia do Início do Evento"
                                             placeholder="Informe a data de início do evento">
                             </app-datepicker>
+                        </td>
+                        <td>
+                            <app-timepicker formControlName="horaInicio"
+                                            id="horaInicio"
+                                            label="Hora do Início Evento"
+                                            placeholder="Horário de início do evento">
+                            </app-timepicker>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <app-datepicker formControlName="diaTermino"
+                                            id="diaTermino"
+                                            startView="year"
+                                            label="Dia do Termino do Evento"
+                                            placeholder="Dia de Termíno do evento">
+                            </app-datepicker>
+                        </td>
+                        <td>
+                            <app-timepicker formControlName="horaTermino"
+                                            id="horaTermino"
+                                            label="Hora do Termino Evento"
+                                            placeholder="Horário de termíno do evento">
+                            </app-timepicker>
                         </td>
                     </tr>
                 </table>

@@ -33,16 +33,16 @@ export class MusicaInsertComponent implements OnInit, OnDestroy, AfterViewInit {
     private theFormBuilder: FormBuilder,
     private dialog: MatDialog,
     private theAlbumService: AlbumService,
-    private theMusicaService: MusicaService,    
+    private theMusicaService: MusicaService,
     private theUnsubscribeControl: UnsubscribeControlService,
-    
+
   ) { }
 
   ngAfterViewInit(): void {
     this.theInscricao.push(this.theAlbumService.eventEmitter.subscribe(
       theAlbum => {
         this.theAlbumForm.patchValue({
-          theAlbumID: theAlbum.id 
+          theAlbumID: theAlbum.id
         });
       }
     ));
@@ -58,7 +58,7 @@ export class MusicaInsertComponent implements OnInit, OnDestroy, AfterViewInit {
       faixa: ['', [Validators.required]],
       file: ['', [Validators.required]],
       idioma: ['', [Validators.required]],
-      nome: ['', [Validators.required]],   
+      nome: ['', [Validators.required]],
     });
     this.theAlbumForm = this.theFormBuilder.group({
       theAlbumID: ['', [Validators.required]]

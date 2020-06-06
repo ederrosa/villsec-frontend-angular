@@ -1,28 +1,28 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { API_CONFIGURATION } from 'src/configurations/api.configuration';
-import { IEventoDTO } from 'src/app/shared/models/dtos/ievento-dto';
+import { IProprietarioDTO } from 'src/app/shared/models/dtos/iproprietario-dto';
 import { take } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class EventoService {
+export class ProprietarioService {
 
-  private readonly API = API_CONFIGURATION.baseUrl + '/eventos';
-  private theIEventoDTO: IEventoDTO;
-  eventEmitter = new EventEmitter<IEventoDTO>();
+  private readonly API = API_CONFIGURATION.baseUrl + '/proprietarios';
+  private theIProprietarioDTO: IProprietarioDTO;
+  eventEmitter = new EventEmitter<IProprietarioDTO>();
 
   constructor(public http: HttpClient) { }
 
-  getIEventoDTO(): IEventoDTO {
-    return this.theIEventoDTO;
+  getIProprietarioDTO(): IProprietarioDTO {
+    return this.theIProprietarioDTO;
   }
 
-  setIEventoDTO(theIEventoDTO: IEventoDTO): void {
-    this.theIEventoDTO = theIEventoDTO;
-    this.eventEmitter.emit(this.theIEventoDTO);
+  setIProprietarioDTO(theIProprietarioDTO: IProprietarioDTO): void {
+    this.theIProprietarioDTO = theIProprietarioDTO;
+    this.eventEmitter.emit(this.theIProprietarioDTO);
   }
 
   delete(id: number) {
@@ -34,15 +34,15 @@ export class EventoService {
   }
 
   find(id: number) {
-    return this.http.get<IEventoDTO>(`${this.API}/${id}`).pipe(take(1));
+    return this.http.get<IProprietarioDTO>(`${this.API}/${id}`).pipe(take(1));
   }
 
   findPage(
     page: number = 0,
     linesPerPage: number = 12,
-    orderBy: string = 'diaInicio',
-    direction: string = 'DESC'): Observable<IEventoDTO[]> {
-    return this.http.get<IEventoDTO[]>(
+    orderBy: string = 'nome',
+    direction: string = 'ASC'): Observable<IProprietarioDTO[]> {
+    return this.http.get<IProprietarioDTO[]>(
       `${this.API}/?page=${page}&linesPerPage=${linesPerPage}&orderBy=${orderBy}&direction=${direction}`).pipe(take(1)
       );
   }

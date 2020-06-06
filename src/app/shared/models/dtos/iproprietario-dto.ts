@@ -28,4 +28,5 @@ export interface IProprietarioDTO extends IEntidadeDominioDTO {
   spotify: string;
   twitter: string;
   twitch: string;
+  youtube: string;
 }

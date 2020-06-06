@@ -115,7 +115,7 @@ export class MusicaUpdateComponent implements OnInit, OnDestroy, AfterViewInit{
       reader.onload = (event) => {
         this.url = (<FileReader>event.target).result;
       }
-    }
+    }    
   }
 
   onClear() {

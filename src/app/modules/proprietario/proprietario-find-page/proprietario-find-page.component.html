@@ -1,22 +1,24 @@
-﻿<mat-card>
+<mat-card>
     <mat-card-header>
         <mat-card-title>
             <div>
-                <button routerLink="/eventos/novo" *ngIf="disabledNew" mat-raised-button color="primary">
-                    <mat-icon>add</mat-icon> Cadastrar um novo evento
+                <button routerLink="/proprietarios/novo" *ngIf="disabledNew" mat-raised-button color="primary">
+                    <mat-icon>add</mat-icon> Cadastrar proprietario
                 </button>
             </div>
         </mat-card-title>
         <mat-card-subtitle>
-            <h5>Lista de Eventos</h5>
+          
         </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
         <mat-form-field>
             <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
         </mat-form-field>
-        <div class="example-container mat-elevation-z8">
-            <table mat-table [dataSource]="dataSource" multiTemplateDataRows matSort>
+        <div class="example-container">
+            <table mat-table
+                   [dataSource]="dataSource" multiTemplateDataRows
+                   class="mat-elevation-z8">
                 <ng-container matColumnDef="{{ column }}" *ngFor="let column of columnsToDisplay">
                     <th mat-header-cell *matHeaderCellDef style="font-size:large;"> {{ column }}</th>
                     <td mat-cell *matCellDef="let element"> {{ element[column] }} </td>
@@ -28,7 +30,7 @@
                              [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
                             <div class="example-element-diagram">
                                 <div class="example-element-img mat-elevation-z8">
-                                    <img class="example-element-img" src="{{ element.folderUrl }}">
+                                    <img class="example-element-img" src="{{ element.uriImgPerfil }}">
                                 </div>
                             </div>
                             <div class="example-element-description">
@@ -38,52 +40,72 @@
                                             <mat-label><strong>Nome: </strong> {{ element.nome }}</mat-label>
                                         </td>
                                         <td mat-cell>
-                                            <mat-label><strong>Tipo do Evento: </strong> {{ element.tipoEvento }}</mat-label>
+                                            <mat-label><strong>Email: </strong> {{ element.email }}</mat-label>
                                         </td>
                                         <td mat-cell>
-                                            <mat-label><strong>Classificação: </strong> {{ element.classificacao }}</mat-label>
-                                        </td>
-                                       
-                                    </tr>
-                                    <tr>
-                                        <td mat-cell>
-                                            <mat-label><strong>Data de Início do Evento: </strong> {{ element.diaInicio | date: 'mediumDate' }} às {{ element.horaInicio }}</mat-label>
-                                        </td>
-                                        <td mat-cell>
-                                            <mat-label><strong>Data de Termíno do Evento: </strong> {{ element.diaTermino | date: 'mediumDate' }} às {{ element.horaTermino }}</mat-label>
-                                        </td>
-                                        <td>
-
+                                            <mat-label><strong>Data de Nascimento: </strong> {{ element.dataNascimento  | date: 'mediumDate'}}</mat-label>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td mat-cell>
-                                            <mat-label><strong>Endereço: </strong> {{ element.logradouro }}</mat-label>
+                                            <mat-label><strong>Status: </strong>{{ (element.status)? 'Ativo' : 'Inativo' }}</mat-label>
                                         </td>
                                         <td mat-cell>
-                                            <mat-label><strong>CEP: </strong> {{ element.cep }}</mat-label>
+                                            <mat-label><strong>G�nero: </strong>{{ element.status }}</mat-label>
+                                        </td>
+                                        <td mat-cell>
+                                            <mat-label><strong>Telefone 1.: </strong> {{ element.numeroTelefone1 }} - {{ element.tipoTelefone1 }}</mat-label>
+                                        </td>
+                                        <td mat-cell>
+                                            <mat-label><strong>Telefone 2.: </strong> {{ element?.numeroTelefone2 }} - {{ element?.tipoTelefone1 }}</mat-label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td mat-cell>
+                                            <mat-label><strong>Logradouro: </strong> {{ element.logradouro }}</mat-label>
                                         </td>
                                         <td mat-cell>
                                             <mat-label><strong>Bairro: </strong> {{ element.bairro }}</mat-label>
+                                        </td>
+                                        <td mat-cell>
+                                            <mat-label><strong>CEP: </strong> {{ element.cep }}</mat-label>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td mat-cell>
                                             <mat-label><strong>Cidade: </strong> {{ element.cidade }}</mat-label>
-
                                         </td>
                                         <td mat-cell>
                                             <mat-label><strong>Estado: </strong> {{ element.estado }}</mat-label>
                                         </td>
                                         <td mat-cell>
                                             <mat-label><strong>Pais: </strong> {{ element.pais }}</mat-label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td mat-cell>
+                                            <mat-label><strong>Quem sou: </strong>{{ element?.sobriMin }}</mat-label>
                                         </td>                                       
                                     </tr>
                                     <tr>
                                         <td mat-cell>
-                                            <mat-label><strong>Descrição: </strong> {{ element.descricao }}</mat-label>
+                                            <mat-label><strong>Instagram: </strong>{{ element?.instagram }}</mat-label>
                                         </td>
-
+                                        <td mat-cell>
+                                            <mat-label><strong>Facebook: </strong>{{ element?.facebook }}</mat-label>
+                                        </td>
+                                        <td mat-cell>
+                                            <mat-label><strong>Spotify: </strong>{{ element?.spotify }}</mat-label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td mat-cell>
+                                            <mat-label><strong>Twitter: </strong> {{ element?.twitter }}</mat-label>
+                                        </td>
+                                        <td mat-cell>
+                                            <mat-label><strong>Twitch: </strong> {{ element?.twitch }}</mat-label>
+                                        </td>
+                                        <td mat-cell></td>
                                     </tr>
                                 </table>
                                 <div class="example-button-row">

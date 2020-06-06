@@ -3,8 +3,10 @@ import { IEntidadeDominioDTO } from './ientidade-dominio-dto';
 export interface IEventoDTO extends IEntidadeDominioDTO{
 
   classificacao: string;
-  duracao: string;
-  data: string;
+  diaInicio: string;
+  diaTermino: string;
+  horaInicio: string;
+  horaTermino: string;
   descricao: string;
   folderName: string;
   folderUrl: string;

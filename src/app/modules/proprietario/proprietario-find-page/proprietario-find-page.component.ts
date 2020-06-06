@@ -1,26 +1,26 @@
-﻿import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
-import { trigger, state, transition, style, animate } from '@angular/animations';
-import { HttpEvent, HttpEventType } from '@angular/common/http';
-import { MatTableDataSource } from '@angular/material/table';
+﻿import { Component, OnInit, ViewChild, OnDestroy, AfterViewInit } from '@angular/core';
+import { HttpEventType, HttpEvent } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
-import { tap } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
-import { ILocalUser } from 'src/app/shared/models/domain/ilocal-user';
-import { EventoService } from '../evento.service';
-import { UnsubscribeControlService } from 'src/app/core/services/unsubscribe-control.service';
-import { ConfirmationAlertComponent } from 'src/app/shared/components/alerts/confirmation-alert/confirmation-alert.component';
 import { InformativeAlertComponent } from 'src/app/shared/components/alerts/informative-alert/informative-alert.component';
-import { IEventoDTO } from 'src/app/shared/models/dtos/ievento-dto';
+import { ConfirmationAlertComponent } from 'src/app/shared/components/alerts/confirmation-alert/confirmation-alert.component';
+import { ILocalUser } from 'src/app/shared/models/domain/ilocal-user';
+import { UnsubscribeControlService } from 'src/app/core/services/unsubscribe-control.service';
+import { IProprietarioDTO } from 'src/app/shared/models/dtos/iproprietario-dto';
+import { ProprietarioService } from '../proprietario.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
-  selector: 'app-evento-find-page',
-  templateUrl: './evento-find-page.component.html',
-  styleUrls: ['./evento-find-page.component.scss'],
+  selector: 'app-proprietario-find-page',
+  templateUrl: './proprietario-find-page.component.html',
+  styleUrls: ['./proprietario-find-page.component.scss'],
   animations: [
     trigger('detailExpand', [
       state('collapsed', style({ height: '0px', minHeight: '0' })),
@@ -29,16 +29,16 @@ import { IEventoDTO } from 'src/app/shared/models/dtos/ievento-dto';
     ]),
   ],
 })
-export class EventoFindPageComponent implements OnInit, OnDestroy, AfterViewInit {
+export class ProprietarioFindPageComponent implements OnInit, OnDestroy, AfterViewInit {
 
   disabledNew: boolean = true;
   disabledEdit: boolean = true;
   disabledDel: boolean = true;
   private theLocalUser: ILocalUser;
   private theInscricao: Subscription[] = new Array<Subscription>();
-  dataSource: MatTableDataSource<IEventoDTO> = new MatTableDataSource();
-  columnsToDisplay = ['nome', 'tipoEvento', 'cidade', 'classificacao'];
-  expandedElement: IEventoDTO | null;
+  dataSource: MatTableDataSource<IProprietarioDTO> = new MatTableDataSource();
+  columnsToDisplay = ['id', 'matricula', 'nome', 'email'];
+  expandedElement: IProprietarioDTO | null;
   pageEvent: PageEvent;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -47,7 +47,7 @@ export class EventoFindPageComponent implements OnInit, OnDestroy, AfterViewInit
   constructor(
     private theActivatedRoute: ActivatedRoute,
     private dialog: MatDialog,
-    private theEventoService: EventoService,
+    private theProprietarioService: ProprietarioService,
     private theRouter: Router,
     private theUnsubscribeControl: UnsubscribeControlService
   ) {
@@ -55,18 +55,18 @@ export class EventoFindPageComponent implements OnInit, OnDestroy, AfterViewInit
       this.theLocalUser = JSON.parse(sessionStorage.getItem('localUser')) as ILocalUser;
       switch (this.theLocalUser.theTipoUsuario) {
         case 1:
-          this.disabledDel = false;
-          this.disabledEdit = false;
-          this.disabledNew = false;
+          this.disabledDel = true;
+          this.disabledEdit = true;
+          this.disabledNew = true;
           break;
         case 2:
-          this.disabledDel = false;
-          this.disabledEdit = false;
-          this.disabledNew = false;
+          this.disabledDel = true;
+          this.disabledEdit = true;
+          this.disabledNew = true;
           break;
       }
     }
-    this.theInscricao.push(this.theEventoService.findPage().subscribe(
+    this.theInscricao.push(this.theProprietarioService.findPage().subscribe(
       (x => {
         this.paginator.pageSizeOptions = [12, 24, 48, 100];
         this.paginator.length = x['totalElements'];
@@ -96,7 +96,7 @@ export class EventoFindPageComponent implements OnInit, OnDestroy, AfterViewInit
     }
   }
 
-  delete(theEvento: IEventoDTO) {
+  delete(theIProprietarioDTO: IProprietarioDTO) {
     this.dialog.closeAll();
     let dialogRef = this.dialog.open(ConfirmationAlertComponent, { disableClose: true, width: '40%' });
     let instance = dialogRef.componentInstance;
@@ -105,7 +105,7 @@ export class EventoFindPageComponent implements OnInit, OnDestroy, AfterViewInit
     instance.classCss = 'color-danger';
     this.theInscricao.push(dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.theInscricao.push(this.theEventoService.delete(theEvento.id)
+        this.theInscricao.push(this.theProprietarioService.delete(theIProprietarioDTO.id)
           .subscribe((event: HttpEvent<Object>) => {
             if (event.type == HttpEventType.Response) {
               this.dialog.closeAll();
@@ -114,8 +114,8 @@ export class EventoFindPageComponent implements OnInit, OnDestroy, AfterViewInit
               instance.title = "Status: " + event.status;
               instance.subTitle = 'Deletando!...';
               instance.classCss = 'color-success';
-              instance.message = event.statusText + '!! O Evento foi Deletado com sucesso!';
-              instance.urlNavigate = '/eventos';
+              instance.message = event.statusText + '!! O Proprietario foi Deletado com sucesso!';
+              instance.urlNavigate = '/proprietarios';
               this.theRouter.navigate(['/']);
             }
           }, error => {
@@ -125,10 +125,10 @@ export class EventoFindPageComponent implements OnInit, OnDestroy, AfterViewInit
     }));
   }
 
-  update(theIEventoDTO: IEventoDTO) {
-    this.theEventoService.setIEventoDTO(theIEventoDTO);
+  update(theIProprietarioDTO: IProprietarioDTO) {
+    this.theProprietarioService.setIProprietarioDTO(theIProprietarioDTO);
     this.theRouter.navigate(
-      ['editar', theIEventoDTO.id],
+      ['editar', theIProprietarioDTO.id],
       { relativeTo: this.theActivatedRoute }
     );
   }
@@ -141,11 +141,11 @@ export class EventoFindPageComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   loadPage() {
-    this.theInscricao.push(this.theEventoService.findPage(
+    this.theInscricao.push(this.theProprietarioService.findPage(
       this.paginator.pageIndex,
       this.paginator.pageSize,
-      'diaInicio',
-      'DESC'
+      'nome',
+      'ASC'
     ).subscribe(
       (x => {
         this.dataSource = new MatTableDataSource(x['content']);

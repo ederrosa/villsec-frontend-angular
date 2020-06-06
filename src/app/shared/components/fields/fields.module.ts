@@ -10,31 +10,33 @@ import { MaterialModule } from 'src/app/core/configurations/material/material.mo
 import { DatepickerComponent } from './datepicker/datepicker.component';
 import { FieldsService } from './fields.service';
 import { SliderToggleComponent } from './slider-toggle/slider-toggle.component';
+import { TimepickerComponent } from './timepicker/timepicker.component';
 
 const FIELDS_COMPONENTS_LIST = [
-    CheckboxComponent,
-    DatepickerComponent,
-    InputComponent,
-    SelectComponent,
-    SliderComponent,
-    SliderToggleComponent,
-    TextareaComponent
+  CheckboxComponent,
+  DatepickerComponent,
+  InputComponent,
+  SelectComponent,
+  SliderComponent,
+  SliderToggleComponent,
+  TextareaComponent,
+  TimepickerComponent
 ]
 
 @NgModule({
-    declarations: [...FIELDS_COMPONENTS_LIST],
-    imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MaterialModule
-    ],
-    exports: [
-        ...FIELDS_COMPONENTS_LIST,
-    ],
-    providers: [FieldsService],
-    schemas: [
-        CUSTOM_ELEMENTS_SCHEMA
-    ]
+  declarations: [...FIELDS_COMPONENTS_LIST],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MaterialModule
+  ],
+  exports: [
+    ...FIELDS_COMPONENTS_LIST,
+  ],
+  providers: [FieldsService],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
+  ]
 })
 export class FieldsModule { }

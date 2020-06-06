@@ -51,9 +51,11 @@ export class EventoUpdateComponent implements OnInit {
       dtCriacao: [''],
       file: [''],
       classificacao: ['', [Validators.required]],
-      duracao: ['', [Validators.required]],
-      data: ['', [Validators.required]],
+      diaInicio: ['', [Validators.required]],
+      diaTermino: ['', [Validators.required]],
       descricao: ['', [Validators.required]],
+      horaInicio: ['', [Validators.required]],
+      horaTermino: ['', [Validators.required]],
       nome: ['', [Validators.required]],
       tipoEvento: ['', [Validators.required]],
       logradouro: ['', [Validators.required]],
@@ -61,7 +63,7 @@ export class EventoUpdateComponent implements OnInit {
       bairro: ['', [Validators.required]],
       cidade: ['', [Validators.required]],
       estado: ['', [Validators.required]],
-      pais: ['', [Validators.required]]   
+      pais: ['', [Validators.required]]
     });
     if (this.theEventoService.getIEventoDTO() == null) {
       this.theActivatedRoute.params.pipe(
@@ -86,9 +88,11 @@ export class EventoUpdateComponent implements OnInit {
       dtCriacao: theIEventoDTO.dtCriacao,
       file: '',
       classificacao: theIEventoDTO.classificacao,
-      duracao: theIEventoDTO.duracao,
-      data: new Date(theIEventoDTO.data.toString()),
+      diaInicio: new Date(theIEventoDTO.diaInicio.toString()),
+      diaTermino: new Date(theIEventoDTO.diaTermino.toString()),
       descricao: theIEventoDTO.descricao,
+      horaInicio:  theIEventoDTO.horaInicio.toString(),
+      horaTermino: theIEventoDTO.horaTermino.toString(),
       nome: theIEventoDTO.nome,
       tipoEvento: this.theFieldsService.getItemOfSelect(this.optionsTipoEvento, theIEventoDTO.tipoEvento),
       logradouro: theIEventoDTO.logradouro,
@@ -132,20 +136,22 @@ export class EventoUpdateComponent implements OnInit {
       if (result) {
         let formData: FormData = new FormData();
         formData.append('classificacao', this.theForm.get('classificacao').value);
-        formData.append('duracao', this.theForm.get('duracao').value);
-        formData.append('data', new Date(this.theForm.get('data').value).toLocaleDateString());
+        formData.append('diaInicio', new Date(this.theForm.get('diaInicio').value).toLocaleDateString());
+        formData.append('diaTermino', new Date(this.theForm.get('diaTermino').value).toLocaleDateString());
         formData.append('descricao', this.theForm.get('descricao').value);
+        if (this.theFile) {
+          formData.append('file', this.theFile, this.theFile.name);
+        }
+        formData.append('horaInicio', this.theForm.get('horaInicio').value);
+        formData.append('horaTerminio', this.theForm.get('horaTermino').value);
         formData.append('tipoEvento', this.theForm.get('tipoEvento').value);
-        formData.append('logradouro', this.theForm.get('logradouro').value);
         formData.append('nome', this.theForm.get('nome').value);
+        formData.append('logradouro', this.theForm.get('logradouro').value);
         formData.append('cep', this.theForm.get('cep').value);
         formData.append('bairro', this.theForm.get('bairro').value);
         formData.append('cidade', this.theForm.get('cidade').value);
         formData.append('estado', this.theForm.get('estado').value);
-        formData.append('pais', this.theForm.get('pais').value);    
-        if (this.theFile) {
-          formData.append('file', this.theFile, this.theFile.name);
-        }
+        formData.append('pais', this.theForm.get('pais').value); 
         this.theInscricao.push(this.theEventoService.update(formData, this.theForm.get('id').value)
           .subscribe((event: HttpEvent<Object>) => {
             if (event.type === HttpEventType.Response) {

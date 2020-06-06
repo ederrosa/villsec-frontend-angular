@@ -51,9 +51,11 @@ export class EventoInsertComponent implements OnInit {
     this.theForm = this.theFormBuilder.group({
       file: ['', [Validators.required]],
       classificacao: ['', [Validators.required]],
-      duracao: ['', [Validators.required]],
-      data: ['', [Validators.required]],
+      diaInicio: ['', [Validators.required]],
+      diaTermino: ['', [Validators.required]],
       descricao: ['', [Validators.required]],
+      horaInicio: ['', [Validators.required]],
+      horaTermino: ['', [Validators.required]],
       nome: ['', [Validators.required]],
       tipoEvento: ['', [Validators.required]],
       logradouro: ['', [Validators.required]],
@@ -94,10 +96,14 @@ export class EventoInsertComponent implements OnInit {
   onSave() {
     let formData: FormData = new FormData();
     formData.append('classificacao', this.theForm.get('classificacao').value);
-    formData.append('duracao', this.theForm.get('duracao').value);
-    formData.append('data', new Date(this.theForm.get('data').value).toLocaleDateString());
+    formData.append('diaInicio', new Date(this.theForm.get('diaInicio').value).toLocaleDateString());
+    formData.append('diaTermino', new Date(this.theForm.get('diaTermino').value).toLocaleDateString());
     formData.append('descricao', this.theForm.get('descricao').value);
-    formData.append('file', this.theFile, this.theFile.name);
+    if (this.theFile) {
+      formData.append('file', this.theFile, this.theFile.name);
+    }
+    formData.append('horaInicio', this.theForm.get('horaInicio').value);
+    formData.append('horaTerminio', this.theForm.get('horaTermino').value);
     formData.append('tipoEvento', this.theForm.get('tipoEvento').value);
     formData.append('nome', this.theForm.get('nome').value);
     formData.append('logradouro', this.theForm.get('logradouro').value);

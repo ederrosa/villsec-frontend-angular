@@ -26,6 +26,10 @@ const routes: Routes = [
         path: 'musicas',
         loadChildren: () => import('./modules/musica/musica.module').then(m => m.MusicaModule)
       },
+      {
+        path: 'proprietarios',
+        loadChildren: () => import('./modules/proprietario/proprietario.module').then(m => m.ProprietarioModule)
+      },
     ]
   },
   {
