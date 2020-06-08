@@ -1,6 +1,6 @@
 import { IEntidadeDominioDTO } from './ientidade-dominio-dto';
 
-export interface ISeguidorDto extends IEntidadeDominioDTO{
+export interface ISeguidorDTO extends IEntidadeDominioDTO{
 
   senha: string;
   login: string;

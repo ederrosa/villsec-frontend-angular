@@ -1,7 +1,7 @@
 ﻿<mat-card class="example-card">
     <mat-card-header>
         <mat-card-title>
-            <h5>Formulario de alteração do proprietário.</h5>
+            <h5>Formulario de cadastro do seguidor.</h5>
         </mat-card-title>
         <mat-card-subtitle>V1LLSEC</mat-card-subtitle>
     </mat-card-header>
@@ -17,22 +17,6 @@
                             <p>
                                 <input formControlName="file" type='file' (change)="onSelectFile($event)" accept=".jpg,.png" />
                             </p>
-                        </td>
-                        <td>
-                            <app-input formControlName="id"
-                                       id="id"
-                                       label="Codígo"
-                                       hint="Codígo do treinamento"
-                                       isReadyOnly="false"
-                                       disabled="true">
-                            </app-input>
-                            <app-input formControlName="dtCriacao"
-                                       id="dtCriacao"
-                                       label="Data de Cadastro no Sistema"
-                                       hint="Data de realização do cadastro!"
-                                       isReadyOnly="false"
-                                       disabled="true">
-                            </app-input>
                         </td>
                     </tr>
                 </table>
@@ -199,106 +183,8 @@
                                         [options]="optionsTipoTelefone">
                             </app-select>
                         </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <app-input formControlName="numeroTelefone2"
-                                       id="numeroTelefone2"
-                                       label="Numero do Telefone Alternativo"
-                                       minlength="3"
-                                       maxlength="20"
-                                       placeholder="Insira o numero do telefone com DDD sem pontuação."
-                                       hint="Ex.: 1199119221">
-                            </app-input>
-                        </td>
-                        <td>
-                            <app-select formControlName="tipoTelefone2"
-                                        id="tipoTelefone2"
-                                        label="Tipo de telefone alternativo"
-                                        hint="Selecione um dos tipos de telefone."
-                                        [options]="optionsTipoTelefone">
-                            </app-select>
-                        </td>
-                    </tr>
-                </table>
-                <table>
-                    <tr>
-                        <td>
-                            <app-input formControlName="facebook"
-                                       id="facebook"
-                                       label="FACEBOOK"
-                                       minlength="1"
-                                       maxlength="255"
-                                       placeholder="link para o facebook.">
-                            </app-input>
-                        </td>
-                    </tr>
-                </table>
-                <table>
-                    <tr>
-                        <td>
-                            <app-input formControlName="instagram"
-                                       id="instagram"
-                                       label="INSTAGRAM"
-                                       minlength="1"
-                                       maxlength="255"
-                                       placeholder="Link para o Instagram.">
-                            </app-input>
-                        </td>
-                    </tr>
-                </table>
-                <table>
-                    <tr>
-                        <td>
-                            <app-input formControlName="spotify"
-                                       id="spotify"
-                                       label="SPOTIFY"
-                                       minlength="1"
-                                       maxlength="255"
-                                       placeholder="Link para o spotify.">
-                            </app-input>
-                        </td>
-                    </tr>
-                </table>
-                <table>
-                    <tr>
-                        <td>
-                            <app-input formControlName="twitter"
-                                       id="twitter"
-                                       label="TWITTER"
-                                       minlength="1"
-                                       maxlength="255"
-                                       placeholder="Link para o Twitter.">
-                            </app-input>
-                        </td>
-                    </tr>
-                </table>
-                <table>
-                    <tr>
-                        <td>
-                            <app-input formControlName="twitch"
-                                       id="twitch"
-                                       label="TWITCH"
-                                       minlength="1"
-                                       maxlength="255"
-                                       placeholder="Link para a Twitch.">
-                            </app-input>
-                        </td>
-                    </tr>
-                </table>
-                <table>
-                    <tr>
-                        <td>
-                            <app-input formControlName="youtube"
-                                       id="youtube"
-                                       label="YOUTUBE"
-                                       minlength="1"
-                                       maxlength="255"
-                                       placeholder="Link para o Youtube.">
-                            </app-input>
-                        </td>
-                    </tr>
-                </table>
+                    </tr>                    
+                </table>                
                 <wbr />
                 <table class="example-full-width" cellspacing="0">
                     <tr>
@@ -309,7 +195,7 @@
                             <button class="full-width" mat-button color="accent" status="primary" (click)="onClear()"><mat-icon>clear</mat-icon>Limpar</button>
                         </td>
                         <td>
-                            <button class="full-width" mat-button color="warn" status="warn" routerLink="/proprietarios"><mat-icon>keyboard_return</mat-icon>Voltar</button>
+                            <button class="full-width" mat-button color="warn" status="warn" routerLink="/seguidores"><mat-icon>keyboard_return</mat-icon>Voltar</button>
                         </td>
                     </tr>
                 </table>

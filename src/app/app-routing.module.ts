@@ -30,6 +30,10 @@ const routes: Routes = [
         path: 'proprietarios',
         loadChildren: () => import('./modules/proprietario/proprietario.module').then(m => m.ProprietarioModule)
       },
+      {
+        path: 'seguidores',
+        loadChildren: () => import('./modules/seguidor/seguidor.module').then(m => m.SeguidorModule)
+      },
     ]
   },
   {
