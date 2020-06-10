@@ -4,11 +4,12 @@ import { SeguidorInsertComponent } from './seguidor-insert/seguidor-insert.compo
 import { SeguidorUpdateComponent } from './seguidor-update/seguidor-update.component';
 import { SeguidorFindPageComponent } from './seguidor-find-page/seguidor-find-page.component';
 import { Error404Component } from '../error/error404/error404.component';
+import { AuthGuard } from 'src/app/core/guards/can-activate/auth-guard';
 
 const routes: Routes = [
   { path: 'novo', component: SeguidorInsertComponent },
-  { path: 'editar/:id', component: SeguidorUpdateComponent },
-  { path: '', component: SeguidorFindPageComponent },
+  { path: 'editar/:id', component: SeguidorUpdateComponent, canActivate: [AuthGuard]},
+  { path: '', component: SeguidorFindPageComponent, canActivate: [AuthGuard] },
   { path: '**', component: Error404Component }
 ];
 

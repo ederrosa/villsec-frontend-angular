@@ -5,11 +5,12 @@ import { ElementoInsertComponent } from './elemento-insert/elemento-insert.compo
 import { ElementoUpdateComponent } from './elemento-update/elemento-update.component';
 import { ElementoFindPageComponent } from './elemento-find-page/elemento-find-page.component';
 import { Error404Component } from '../error/error404/error404.component';
+import { AuthGuard } from 'src/app/core/guards/can-activate/auth-guard';
 
 
 const routes: Routes = [
-  { path: 'novo', component: ElementoInsertComponent },
-  { path: 'editar/:id', component: ElementoUpdateComponent },
+  { path: 'novo', component: ElementoInsertComponent, canActivate: [AuthGuard]},
+  { path: 'editar/:id', component: ElementoUpdateComponent, canActivate: [AuthGuard]},
   { path: '', component: ElementoFindPageComponent },
   { path: '**', component: Error404Component }
 ];

@@ -6,22 +6,22 @@ import { MaterialModule } from '../configurations/material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const LOGIN_COMPONENTS_LIST = [
-    LoginComponent
+  LoginComponent
 ]
 
 @NgModule({
-    declarations: [
-        ...LOGIN_COMPONENTS_LIST
-    ],
-    imports: [
-        CommonModule,
-        MaterialModule,
-        FormsModule,
-        ReactiveFormsModule,
-    ],
-    exports: [
-        FormsModule,
-        ReactiveFormsModule,
-    ]
+  declarations: [
+    ...LOGIN_COMPONENTS_LIST
+  ],
+  imports: [
+    CommonModule,
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
+  exports: [
+    FormsModule,
+    ReactiveFormsModule,
+  ]
 })
 export class AuthenticationModule { }

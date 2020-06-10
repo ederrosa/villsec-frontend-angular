@@ -10,15 +10,16 @@
     width: 100%;
 }
 
-.logo-simaf-login {
+.logo-login {
+    background-image: url(../../../../assets/images/villsec-logo-barra-principal.png);
     background-repeat: no-repeat;
     background-attachment: scroll;
-    background-position: center;
+    background-position: top;
     overflow: hidden;
     position: absolute;
-    width: 45%;
+    width: 40%;
     left: 30%;
-    top: 18%;
+    top: 15%;
 }
 
 h1 {

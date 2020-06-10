@@ -71,23 +71,23 @@ export class ProprietarioUpdateComponent implements OnInit, OnDestroy {
       dataNascimento: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.maxLength(120), Validators.email]],
       estado: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(1)]],
-      facebook: ['', [Validators.required]],
+      facebook: [''],
       genero: ['', [Validators.required]],
-      instagram: ['', [Validators.required]],
+      instagram: [''],
       logradouro: ['', [Validators.required, Validators.maxLength(100), Validators.minLength(1)]],
       nome: ['', [Validators.required, Validators.maxLength(100), Validators.minLength(4)]],
       numeroTelefone1: ['', [Validators.required, Validators.maxLength(20), Validators.minLength(4)]],
-      numeroTelefone2: ['', [Validators.maxLength(20)]],
+      numeroTelefone2: [''],
       pais: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(1)]],
       senha: ['', [Validators.required, Validators.maxLength(20), Validators.minLength(6)]],
-      sobreMim: ['', [Validators.required]],
-      spotify: ['', [Validators.required]],
+      sobreMim: [''],
+      spotify: [''],
       status: ['', [Validators.required]],
       tipoTelefone1: ['', [Validators.required]],
       tipoTelefone2: [''],
-      twitter: ['', [Validators.required]],
-      twitch: ['', [Validators.required]],
-      youtube: ['', [Validators.required]],
+      twitter: [''],
+      twitch: [''],
+      youtube: [''],
     });
     if (this.theProprietarioService.getIProprietarioDTO() == null) {
       this.theActivatedRoute.params.pipe(
@@ -171,7 +171,7 @@ export class ProprietarioUpdateComponent implements OnInit, OnDestroy {
         formData.append('bairro', this.theForm.get('bairro').value);
         formData.append('cidade', this.theForm.get('cidade').value);
         formData.append('cep', this.theForm.get('cep').value);
-        formData.append('dataNascimento', this.theForm.get('dataNascimento').value);
+        formData.append('dataNascimento', new Date(this.theForm.get('dataNascimento').value).toLocaleDateString());
         formData.append('email', this.theForm.get('email').value);
         formData.append('estado', this.theForm.get('estado').value);
         formData.append('facebook', this.theForm.get('facebook').value);

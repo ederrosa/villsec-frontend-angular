@@ -36,9 +36,9 @@ const MODULES_LIST = [
 
 
 const SERVICES_LIST = [
-  //AuthGuard,
-  //AuthenticationService,
-  //AuthInterceptorProvider,
+  AuthGuard,
+  AuthenticationService,
+  AuthInterceptorProvider,
   ErrorInterceptorProvider,
 ]
 

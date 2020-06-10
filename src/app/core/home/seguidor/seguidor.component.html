@@ -1,1 +1,83 @@
-﻿<p>seguidor works!</p>
+﻿<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <div class="android-header mdl-layout__header mdl-layout__header--waterfall mat-elevation-z8">
+        <div class="mdl-layout__header-row">
+            <span routerLink="" class="android-title mdl-layout-title mdl-navigation__link">
+                <img class="android-logo-image" src="../../../../assets/images/villsec-logo-barra-principal.png">
+            </span>
+            <!-- Add spacer, to align navigation to the right in desktop -->
+            <div class="android-header-spacer mdl-layout-spacer"></div>
+
+            <!-- Navigation -->
+            <div class="android-navigation-container">
+                <nav class="android-navigation mdl-navigation">
+                    <a class="mdl-navigation__link mdl-typography--text-uppercase" mat-menu-item
+                       [matMenuTriggerFor]="usuarios">
+                        <mat-icon class="example-icon">fingerprint</mat-icon>Perfil
+                    </a>
+                    <a class="mdl-navigation__link mdl-typography--text-uppercase" mat-menu-item
+                       [matMenuTriggerFor]="midias">
+                        <mat-icon class="example-icon">storage</mat-icon>Mídias
+                    </a>
+                    <mat-menu #usuarios="matMenu">
+                        <button routerLink="/seguidores" mat-menu-item>
+                            <mat-icon class="example-icon">fingerprint</mat-icon>Meus Dados
+                        </button>
+                    </mat-menu>
+                    <mat-menu #midias="matMenu">
+                        <button routerLink="/albuns" mat-menu-item>
+                            <mat-icon class="example-icon">album</mat-icon>Álbuns
+                        </button>
+                        <button routerLink="/elementos" mat-menu-item>
+                            <mat-icon class="example-icon">folder_open</mat-icon>Elementos
+                        </button>
+                        <button routerLink="/eventos" mat-menu-item>
+                            <mat-icon class="example-icon">event_note</mat-icon>Eventos
+                        </button>
+                        <button routerLink="/musicas" mat-menu-item>
+                            <mat-icon class="example-icon">audiotrack</mat-icon>Músicas
+                        </button>
+                    </mat-menu>
+                </nav>
+            </div>
+            <span class="android-mobile-title mdl-layout-title ">
+                <img class="android-logo-image" src="../../../../assets/images/villsec-logo-barra-principal.png">
+            </span>
+            <button class="android-more-button mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect"
+                    id="more-button">
+                <i class="material-icons">more_vert</i>
+            </button>
+            <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right mdl-js-ripple-effect" for="more-button">
+                <li class="mdl-menu__item" routerLink="/" (click)="logout()">Logout</li>
+            </ul>
+        </div>
+    </div>
+    <div class="android-drawer mdl-layout__drawer">
+        <span routerLink="" class="mdl-layout-title mdl-navigation__link">
+            <img class="android-logo-image" src="../../../../assets/images/villsec-logo-barra-principal.png">
+        </span>
+        <nav class="mdl-navigation">
+            <span class="mdl-navigation__link" routerLink="/seguidores">
+                <mat-icon class="example-icon">fingerprint</mat-icon> Meus Dados
+            </span>
+            <a class="mdl-navigation__link" routerLink="/albuns">
+                <mat-icon class="example-icon">album</mat-icon> Álbuns
+            </a>
+            <a class="mdl-navigation__link" routerLink="/elementos">
+                <mat-icon class="example-icon">folder_open</mat-icon> Elementos
+            </a>
+            <a class="mdl-navigation__link" routerLink="/eventos">
+                <mat-icon class="example-icon">event_note</mat-icon> Eventos
+            </a>
+            <a class="mdl-navigation__link" routerLink="/musicas">
+                <mat-icon class="example-icon">audiotrack</mat-icon> Músicas
+            </a>
+            <div class="android-drawer-separator"></div>
+            <span class="mdl-navigation__link" routerLink="/" (click)="logout()">
+                <mat-icon class="example-icon">power_settings_new</mat-icon> Sair
+            </span>
+        </nav>
+    </div>
+    <div class="android-content mdl-layout__content logo-background">
+        <router-outlet></router-outlet>
+    </div>
+</div>

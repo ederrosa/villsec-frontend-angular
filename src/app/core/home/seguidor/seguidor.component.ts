@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from '../../authentication/authentication.service';
 
 @Component({
   selector: 'app-seguidor',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SeguidorComponent implements OnInit {
 
-  constructor() { }
+  constructor(private theAuthenticationServices: AuthenticationService) { }
 
   ngOnInit(): void {
+  }
+  logout() {
+    this.theAuthenticationServices.logout();
   }
 
 }

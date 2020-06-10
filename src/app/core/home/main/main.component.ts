@@ -12,7 +12,7 @@ export class MainComponent implements OnInit {
   readonly ADMIN = 1;
   readonly PROPRIETARIO = 2;
   readonly SEGUIDOR = 3;
-  user: number = 1;
+  user: number;
   private localUser: ILocalUser;
 
   constructor(private theAuthenticationServices: AuthenticationService) { }
@@ -21,6 +21,8 @@ export class MainComponent implements OnInit {
     this.localUser = JSON.parse(sessionStorage.getItem('localUser')) as ILocalUser;
     if (this.localUser != null) {
       this.user = this.localUser.theTipoUsuario;
+    } else {
+      this.user = 0;
     }
   }
 }

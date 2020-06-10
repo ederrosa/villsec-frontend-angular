@@ -153,7 +153,7 @@ export class SeguidorUpdateComponent implements OnInit, OnDestroy {
         formData.append('bairro', this.theForm.get('bairro').value);
         formData.append('cidade', this.theForm.get('cidade').value);
         formData.append('cep', this.theForm.get('cep').value);
-        formData.append('dataNascimento', this.theForm.get('dataNascimento').value);
+        formData.append('dataNascimento', new Date(this.theForm.get('dataNascimento').value).toLocaleDateString());
         formData.append('email', this.theForm.get('email').value);
         formData.append('estado', this.theForm.get('estado').value);
         formData.append('genero', this.theForm.get('genero').value);

@@ -61,24 +61,24 @@ export class ProprietarioInsertComponent implements OnInit {
       dataNascimento: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.maxLength(120), Validators.email]],
       estado: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(1)]],
-      facebook: ['', [Validators.required]],
+      facebook: [''],
       file: ['', [Validators.required]],
       genero: ['', [Validators.required]],
-      instagram: ['', [Validators.required]],
+      instagram: [''],
       logradouro: ['', [Validators.required, Validators.maxLength(100), Validators.minLength(1)]],
       nome: ['', [Validators.required, Validators.maxLength(100), Validators.minLength(4)]],
       numeroTelefone1: ['', [Validators.required, Validators.maxLength(20), Validators.minLength(4)]],
-      numeroTelefone2: ['', [Validators.maxLength(20)]],
+      numeroTelefone2: [''],
       pais: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(1)]],
       senha: ['', [Validators.required, Validators.maxLength(20), Validators.minLength(6)]],
-      sobreMim: ['', [Validators.required]],
-      spotify: ['', [Validators.required]],
+      sobreMim: [''],
+      spotify: [''],
       status: ['', [Validators.required]],
       tipoTelefone1: ['', [Validators.required]],
       tipoTelefone2: [''],
-      twitter: ['', [Validators.required]],
-      twitch: ['', [Validators.required]],
-      youtube: ['', [Validators.required]],
+      twitter: [''],
+      twitch: [''],
+      youtube: [''],
     });
   }
 
@@ -113,11 +113,11 @@ export class ProprietarioInsertComponent implements OnInit {
     formData.append('bairro', this.theForm.get('bairro').value);
     formData.append('cidade', this.theForm.get('cidade').value);
     formData.append('cep', this.theForm.get('cep').value);
-    formData.append('dataNascimento', this.theForm.get('dataNascimento').value);
+    formData.append('dataNascimento', new Date(this.theForm.get('dataNascimento').value).toLocaleDateString());
     formData.append('email', this.theForm.get('email').value);
     formData.append('estado', this.theForm.get('estado').value);
     formData.append('facebook', this.theForm.get('facebook').value);
-    formData.append('file', this.theForm.get('file').value);
+    formData.append('file', this.theFile, this.theFile.name);
     formData.append('genero', this.theForm.get('genero').value);
     formData.append('instagram', this.theForm.get('instagram').value);
     formData.append('logradouro', this.theForm.get('logradouro').value);
