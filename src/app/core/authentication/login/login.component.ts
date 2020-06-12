@@ -3,7 +3,6 @@ import { FormControl, Validators } from '@angular/forms';
 import { IAutenticacaoDTO } from 'src/app/shared/models/domain/iautenticacao-dto';
 import { AuthenticationService } from '../authentication.service';
 import { Subscription } from 'rxjs';
-import { error } from 'util';
 
 @Component({
     selector: 'app-login',

@@ -35,6 +35,11 @@ export class AuthenticationService {
     );
   }
 
+  onReloadRoute(url: string) {
+    this.router.navigateByUrl(url, { skipLocationChange: true })
+      .then(() => this.router.navigate([url]));
+  }
+
   refreshToken() {
     return this.http.post(
       API_CONFIGURATION.baseUrl + "/auth/refresh_token",
@@ -45,7 +50,7 @@ export class AuthenticationService {
       }
     );
   }
-
+  
   successFulLogin(theAutorizationValue: String,
     tipoUsuario: string,
     uriImgPerfil: string,
@@ -59,13 +64,11 @@ export class AuthenticationService {
       theMatricula: matricula
     }
     this.theStorageService.setLocalUser(theUser);
-    this.router.navigate(['/']);
-    //this.router.navigateByUrl('/', { skipLocationChange: false })
-    //  .then(() => this.router.navigate(['']));        
+    this.onReloadRoute('');   
   }
 
   logout() {
     this.theStorageService.setLocalUser(null);
-    this.router.navigate(['/']);
+    this.onReloadRoute('');
   }
 }

@@ -4,6 +4,7 @@ import { MainComponent } from './core/home/main/main.component';
 import { Error404Component } from './modules/error/error404/error404.component';
 import { AuthGuard } from './core/guards/can-activate/auth-guard';
 import { LoginComponent } from './core/authentication/login/login.component';
+import { config } from 'rxjs';
 
 
 const routes: Routes = [
@@ -49,7 +50,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload'})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

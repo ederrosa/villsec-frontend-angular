@@ -31,9 +31,9 @@ import { IAlbumDTO } from 'src/app/shared/models/dtos/ialbum-dto';
 })
 export class AlbumFindPageComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  disabledNew: boolean = true;
-  disabledEdit: boolean = true;
-  disabledDel: boolean = true;
+  private delete: boolean;
+  private insert: boolean;
+  private update: boolean; 
   private theLocalUser: ILocalUser;
   private theInscricao: Subscription[] = new Array<Subscription>();
   dataSource: MatTableDataSource<IAlbumDTO> = new MatTableDataSource();
@@ -46,8 +46,8 @@ export class AlbumFindPageComponent implements OnInit, OnDestroy, AfterViewInit 
 
   constructor(
     private theActivatedRoute: ActivatedRoute,
-    private dialog: MatDialog,
     private theAlbumService: AlbumService,
+    private dialog: MatDialog,    
     private theRouter: Router,
     private theUnsubscribeControl: UnsubscribeControlService
   ) {
@@ -55,14 +55,14 @@ export class AlbumFindPageComponent implements OnInit, OnDestroy, AfterViewInit 
       this.theLocalUser = JSON.parse(sessionStorage.getItem('localUser')) as ILocalUser;
       switch (this.theLocalUser.theTipoUsuario) {
         case 1:
-          this.disabledDel = false;
-          this.disabledEdit = false;
-          this.disabledNew = false;
+          this.insert = true;
+          this.update = true;
+          this.delete = true;
           break;
         case 2:
-          this.disabledDel = false;
-          this.disabledEdit = true;
-          this.disabledNew = false;
+          this.insert = true;
+          this.update = true;
+          this.delete = true;
           break;
       }
     }
@@ -78,9 +78,30 @@ export class AlbumFindPageComponent implements OnInit, OnDestroy, AfterViewInit 
     ));
   }
 
-  ngOnInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  getDelete(): boolean {
+    return this.delete;
+  }
+
+  getInsert(): boolean {
+    return this.insert;
+  }
+
+  getUpdate(): boolean {
+    return this.update;
+  }  
+
+  ngAfterViewInit() {
+    this.theInscricao.push(this.paginator.page
+      .pipe(
+        tap(() => this.onLoadPage())
+      ).subscribe());
   }
 
   ngOnDestroy() {
@@ -89,14 +110,12 @@ export class AlbumFindPageComponent implements OnInit, OnDestroy, AfterViewInit 
     this.theUnsubscribeControl.unsubscribe(this.theInscricao);
   }
 
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+  ngOnInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
-
-  delete(theAlbum: IAlbumDTO) {
+    
+  onDelete(theAlbum: IAlbumDTO) {
     this.dialog.closeAll();
     let dialogRef = this.dialog.open(ConfirmationAlertComponent, { disableClose: true, width: '40%' });
     let instance = dialogRef.componentInstance;
@@ -125,22 +144,7 @@ export class AlbumFindPageComponent implements OnInit, OnDestroy, AfterViewInit 
     }));
   }
 
-  update(theIAlbumDTO: IAlbumDTO) {
-    this.theAlbumService.setIAlbumDTO(theIAlbumDTO);
-    this.theRouter.navigate(
-      ['editar', theIAlbumDTO.id],
-      { relativeTo: this.theActivatedRoute }
-    );
-  }
-
-  ngAfterViewInit() {
-    this.theInscricao.push(this.paginator.page
-      .pipe(
-        tap(() => this.loadPage())
-      ).subscribe());
-  }
-
-  loadPage() {
+  onLoadPage() {
     this.theInscricao.push(this.theAlbumService.findPage(
       this.paginator.pageIndex,
       this.paginator.pageSize,
@@ -152,4 +156,12 @@ export class AlbumFindPageComponent implements OnInit, OnDestroy, AfterViewInit 
       })
     ));
   }
+
+  onUpdate(theIAlbumDTO: IAlbumDTO) {
+    this.theAlbumService.setIAlbumDTO(theIAlbumDTO);
+    this.theRouter.navigate(
+      ['editar', theIAlbumDTO.id],
+      { relativeTo: this.theActivatedRoute }
+    );
+  }  
 }

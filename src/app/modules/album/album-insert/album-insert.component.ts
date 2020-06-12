@@ -16,12 +16,12 @@ import { InformativeAlertComponent } from 'src/app/shared/components/alerts/info
 })
 export class AlbumInsertComponent implements OnInit {
 
-  theForm: FormGroup;
-  url: any;
-  format: string;
+  private theForm: FormGroup;
+  private url: any;
+  private format: string;
   private theFile: File;
   private theInscricao: Subscription[] = new Array<Subscription>();
- 
+
   constructor(
     private theFormBuilder: FormBuilder,
     private theAlbumService: AlbumService,
@@ -29,14 +29,16 @@ export class AlbumInsertComponent implements OnInit {
     private theUnsubscribeControl: UnsubscribeControlService
   ) { }
 
-  ngOnInit() {
-    this.theForm = this.theFormBuilder.group({
-      file: ['', [Validators.required]],
-      nome: ['', [Validators.required]],
-      ano: ['', [Validators.required]],
-      descricao: ['', [Validators.required]],
-      genero: ['', [Validators.required]]      
-    });
+  getTheForm(): FormGroup {
+    return this.theForm;
+  }
+
+  getUrl() {
+    return this.url;
+  }
+
+  getFormat() {
+    return this.format;
   }
 
   ngOnDestroy() {
@@ -44,18 +46,14 @@ export class AlbumInsertComponent implements OnInit {
     this.theUnsubscribeControl.unsubscribe(this.theInscricao);
   }
 
-  onSelectFile(event) {
-    this.theFile = event.target.files && event.target.files[0];
-    if (this.theFile) {
-      var reader = new FileReader();
-      reader.readAsDataURL(this.theFile);
-      if (this.theFile.type.indexOf('image') > -1) {
-        this.format = 'image';
-      }
-      reader.onload = (event) => {
-        this.url = (<FileReader>event.target).result;
-      }
-    }
+  ngOnInit() {
+    this.theForm = this.theFormBuilder.group({
+      file: ['', [Validators.required]],
+      nome: ['', [Validators.required]],
+      ano: ['', [Validators.required]],
+      descricao: ['', [Validators.required]],
+      genero: ['', [Validators.required]]
+    });
   }
 
   onClear() {
@@ -93,5 +91,19 @@ export class AlbumInsertComponent implements OnInit {
       }, error => {
 
       }));
+  }
+
+  onSelectFile(event) {
+    this.theFile = event.target.files && event.target.files[0];
+    if (this.theFile) {
+      var reader = new FileReader();
+      reader.readAsDataURL(this.theFile);
+      if (this.theFile.type.indexOf('image') > -1) {
+        this.format = 'image';
+      }
+      reader.onload = (event) => {
+        this.url = (<FileReader>event.target).result;
+      }
+    }
   }
 }
