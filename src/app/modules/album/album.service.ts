@@ -1,5 +1,6 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+
 import { API_CONFIGURATION } from 'src/configurations/api.configuration';
 import { IAlbumDTO } from 'src/app/shared/models/dtos/ialbum-dto';
 import { take } from 'rxjs/operators';

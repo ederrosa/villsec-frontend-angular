@@ -9,8 +9,6 @@ import { API_CONFIGURATION } from 'src/configurations/api.configuration';
 import { ILocalUser } from 'src/app/shared/models/domain/ilocal-user';
 import { StorageService } from '../services/storage.service';
 
-
-
 @Injectable({
   providedIn: 'root'
 })
@@ -36,8 +34,12 @@ export class AuthenticationService {
   }
 
   onReloadRoute(url: string) {
-    this.router.navigateByUrl(url, { skipLocationChange: true })
+    this.router.navigateByUrl(url, { skipLocationChange: false })
       .then(() => this.router.navigate([url]));
+    this.router.routeReuseStrategy.shouldReuseRoute = () => {
+      location.reload();
+      return false;      
+    };
   }
 
   refreshToken() {
@@ -50,7 +52,7 @@ export class AuthenticationService {
       }
     );
   }
-  
+
   successFulLogin(theAutorizationValue: String,
     tipoUsuario: string,
     uriImgPerfil: string,
@@ -64,7 +66,7 @@ export class AuthenticationService {
       theMatricula: matricula
     }
     this.theStorageService.setLocalUser(theUser);
-    this.onReloadRoute('');   
+    this.onReloadRoute('');
   }
 
   logout() {

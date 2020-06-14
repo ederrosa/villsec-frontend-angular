@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from '../../authentication/authentication.service';
 import { ILocalUser } from 'src/app/shared/models/domain/ilocal-user';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-main',
@@ -16,21 +14,14 @@ export class MainComponent implements OnInit {
   user: number;
   private localUser: ILocalUser;
 
-  constructor(
-    private theAuthenticationServices: AuthenticationService,
-    private theRouter: Router
-  ) { }
+  constructor() { }
 
-  ngOnInit() {
-    this.theRouter.routeReuseStrategy.shouldReuseRoute = () => {
-      return false;
-    };
+  ngOnInit() {   
     this.localUser = JSON.parse(sessionStorage.getItem('localUser')) as ILocalUser;
     if (this.localUser != null) {
       this.user = this.localUser.theTipoUsuario;
     } else {
       this.user = 0;
-    }
-   
+    }   
   }
 }

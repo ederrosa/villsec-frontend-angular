@@ -2,7 +2,7 @@
     <mat-card-header>
         <mat-card-title>
             <div>
-                <button routerLink="/albuns/novo" *ngIf="disabledNew" mat-raised-button color="primary">
+                <button routerLink="/albuns/novo" *ngIf="getInsert()" mat-raised-button color="primary">
                     <mat-icon>add</mat-icon> Cadastrar um novo álbum
                 </button>
             </div>
@@ -64,7 +64,7 @@
                                     </tr>
                                 </table>
                                 <div class="example-button-row">
-                                    <button (click)="selected(element)" mat-button color="primary" matStepperNext>
+                                    <button (click)="onSelected(element)" mat-button color="primary" matStepperNext>
                                         <mat-icon>edit</mat-icon> selecionar
                                     </button>
                                 </div>

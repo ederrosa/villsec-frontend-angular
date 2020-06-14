@@ -10,10 +10,8 @@ import { UnsubscribeControlService } from 'src/app/core/services/unsubscribe-con
 import { ProgressSpinnerOverviewComponent } from 'src/app/shared/components/progress-spinner/progress-spinner-overview/progress-spinner-overview.component';
 import { InformativeAlertComponent } from 'src/app/shared/components/alerts/informative-alert/informative-alert.component';
 import { ConfirmationAlertComponent } from 'src/app/shared/components/alerts/confirmation-alert/confirmation-alert.component';
-import { FieldsService } from 'src/app/shared/components/fields/fields.service';
 import { switchMap, map } from 'rxjs/operators';
 import { IAlbumDTO } from 'src/app/shared/models/dtos/ialbum-dto';
-
 
 @Component({
   selector: 'app-album-update',
@@ -22,20 +20,43 @@ import { IAlbumDTO } from 'src/app/shared/models/dtos/ialbum-dto';
 })
 export class AlbumUpdateComponent implements OnInit {
 
-  theForm: FormGroup;
-  url: any;
-  format: string;
+  private theForm: FormGroup;
+  private url: any;
+  private format: string;
   private theFile: File;
   private theInscricao: Subscription[] = new Array<Subscription>();
 
   constructor(
     private theAlbumService: AlbumService,
     private theActivatedRoute: ActivatedRoute,
-    private theFieldsService: FieldsService,
     private theFormBuilder: FormBuilder,
     private dialog: MatDialog,
     private theUnsubscribeControl: UnsubscribeControlService
   ) { }
+
+  getTheForm(): FormGroup {
+    return this.theForm;
+  }
+
+  getUrl() {
+    return this.url;
+  }
+
+  getFormat() {
+    return this.format;
+  }
+
+  ngOnDestroy() {
+    this.onClear();
+    this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+  }
+
+  onClear() {
+    this.theForm.reset();
+    this.url = null;
+    this.format = null;
+    this.theFile = null;
+  }
 
   ngOnInit() {
     this.theForm = this.theFormBuilder.group({
@@ -57,11 +78,6 @@ export class AlbumUpdateComponent implements OnInit {
     }
   }
 
-  ngOnDestroy() {
-    this.onClear();
-    this.theUnsubscribeControl.unsubscribe(this.theInscricao);
-  }
-
   onFormUpdate(theIAlbumDTO: IAlbumDTO): void {
     this.format = 'image';
     this.url = theIAlbumDTO.capaUrl;
@@ -74,28 +90,7 @@ export class AlbumUpdateComponent implements OnInit {
       ano: new Date(theIAlbumDTO.ano.toString()),
       genero: theIAlbumDTO.genero,
     });
-  }
-
-  onSelectFile(event) {
-    this.theFile = event.target.files && event.target.files[0];
-    if (this.theFile) {
-      var reader = new FileReader();
-      reader.readAsDataURL(this.theFile);
-      if (this.theFile.type.indexOf('image') > -1) {
-        this.format = 'image';
-      }
-      reader.onload = (event) => {
-        this.url = (<FileReader>event.target).result;
-      }
-    }
-  }
-
-  onClear() {
-    this.theForm.reset();
-    this.url = null;
-    this.format = null;
-    this.theFile = null;
-  }
+  } 
 
   onSave() {
     this.dialog.closeAll();
@@ -140,4 +135,17 @@ export class AlbumUpdateComponent implements OnInit {
     }));
   }
 
+  onSelectFile(event) {
+    this.theFile = event.target.files && event.target.files[0];
+    if (this.theFile) {
+      var reader = new FileReader();
+      reader.readAsDataURL(this.theFile);
+      if (this.theFile.type.indexOf('image') > -1) {
+        this.format = 'image';
+      }
+      reader.onload = (event) => {
+        this.url = (<FileReader>event.target).result;
+      }
+    }
+  }
 }

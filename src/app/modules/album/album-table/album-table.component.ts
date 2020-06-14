@@ -1,5 +1,4 @@
 ﻿import { Component, OnInit, ViewChild, OnDestroy, AfterViewInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { PageEvent, MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -12,8 +11,6 @@ import { ILocalUser } from 'src/app/shared/models/domain/ilocal-user';
 import { UnsubscribeControlService } from 'src/app/core/services/unsubscribe-control.service';
 import { IAlbumDTO } from 'src/app/shared/models/dtos/ialbum-dto';
 import { AlbumService } from '../album.service';
-
-
 
 @Component({
   selector: 'app-album-table',
@@ -29,7 +26,7 @@ import { AlbumService } from '../album.service';
 })
 export class AlbumTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  disabledNew: boolean = false;
+  private insert: boolean;
   private theLocalUser: ILocalUser;
   private theInscricao: Subscription[] = new Array<Subscription>();
   dataSource: MatTableDataSource<IAlbumDTO> = new MatTableDataSource();
@@ -42,14 +39,13 @@ export class AlbumTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
   constructor(
     private theAlbumService: AlbumService,
-    private theRouter: Router,
     private theUnsubscribeControl: UnsubscribeControlService
   ) {
     if (sessionStorage['localUser'] != null) {
       this.theLocalUser = JSON.parse(sessionStorage.getItem('localUser')) as ILocalUser;
       switch (this.theLocalUser.theTipoUsuario) {
         case 1:
-          this.disabledNew = false;
+          this.insert = true;
           break;
       }
     }
@@ -72,23 +68,14 @@ export class AlbumTableComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  loadPage() {
-    this.theInscricao.push(this.theAlbumService.findPage(
-      this.paginator.pageIndex,
-      this.paginator.pageSize,
-      'nome',
-      'ASC'
-    ).subscribe(
-      (x => {
-        this.dataSource = new MatTableDataSource(x['content']);
-      })
-    ));
+  getInsert(): boolean {
+    return this.insert;
   }
 
   ngAfterViewInit() {
     this.theInscricao.push(this.paginator.page
       .pipe(
-        tap(() => this.loadPage())
+        tap(() => this.onLoadPage())
       ).subscribe());
   }
 
@@ -103,8 +90,20 @@ export class AlbumTableComponent implements OnInit, OnDestroy, AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
-  selected(theIAlbumDTO: IAlbumDTO): void {
+  onLoadPage() {
+    this.theInscricao.push(this.theAlbumService.findPage(
+      this.paginator.pageIndex,
+      this.paginator.pageSize,
+      'nome',
+      'ASC'
+    ).subscribe(
+      (x => {
+        this.dataSource = new MatTableDataSource(x['content']);
+      })
+    ));
+  } 
+
+  onSelected(theIAlbumDTO: IAlbumDTO): void {
     this.theAlbumService.setIAlbumDTO(theIAlbumDTO);
   }
-
 }
