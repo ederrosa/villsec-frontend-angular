@@ -6,22 +6,22 @@
         <mat-card-subtitle>V1LLSEC</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-        <mat-horizontal-stepper [linear]="isLinear" labelPosition="bottom" #stepper>
-            <mat-step [stepControl]="theAlbumForm">
+        <mat-horizontal-stepper [linear]="isLinear()" labelPosition="bottom" #stepper>
+            <mat-step [stepControl]="getTheAlbumForm()">
                 <form>
                     <ng-template matStepLabel>PASSO 1: Selecione o Album.</ng-template>
                     <app-album-table></app-album-table>
                 </form>
             </mat-step>
-            <mat-step [stepControl]="theForm">
+            <mat-step [stepControl]="getTheForm()">
                 <div class="example-container mat-elevation-z8">
-                    <form class="example-form" [formGroup]="theForm">
+                    <form class="example-form" [formGroup]="getTheForm()">
                         <ng-template matStepLabel>PASSO 2: Dados da Música.</ng-template>
                         <table class="example-full-width" cellspacing="0">
                             <tr>
                                 <td>
                                     <br />
-                                    <audio [src]="url" *ngIf="format==='audio' && url" controls></audio> <br />
+                                    <audio [src]="getUrl()" *ngIf="getFormat()==='audio' && getUrl()" controls></audio> <br />
                                     <br />
                                     <p>
                                         <input formControlName="file" type='file' (change)="onSelectFile($event)" accept=".mp3" />
@@ -110,7 +110,7 @@
                                                 id="copyright"
                                                 label="Copyright"
                                                 hint="Selecione..."
-                                                [options]="optionsCopyright">
+                                                [options]="getOptionsCopyright()">
                                     </app-select>
                                 </td>
                             </tr>
@@ -139,7 +139,7 @@
                         <table class="example-full-width" cellspacing="0">
                             <tr>
                                 <td>
-                                    <button class="full-width" mat-button color="primary" status="primary" [disabled]="theForm.invalid" (click)="onSave()"><mat-icon>save</mat-icon>Salvar</button>
+                                    <button class="full-width" mat-button color="primary" status="primary" [disabled]="getTheForm().invalid" (click)="onSave()"><mat-icon>save</mat-icon>Salvar</button>
                                 </td>
                                 <td>
                                     <button class="full-width" mat-button color="accent" status="primary" (click)="onClear()"><mat-icon>clear</mat-icon>Limpar</button>

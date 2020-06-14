@@ -19,18 +19,18 @@ import { IAlbumDTO } from 'src/app/shared/models/dtos/ialbum-dto';
   styleUrls: ['./album-update.component.scss']
 })
 export class AlbumUpdateComponent implements OnInit {
-
-  private theForm: FormGroup;
-  private url: any;
+   
   private format: string;
   private theFile: File;
+  private theForm: FormGroup;
   private theInscricao: Subscription[] = new Array<Subscription>();
+  private url: any;
 
   constructor(
-    private theAlbumService: AlbumService,
+    private dialog: MatDialog,    
     private theActivatedRoute: ActivatedRoute,
-    private theFormBuilder: FormBuilder,
-    private dialog: MatDialog,
+    private theAlbumService: AlbumService,
+    private theFormBuilder: FormBuilder,    
     private theUnsubscribeControl: UnsubscribeControlService
   ) { }
 
@@ -40,6 +40,10 @@ export class AlbumUpdateComponent implements OnInit {
 
   getUrl() {
     return this.url;
+  }
+
+  getTheFile(): File {
+    return this.theFile;
   }
 
   getFormat() {
@@ -52,7 +56,7 @@ export class AlbumUpdateComponent implements OnInit {
   }
 
   onClear() {
-    this.theForm.reset();
+    this.getTheForm().reset();
     this.url = null;
     this.format = null;
     this.theFile = null;
@@ -81,7 +85,7 @@ export class AlbumUpdateComponent implements OnInit {
   onFormUpdate(theIAlbumDTO: IAlbumDTO): void {
     this.format = 'image';
     this.url = theIAlbumDTO.capaUrl;
-    this.theForm.patchValue({
+    this.getTheForm().patchValue({
       id: theIAlbumDTO.id,
       dtCriacao: theIAlbumDTO.dtCriacao,
       file: '',
@@ -102,14 +106,14 @@ export class AlbumUpdateComponent implements OnInit {
     this.theInscricao.push(dialogRef.afterClosed().subscribe(result => {
       if (result) {
         let formData: FormData = new FormData();
-        formData.append('ano', this.theForm.get('ano').value);
-        formData.append('descricao', this.theForm.get('descricao').value);
-        formData.append('genero', this.theForm.get('genero').value);
-        formData.append('nome', this.theForm.get('nome').value);
-        if (this.theFile) {
-          formData.append('file', this.theFile, this.theFile.name);
+        formData.append('ano', this.getTheForm().get('ano').value);
+        formData.append('descricao', this.getTheForm().get('descricao').value);
+        formData.append('genero', this.getTheForm().get('genero').value);
+        formData.append('nome', this.getTheForm().get('nome').value);
+        if (this.getTheFile()) {
+          formData.append('file', this.getTheFile(), this.getTheFile().name);
         }
-        this.theInscricao.push(this.theAlbumService.update(formData, this.theForm.get('id').value)
+        this.theInscricao.push(this.theAlbumService.update(formData, this.getTheForm().get('id').value)
           .subscribe((event: HttpEvent<Object>) => {
             if (event.type === HttpEventType.Response) {
               this.dialog.closeAll();
@@ -137,10 +141,10 @@ export class AlbumUpdateComponent implements OnInit {
 
   onSelectFile(event) {
     this.theFile = event.target.files && event.target.files[0];
-    if (this.theFile) {
+    if (this.getTheFile()) {
       var reader = new FileReader();
-      reader.readAsDataURL(this.theFile);
-      if (this.theFile.type.indexOf('image') > -1) {
+      reader.readAsDataURL(this.getTheFile());
+      if (this.getTheFile().type.indexOf('image') > -1) {
         this.format = 'image';
       }
       reader.onload = (event) => {

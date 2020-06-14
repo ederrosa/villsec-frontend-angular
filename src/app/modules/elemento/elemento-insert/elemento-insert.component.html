@@ -7,17 +7,17 @@
     </mat-card-header>
     <mat-card-content>
         <div class="example-container mat-elevation-z8">
-            <form class="example-form" [formGroup]="theForm">
+            <form class="example-form" [formGroup]="getTheForm()">
                 <table class="example-full-width" cellspacing="0">
                     <tr>
                         <td>
-                            <img [src]="url" *ngIf="format==='image' && url"width="640px" height="360px"> <br />
-                            <video [src]="url" *ngIf="format==='video' && url" width="640px" height="360px" controls></video> <br />
-                            <audio [src]="url" *ngIf="format==='audio' && url" controls></audio> <br />
-                            <iframe [src]=" url | safe " *ngIf="url" width="640px" height="360px"></iframe> <br />
+                            <img [src]="getUrl()" *ngIf="getFormat()==='image' && getUrl()"width="640px" height="360px"> <br />
+                            <video [src]="getUrl()" *ngIf="getFormat()==='video' && getUrl()" width="640px" height="360px" controls></video> <br />
+                            <audio [src]="getUrl()" *ngIf="getFormat()==='audio' && getUrl()" controls></audio> <br />
+                            <iframe [src]="getUrl() | safe " *ngIf="getUrl()" width="640px" height="360px"></iframe> <br />
                             <wbr />
                             <p>
-                                <input formControlName="file" type='file' (change)="onSelectFile($event)" accept=".jpg,.png,.mp4,.avi,.mp3,.wave" />
+                                <input formControlName="file" type='file' (change)="onSelectFile($event)" accept=".jpg,.png,.mp4,.avi,.mp3" />
                             </p>
                         </td>
                     </tr>
@@ -68,7 +68,7 @@
                                         id="tipoElemento"
                                         label="Tipo do Arquivo"
                                         hint="Selecione um dos tipos."
-                                        [options]="optionsTipoElemento">
+                                        [options]="getOptionsTipoElemento()">
                             </app-select>
                         </td>
                         <td>
@@ -76,7 +76,7 @@
                                         id="status"
                                         label="Status do Arquivo"
                                         hint="Selecione um dos status."
-                                        [options]="optionsStatus" >
+                                        [options]="getOptionsStatus()" >
                             </app-select>
                         </td>
                     </tr>                    
@@ -84,7 +84,7 @@
                 <table class="example-full-width" cellspacing="0">
                     <tr>
                         <td>
-                            <button class="full-width" mat-button color="primary" status="primary" [disabled]="theForm.invalid" (click)="onSave()"><mat-icon>save</mat-icon>Salvar</button>
+                            <button class="full-width" mat-button color="primary" status="primary" [disabled]="getTheForm().invalid" (click)="onSave()"><mat-icon>save</mat-icon>Salvar</button>
                         </td>
                         <td>
                             <button class="full-width" mat-button color="accent" status="primary" (click)="onClear()"><mat-icon>clear</mat-icon>Limpar</button>

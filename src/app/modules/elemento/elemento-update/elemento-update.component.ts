@@ -22,29 +22,58 @@ import { IOptions } from 'src/app/shared/components/fields/select/select.compone
 })
 export class ElementoUpdateComponent implements OnInit {
 
-  theForm: FormGroup;
-  url: any;
-  format: string;
-  private theFile: File;
-  private theInscricao: Subscription[] = new Array<Subscription>();
-  optionsTipoElemento: IOptions[] = [
+  private format: string;
+  private readonly optionsTipoElemento: IOptions[] = [
     { value: 1, option: 'Imagem' },
     { value: 2, option: 'Vídeo' },
     { value: 3, option: 'LiveStream' },
     { value: 4, option: 'Show' },
     { value: 5, option: 'Áudio' }];
-  optionsStatus: IOptions[] = [
+  private readonly optionsStatus: IOptions[] = [
     { value: true, option: 'Ativo' },
     { value: false, option: 'Inativo' }];
+  private theFile: File;
+  private theForm: FormGroup;
+  private theInscricao: Subscription[] = new Array<Subscription>();
+  private url: any;
 
   constructor(
-    private theElementoService: ElementoService,
-    private theActivatedRoute: ActivatedRoute,
-    private theFieldsService: FieldsService,
-    private theFormBuilder: FormBuilder,
     private dialog: MatDialog,
+    private theActivatedRoute: ActivatedRoute,
+    private theElementoService: ElementoService,    
+    private theFieldsService: FieldsService,
+    private theFormBuilder: FormBuilder,    
     private theUnsubscribeControl: UnsubscribeControlService
   ) { }
+
+  getFormat(): string {
+    return this.format;
+  }
+
+  getOptionsTipoElemento(): IOptions[] {
+    return this.optionsTipoElemento;
+  }
+
+  getOptionsStatus(): IOptions[] {
+    return this.optionsStatus;
+  }
+
+  getTheFile(): File {
+    return this.theFile;
+  }
+
+  getTheForm(): FormGroup {
+    return this.theForm;
+  }
+
+  getUrl() {
+    return this.url;
+  }
+
+  ngOnDestroy() {
+    this.onClear();
+    this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+  }
 
   ngOnInit() {
     this.theForm = this.theFormBuilder.group({
@@ -67,9 +96,11 @@ export class ElementoUpdateComponent implements OnInit {
     }
   }
 
-  ngOnDestroy() {
-    this.onClear();
-    this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+  onClear() {
+    this.theForm.reset();
+    this.url = null;
+    this.format = null;
+    this.theFile = null;
   }
 
   onFormUpdate(theIElementoDTO: IElementoDTO): void {
@@ -77,8 +108,7 @@ export class ElementoUpdateComponent implements OnInit {
       this.url = theIElementoDTO.elementoUrl;
     } else if (theIElementoDTO.embed != null && theIElementoDTO.embed != '') {
       this.url = theIElementoDTO.embed;
-    }
-   
+    }   
     this.theForm.patchValue({
       id: theIElementoDTO.id,
       dtCriacao: theIElementoDTO.dtCriacao,
@@ -86,34 +116,9 @@ export class ElementoUpdateComponent implements OnInit {
       titulo: theIElementoDTO.titulo,
       descricao: theIElementoDTO.descricao,
       embed: theIElementoDTO.embed,
-      tipoElemento: this.theFieldsService.getItemOfSelect(this.optionsTipoElemento, theIElementoDTO.tipoElemento),
-      status: this.theFieldsService.getItemOfSelect(this.optionsStatus, theIElementoDTO.status),
+      tipoElemento: this.theFieldsService.getItemOfSelect(this.getOptionsTipoElemento(), theIElementoDTO.tipoElemento),
+      status: this.theFieldsService.getItemOfSelect(this.getOptionsStatus(), theIElementoDTO.status),
     });
-  }
-
-  onSelectFile(event) {
-    this.theFile = event.target.files && event.target.files[0];
-    if (this.theFile) {
-      var reader = new FileReader();
-      reader.readAsDataURL(this.theFile);
-      if (this.theFile.type.indexOf('image') > -1) {
-        this.format = 'image';
-      } else if (this.theFile.type.indexOf('video') > -1) {
-        this.format = 'video';
-      } else if (this.theFile.type.indexOf('audio') > -1) {
-        this.format = 'audio';
-      }
-      reader.onload = (event) => {
-        this.url = (<FileReader>event.target).result;
-      }
-    }
-  }
-
-  onClear() {
-    this.theForm.reset();
-    this.url = null;
-    this.format = null;
-    this.theFile = null;
   }
 
   onSave() {
@@ -126,16 +131,16 @@ export class ElementoUpdateComponent implements OnInit {
     this.theInscricao.push(dialogRef.afterClosed().subscribe(result => {
       if (result) {
         let formData: FormData = new FormData();
-        if (this.theFile) {
-          formData.append('file', this.theFile, this.theFile.name);
-        } else if (this.theForm.get('embed').valid) {
-          formData.append('embed', this.theForm.get('embed').value);
+        if (this.getTheFile()) {
+          formData.append('file', this.getTheFile(), this.getTheFile().name);
+        } else if (this.getTheForm().get('embed').valid) {
+          formData.append('embed', this.getTheForm().get('embed').value);
         }
-        formData.append('descricao', this.theForm.get('descricao').value);
-        formData.append('tipoElemento', this.theForm.get('tipoElemento').value);
-        formData.append('titulo', this.theForm.get('titulo').value);
-        formData.append('status', this.theForm.get('status').value);
-        this.theInscricao.push(this.theElementoService.update(formData, this.theForm.get('id').value)
+        formData.append('descricao', this.getTheForm().get('descricao').value);
+        formData.append('tipoElemento', this.getTheForm().get('tipoElemento').value);
+        formData.append('titulo', this.getTheForm().get('titulo').value);
+        formData.append('status', this.getTheForm().get('status').value);
+        this.theInscricao.push(this.theElementoService.update(formData, this.getTheForm().get('id').value)
           .subscribe((event: HttpEvent<Object>) => {
             if (event.type === HttpEventType.Response) {
               this.dialog.closeAll();
@@ -161,7 +166,25 @@ export class ElementoUpdateComponent implements OnInit {
     }));
   }
 
+  onSelectFile(event) {
+    this.theFile = event.target.files && event.target.files[0];
+    if (this.getTheFile()) {
+      var reader = new FileReader();
+      reader.readAsDataURL(this.getTheFile());
+      if (this.getTheFile().type.indexOf('image') > -1) {
+        this.format = 'image';
+      } else if (this.getTheFile().type.indexOf('video') > -1) {
+        this.format = 'video';
+      } else if (this.getTheFile().type.indexOf('audio') > -1) {
+        this.format = 'audio';
+      }
+      reader.onload = (event) => {
+        this.url = (<FileReader>event.target).result;
+      }
+    }
+  }
+
   setUrl() {
-    this.url = this.theForm.get('embed').value;
+    this.url = this.getTheForm().get('embed').value;
   }
 }

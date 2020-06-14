@@ -33,21 +33,21 @@ export class AlbumFindPageComponent implements OnInit, OnDestroy, AfterViewInit 
 
   private delete: boolean;
   private insert: boolean;
-  private update: boolean; 
-  private theLocalUser: ILocalUser;
   private theInscricao: Subscription[] = new Array<Subscription>();
-  dataSource: MatTableDataSource<IAlbumDTO> = new MatTableDataSource();
+  private theLocalUser: ILocalUser;
+  private update: boolean; 
+
   columnsToDisplay = ['codigo', 'nome', 'genero'];
+  dataSource: MatTableDataSource<IAlbumDTO> = new MatTableDataSource();
   expandedElement: IAlbumDTO | null;
   pageEvent: PageEvent;
-
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(
+    private dialog: MatDialog,  
     private theActivatedRoute: ActivatedRoute,
-    private theAlbumService: AlbumService,
-    private dialog: MatDialog,    
+    private theAlbumService: AlbumService,      
     private theRouter: Router,
     private theUnsubscribeControl: UnsubscribeControlService
   ) {
@@ -55,14 +55,14 @@ export class AlbumFindPageComponent implements OnInit, OnDestroy, AfterViewInit 
       this.theLocalUser = JSON.parse(sessionStorage.getItem('localUser')) as ILocalUser;
       switch (this.theLocalUser.theTipoUsuario) {
         case 1:
-          this.insert = true;
-          this.update = true;
           this.delete = true;
+          this.insert = true;
+          this.update = true;         
           break;
         case 2:
-          this.insert = true;
-          this.update = true;
           this.delete = true;
+          this.insert = true;
+          this.update = true;          
           break;
       }
     }
@@ -85,15 +85,15 @@ export class AlbumFindPageComponent implements OnInit, OnDestroy, AfterViewInit 
     }
   }
 
-  getDelete(): boolean {
+  isDelete(): boolean {
     return this.delete;
   }
 
-  getInsert(): boolean {
+  isInsert(): boolean {
     return this.insert;
   }
 
-  getUpdate(): boolean {
+  isUpdate(): boolean {
     return this.update;
   }  
 
@@ -115,7 +115,7 @@ export class AlbumFindPageComponent implements OnInit, OnDestroy, AfterViewInit 
     this.dataSource.sort = this.sort;
   }
     
-  onDelete(theAlbum: IAlbumDTO) {
+  onDelete(theIAlbumDTO: IAlbumDTO) {
     this.dialog.closeAll();
     let dialogRef = this.dialog.open(ConfirmationAlertComponent, { disableClose: true, width: '40%' });
     let instance = dialogRef.componentInstance;
@@ -124,7 +124,7 @@ export class AlbumFindPageComponent implements OnInit, OnDestroy, AfterViewInit 
     instance.classCss = 'color-danger';
     this.theInscricao.push(dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.theInscricao.push(this.theAlbumService.delete(theAlbum.id)
+        this.theInscricao.push(this.theAlbumService.delete(theIAlbumDTO.id)
           .subscribe((event: HttpEvent<Object>) => {
             if (event.type == HttpEventType.Response) {
               this.dialog.closeAll();

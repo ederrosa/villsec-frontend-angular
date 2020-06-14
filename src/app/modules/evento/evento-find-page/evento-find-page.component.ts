@@ -31,22 +31,22 @@ import { IEventoDTO } from 'src/app/shared/models/dtos/ievento-dto';
 })
 export class EventoFindPageComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  disabledNew: boolean = true;
-  disabledEdit: boolean = true;
-  disabledDel: boolean = true;
-  private theLocalUser: ILocalUser;
+  private delete: boolean;
+  private insert: boolean;
   private theInscricao: Subscription[] = new Array<Subscription>();
-  dataSource: MatTableDataSource<IEventoDTO> = new MatTableDataSource();
+  private theLocalUser: ILocalUser;
+  private update: boolean;
+
   columnsToDisplay = ['nome', 'tipoEvento', 'cidade', 'classificacao'];
+  dataSource: MatTableDataSource<IEventoDTO> = new MatTableDataSource();
   expandedElement: IEventoDTO | null;
   pageEvent: PageEvent;
-
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(
-    private theActivatedRoute: ActivatedRoute,
+  constructor(   
     private dialog: MatDialog,
+    private theActivatedRoute: ActivatedRoute,
     private theEventoService: EventoService,
     private theRouter: Router,
     private theUnsubscribeControl: UnsubscribeControlService
@@ -55,14 +55,14 @@ export class EventoFindPageComponent implements OnInit, OnDestroy, AfterViewInit
       this.theLocalUser = JSON.parse(sessionStorage.getItem('localUser')) as ILocalUser;
       switch (this.theLocalUser.theTipoUsuario) {
         case 1:
-          this.disabledDel = false;
-          this.disabledEdit = false;
-          this.disabledNew = false;
+          this.delete = true;
+          this.insert = true;
+          this.update = true;
           break;
         case 2:
-          this.disabledDel = false;
-          this.disabledEdit = false;
-          this.disabledNew = false;
+          this.delete = true;
+          this.insert = true;
+          this.update = true;
           break;
       }
     }
@@ -78,9 +78,30 @@ export class EventoFindPageComponent implements OnInit, OnDestroy, AfterViewInit
     ));
   }
 
-  ngOnInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  isDelete(): boolean {
+    return this.delete;
+  }
+
+  isInsert(): boolean {
+    return this.insert;
+  }
+
+  isUpdate(): boolean {
+    return this.update;
+  }
+
+  ngAfterViewInit() {
+    this.theInscricao.push(this.paginator.page
+      .pipe(
+        tap(() => this.onLoadPage())
+      ).subscribe());
   }
 
   ngOnDestroy() {
@@ -89,14 +110,12 @@ export class EventoFindPageComponent implements OnInit, OnDestroy, AfterViewInit
     this.theUnsubscribeControl.unsubscribe(this.theInscricao);
   }
 
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+  ngOnInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
-  delete(theEvento: IEventoDTO) {
+  onDelete(theIEventoDTO: IEventoDTO) {
     this.dialog.closeAll();
     let dialogRef = this.dialog.open(ConfirmationAlertComponent, { disableClose: true, width: '40%' });
     let instance = dialogRef.componentInstance;
@@ -105,7 +124,7 @@ export class EventoFindPageComponent implements OnInit, OnDestroy, AfterViewInit
     instance.classCss = 'color-danger';
     this.theInscricao.push(dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.theInscricao.push(this.theEventoService.delete(theEvento.id)
+        this.theInscricao.push(this.theEventoService.delete(theIEventoDTO.id)
           .subscribe((event: HttpEvent<Object>) => {
             if (event.type == HttpEventType.Response) {
               this.dialog.closeAll();
@@ -125,22 +144,7 @@ export class EventoFindPageComponent implements OnInit, OnDestroy, AfterViewInit
     }));
   }
 
-  update(theIEventoDTO: IEventoDTO) {
-    this.theEventoService.setIEventoDTO(theIEventoDTO);
-    this.theRouter.navigate(
-      ['editar', theIEventoDTO.id],
-      { relativeTo: this.theActivatedRoute }
-    );
-  }
-
-  ngAfterViewInit() {
-    this.theInscricao.push(this.paginator.page
-      .pipe(
-        tap(() => this.loadPage())
-      ).subscribe());
-  }
-
-  loadPage() {
+  onLoadPage() {
     this.theInscricao.push(this.theEventoService.findPage(
       this.paginator.pageIndex,
       this.paginator.pageSize,
@@ -151,5 +155,13 @@ export class EventoFindPageComponent implements OnInit, OnDestroy, AfterViewInit
         this.dataSource = new MatTableDataSource(x['content']);
       })
     ));
+  }
+
+  onUpdate(theIEventoDTO: IEventoDTO) {
+    this.theEventoService.setIEventoDTO(theIEventoDTO);
+    this.theRouter.navigate(
+      ['editar', theIEventoDTO.id],
+      { relativeTo: this.theActivatedRoute }
+    );
   }
 }

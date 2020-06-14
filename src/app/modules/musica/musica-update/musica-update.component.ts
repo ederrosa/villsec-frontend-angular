@@ -21,37 +21,70 @@ import { AlbumService } from '../../album/album.service';
   templateUrl: './musica-update.component.html',
   styleUrls: ['./musica-update.component.scss']
 })
-export class MusicaUpdateComponent implements OnInit, OnDestroy, AfterViewInit{
+export class MusicaUpdateComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  isLinear = true;
-  theForm: FormGroup;
-  theAlbumForm: FormGroup;
-  url: any;
-  format: string;
-  private theFile: File;
-  private theInscricao: Subscription[] = new Array<Subscription>();
-  optionsCopyright: IOptions[] = [
+  private format: string;
+  private readonly linear: boolean = true;
+  private readonly optionsCopyright: IOptions[] = [
     { value: true, option: 'Sim' },
     { value: false, option: 'Não' }];
+  private theAlbumForm: FormGroup;
+  private theForm: FormGroup;
+  private theFile: File;
+  private theInscricao: Subscription[] = new Array<Subscription>();
+  private url: any;
 
   constructor(
-    private theMusicaService: MusicaService,
-    private theAlbumService: AlbumService,
+    private dialog: MatDialog,
     private theActivatedRoute: ActivatedRoute,
+    private theAlbumService: AlbumService,
     private theFieldsService: FieldsService,
     private theFormBuilder: FormBuilder,
-    private dialog: MatDialog,
+    private theMusicaService: MusicaService,
     private theUnsubscribeControl: UnsubscribeControlService
   ) { }
+
+  getFormat(): string {
+    return this.format;
+  }
+
+  getOptionsCopyright(): IOptions[] {
+    return this.optionsCopyright;
+  }
+
+  getTheAlbumForm(): FormGroup {
+    return this.theAlbumForm;
+  }
+
+  getTheForm(): FormGroup {
+    return this.theForm;
+  }
+
+  getTheFile(): File {
+    return this.theFile;
+  }
+
+  getUrl() {
+    return this.url;
+  }
+
+  isLinear(): boolean {
+    return this.linear;
+  }
 
   ngAfterViewInit(): void {
     this.theInscricao.push(this.theAlbumService.eventEmitter.subscribe(
       theAlbum => {
-        this.theAlbumForm.patchValue({
+        this.getTheAlbumForm().patchValue({
           theAlbumID: theAlbum.id
         });
       }
     ));
+  }
+
+  ngOnDestroy() {
+    this.onClear();
+    this.theUnsubscribeControl.unsubscribe(this.theInscricao);
   }
 
   ngOnInit() {
@@ -66,7 +99,7 @@ export class MusicaUpdateComponent implements OnInit, OnDestroy, AfterViewInit{
       faixa: ['', [Validators.required]],
       file: [''],
       idioma: ['', [Validators.required]],
-      nome: ['', [Validators.required]],        
+      nome: ['', [Validators.required]],
     });
     this.theAlbumForm = this.theFormBuilder.group({
       theAlbumID: ['', [Validators.required]]
@@ -81,48 +114,43 @@ export class MusicaUpdateComponent implements OnInit, OnDestroy, AfterViewInit{
     }
   }
 
-  ngOnDestroy() {
-    this.onClear();
-    this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+  onClear() {
+    this.getTheForm().reset();
+    this.url = null;
+    this.format = null;
+    this.theFile = null;
   }
 
   onFormUpdate(theIMusicaDTO: IMusicaDTO): void {
     this.url = theIMusicaDTO.arquivoUrl;
     this.format = 'audio';
-    this.theForm.patchValue({
+    this.getTheForm().patchValue({
       id: theIMusicaDTO.id,
       dtCriacao: theIMusicaDTO.dtCriacao,
       autor: theIMusicaDTO.autor,
       bpm: theIMusicaDTO.bpm,
       coautor: theIMusicaDTO.coautor,
-      copyright: this.theFieldsService.getItemOfSelect(this.optionsCopyright, theIMusicaDTO.copyright),
+      copyright: this.theFieldsService.getItemOfSelect(this.getOptionsCopyright(), theIMusicaDTO.copyright),
       duracao: theIMusicaDTO.duracao,
       file: '',
       faixa: theIMusicaDTO.faixa,
       idioma: theIMusicaDTO.idioma,
-      nome: theIMusicaDTO.nome,     
+      nome: theIMusicaDTO.nome,
     });
   }
 
   onSelectFile(event) {
     this.theFile = event.target.files && event.target.files[0];
-    if (this.theFile) {
+    if (this.getTheFile()) {
       var reader = new FileReader();
-      reader.readAsDataURL(this.theFile);
-      if (this.theFile.type.indexOf('audio') > -1) {
+      reader.readAsDataURL(this.getTheFile());
+      if (this.getTheFile().type.indexOf('audio') > -1) {
         this.format = 'audio';
       }
       reader.onload = (event) => {
         this.url = (<FileReader>event.target).result;
       }
-    }    
-  }
-
-  onClear() {
-    this.theForm.reset();
-    this.url = null;
-    this.format = null;
-    this.theFile = null;
+    }
   }
 
   onSave() {
@@ -135,20 +163,20 @@ export class MusicaUpdateComponent implements OnInit, OnDestroy, AfterViewInit{
     this.theInscricao.push(dialogRef.afterClosed().subscribe(result => {
       if (result) {
         let formData: FormData = new FormData();
-        formData.append('autor', this.theForm.get('autor').value);
-        formData.append('bpm', this.theForm.get('bpm').value);
-        formData.append('coautor', this.theForm.get('coautor').value);
-        formData.append('copyright', this.theForm.get('copyright').value);
-        formData.append('duracao', this.theForm.get('duracao').value);
-        formData.append('idioma', this.theForm.get('idioma').value);
-        formData.append('faixa', this.theForm.get('faixa').value);
-        if (this.theFile) {
-          formData.append('file', this.theFile, this.theFile.name);
-        } 
-        formData.append('idioma', this.theForm.get('idioma').value);
-        formData.append('nome', this.theForm.get('nome').value);
-        formData.append('albumID', this.theAlbumForm.get('theAlbumID').value);
-        this.theInscricao.push(this.theMusicaService.update(formData, this.theForm.get('id').value)
+        formData.append('autor', this.getTheForm().get('autor').value);
+        formData.append('bpm', this.getTheForm().get('bpm').value);
+        formData.append('coautor', this.getTheForm().get('coautor').value);
+        formData.append('copyright', this.getTheForm().get('copyright').value);
+        formData.append('duracao', this.getTheForm().get('duracao').value);
+        formData.append('idioma', this.getTheForm().get('idioma').value);
+        formData.append('faixa', this.getTheForm().get('faixa').value);
+        if (this.getTheFile()) {
+          formData.append('file', this.getTheFile(), this.getTheFile().name);
+        }
+        formData.append('idioma', this.getTheForm().get('idioma').value);
+        formData.append('nome', this.getTheForm().get('nome').value);
+        formData.append('albumID', this.getTheAlbumForm().get('theAlbumID').value);
+        this.theInscricao.push(this.theMusicaService.update(formData, this.getTheForm().get('id').value)
           .subscribe((event: HttpEvent<Object>) => {
             if (event.type === HttpEventType.Response) {
               this.dialog.closeAll();

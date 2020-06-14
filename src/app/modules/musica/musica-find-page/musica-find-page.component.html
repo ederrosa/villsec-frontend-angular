@@ -6,8 +6,8 @@
         <mat-card-subtitle>V1LLSEC</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-        <mat-horizontal-stepper [linear]="true" #stepper>
-            <mat-step [stepControl]="theIAlbum">
+        <mat-horizontal-stepper [linear]="getLinear()" #stepper>
+            <mat-step [stepControl]="getTheAlbumForm()">
                 <form>
                     <ng-template matStepLabel>Selecione o Álbum.</ng-template>
                     <app-album-table></app-album-table>
@@ -17,7 +17,7 @@
                 <ng-template matStepLabel>Lista de Músicas</ng-template>
                 <mat-card-title>
                     <div>
-                        <button routerLink="/musicas/novo" *ngIf="disabledNew" mat-raised-button color="primary">
+                        <button routerLink="/musicas/novo" *ngIf="getInsert()" mat-raised-button color="primary">
                             <mat-icon>add</mat-icon> Cadastrar uma nova música
                         </button>
                     </div>
@@ -79,10 +79,10 @@
                                             </tr>
                                         </table>
                                         <div class="example-button-row">
-                                            <button (click)="update(element)" *ngIf="disabledEdit" mat-button color="accent">
+                                            <button (click)="onUpdate(element)" *ngIf="getUpdate()" mat-button color="accent">
                                                 <mat-icon>edit</mat-icon> Editar
                                             </button>
-                                            <button (click)="delete(element)" *ngIf="disabledDel" mat-button color="warn">
+                                            <button (click)="onDelete(element)" *ngIf="getDelete()" mat-button color="warn">
                                                 <mat-icon>clear</mat-icon> Deletar
                                             </button>
                                         </div>

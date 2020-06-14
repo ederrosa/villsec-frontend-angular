@@ -27,10 +27,11 @@ import { AlbumService } from '../album.service';
 export class AlbumTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private insert: boolean;
-  private theLocalUser: ILocalUser;
   private theInscricao: Subscription[] = new Array<Subscription>();
-  dataSource: MatTableDataSource<IAlbumDTO> = new MatTableDataSource();
+  private theLocalUser: ILocalUser;
+
   columnsToDisplay = ['codigo', 'nome', 'genero'];
+  dataSource: MatTableDataSource<IAlbumDTO> = new MatTableDataSource();
   expandedElement: IAlbumDTO | null;
   pageEvent: PageEvent;
 
@@ -68,7 +69,7 @@ export class AlbumTableComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  getInsert(): boolean {
+  isInsert(): boolean {
     return this.insert;
   }
 

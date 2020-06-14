@@ -13,7 +13,7 @@ import { IMusicaDTO } from 'src/app/shared/models/dtos/imusica-dto';
 export class MusicaService {
 
   private readonly API = API_CONFIGURATION.baseUrl + '/musicas';
-  theIMusicaDTO: IMusicaDTO;
+  private theIMusicaDTO: IMusicaDTO;
   eventEmitter = new EventEmitter<IMusicaDTO>();
 
   constructor(public http: HttpClient) { }

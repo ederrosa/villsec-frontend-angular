@@ -15,19 +15,27 @@ import { InformativeAlertComponent } from 'src/app/shared/components/alerts/info
   styleUrls: ['./album-insert.component.scss']
 })
 export class AlbumInsertComponent implements OnInit {
-
-  private theForm: FormGroup;
-  private url: any;
+    
   private format: string;
   private theFile: File;
+  private theForm: FormGroup;
   private theInscricao: Subscription[] = new Array<Subscription>();
+  private url: any;
 
   constructor(
-    private theFormBuilder: FormBuilder,
-    private theAlbumService: AlbumService,
     private dialog: MatDialog,
+    private theAlbumService: AlbumService,
+    private theFormBuilder: FormBuilder,
     private theUnsubscribeControl: UnsubscribeControlService
   ) { }
+   
+  getFormat() {
+    return this.format;
+  }
+
+  getTheFile(): File {
+    return this.theFile;
+  }
 
   getTheForm(): FormGroup {
     return this.theForm;
@@ -35,10 +43,6 @@ export class AlbumInsertComponent implements OnInit {
 
   getUrl() {
     return this.url;
-  }
-
-  getFormat() {
-    return this.format;
   }
 
   ngOnDestroy() {
@@ -57,7 +61,7 @@ export class AlbumInsertComponent implements OnInit {
   }
 
   onClear() {
-    this.theForm.reset();
+    this.getTheForm().reset();
     this.url = null;
     this.format = null;
     this.theFile = null;
@@ -65,11 +69,11 @@ export class AlbumInsertComponent implements OnInit {
 
   onSave() {
     let formData: FormData = new FormData();
-    formData.append('ano', this.theForm.get('ano').value);
-    formData.append('descricao', this.theForm.get('descricao').value);
-    formData.append('genero', this.theForm.get('genero').value);
-    formData.append('nome', this.theForm.get('nome').value);
-    formData.append('file', this.theFile, this.theFile.name);
+    formData.append('ano', this.getTheForm().get('ano').value);
+    formData.append('descricao', this.getTheForm().get('descricao').value);
+    formData.append('genero', this.getTheForm().get('genero').value);
+    formData.append('nome', this.getTheForm().get('nome').value);
+    formData.append('file', this.getTheFile(), this.getTheFile().name);
     let dialogRef = this.dialog.open(ProgressSpinnerOverviewComponent, { disableClose: true, width: '350px', height: '350px' });
     this.theInscricao.push(this.theAlbumService.insert(formData)
       .subscribe((event: HttpEvent<Object>) => {
@@ -95,10 +99,10 @@ export class AlbumInsertComponent implements OnInit {
 
   onSelectFile(event) {
     this.theFile = event.target.files && event.target.files[0];
-    if (this.theFile) {
+    if (this.getTheFile()) {
       var reader = new FileReader();
-      reader.readAsDataURL(this.theFile);
-      if (this.theFile.type.indexOf('image') > -1) {
+      reader.readAsDataURL(this.getTheFile());
+      if (this.getTheFile().type.indexOf('image') > -1) {
         this.format = 'image';
       }
       reader.onload = (event) => {

@@ -2,7 +2,7 @@
     <mat-card-header>
         <mat-card-title>
             <div>
-                <button routerLink="/albuns/novo" *ngIf="getInsert()" mat-raised-button color="primary">
+                <button routerLink="/albuns/novo" *ngIf="isInsert()" mat-raised-button color="primary">
                     <mat-icon>add</mat-icon> Cadastrar um novo álbum
                 </button>
             </div>
@@ -63,10 +63,10 @@
                                     </tr>
                                 </table>
                                 <div class="example-button-row">
-                                    <button (click)="onUpdate(element)" *ngIf="getUpdate()" mat-button color="accent">
+                                    <button (click)="onUpdate(element)" *ngIf="isUpdate()" mat-button color="accent">
                                         <mat-icon>edit</mat-icon> Editar
                                     </button>
-                                    <button (click)="onDelete(element)" *ngIf="getDelete()" mat-button color="warn">
+                                    <button (click)="onDelete(element)" *ngIf="isDelete()" mat-button color="warn">
                                         <mat-icon>clear</mat-icon> Deletar
                                     </button>
                                 </div>

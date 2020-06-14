@@ -1,4 +1,4 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { HttpEventType, HttpEvent } from '@angular/common/http';
@@ -14,6 +14,7 @@ import { FieldsService } from 'src/app/shared/components/fields/fields.service';
 import { switchMap, map } from 'rxjs/operators';
 import { IEventoDTO } from 'src/app/shared/models/dtos/ievento-dto';
 import { IOptions } from 'src/app/shared/components/fields/select/select.component';
+import { CepService } from 'src/app/core/services/cep.service';
 
 
 @Component({
@@ -21,29 +22,70 @@ import { IOptions } from 'src/app/shared/components/fields/select/select.compone
   templateUrl: './evento-update.component.html',
   styleUrls: ['./evento-update.component.scss']
 })
-export class EventoUpdateComponent implements OnInit {
+export class EventoUpdateComponent implements OnInit, OnDestroy {
 
-  theForm: FormGroup;
-  url: any;
-  format: string;
-  private theFile: File;
-  private theInscricao: Subscription[] = new Array<Subscription>();
-  optionsTipoEvento: IOptions[] = [
+  private format: string;
+  private readonly optionsTipoEvento: IOptions[] = [
     { value: 1, option: 'tipo 1' },
     { value: 2, option: 'tipo 2' },
     { value: 3, option: 'tipo 3' },
     { value: 4, option: 'tipo 4' },
     { value: 5, option: 'tipo 5' },
     { value: 6, option: 'tipo 6' }];
+  private theFile: File;
+  private theForm: FormGroup;
+  private theInscricao: Subscription[] = new Array<Subscription>();
+  private url: any;
 
-  constructor(
-    private theEventoService: EventoService,
+  constructor(    
+    private dialog: MatDialog,
     private theActivatedRoute: ActivatedRoute,
+    private theCepService: CepService,
+    private theEventoService: EventoService,
     private theFieldsService: FieldsService,
     private theFormBuilder: FormBuilder,
-    private dialog: MatDialog,
     private theUnsubscribeControl: UnsubscribeControlService
   ) { }
+
+  getFormat(): string {
+    return this.format;
+  }
+
+  getOptionsTipoEvento(): IOptions[] {
+    return this.optionsTipoEvento;
+  }
+
+  getTheFile(): File {
+    return this.theFile;
+  }
+
+  getTheForm(): FormGroup {
+    return this.theForm;
+  }
+
+  getUrl(): string {
+    return this.url;
+  }
+
+  onClear() {
+    this.getTheForm().reset();
+    this.url = null;
+    this.format = null;
+    this.theFile = null;
+  }
+
+  onConsultaCEP() {
+    const cep = this.getTheForm().get('cep').value;
+    if (cep != null && cep !== '') {
+      this.theInscricao.push(this.theCepService.consultaCEP(cep)
+        .subscribe(dados => this.populaDadosForm(dados)));
+    }
+  }
+
+  ngOnDestroy() {
+    this.onClear();
+    this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+  }
 
   ngOnInit() {
     this.theForm = this.theFormBuilder.group({
@@ -75,15 +117,10 @@ export class EventoUpdateComponent implements OnInit {
     }
   }
 
-  ngOnDestroy() {
-    this.onClear();
-    this.theUnsubscribeControl.unsubscribe(this.theInscricao);
-  }
-
   onFormUpdate(theIEventoDTO: IEventoDTO): void {
     this.format = 'image';
     this.url = theIEventoDTO.folderUrl;
-    this.theForm.patchValue({
+    this.getTheForm().patchValue({
       id: theIEventoDTO.id,
       dtCriacao: theIEventoDTO.dtCriacao,
       file: '',
@@ -91,40 +128,19 @@ export class EventoUpdateComponent implements OnInit {
       diaInicio: new Date(theIEventoDTO.diaInicio.toString()),
       diaTermino: new Date(theIEventoDTO.diaTermino.toString()),
       descricao: theIEventoDTO.descricao,
-      horaInicio:  theIEventoDTO.horaInicio.toString(),
+      horaInicio: theIEventoDTO.horaInicio.toString(),
       horaTermino: theIEventoDTO.horaTermino.toString(),
       nome: theIEventoDTO.nome,
-      tipoEvento: this.theFieldsService.getItemOfSelect(this.optionsTipoEvento, theIEventoDTO.tipoEvento),
+      tipoEvento: this.theFieldsService.getItemOfSelect(this.getOptionsTipoEvento(), theIEventoDTO.tipoEvento),
       logradouro: theIEventoDTO.logradouro,
       cep: theIEventoDTO.cep,
       bairro: theIEventoDTO.bairro,
       cidade: theIEventoDTO.cidade,
       estado: theIEventoDTO.estado,
-      pais: theIEventoDTO.pais   
+      pais: theIEventoDTO.pais
     });
   }
-
-  onSelectFile(event) {
-    this.theFile = event.target.files && event.target.files[0];
-    if (this.theFile) {
-      var reader = new FileReader();
-      reader.readAsDataURL(this.theFile);
-      if (this.theFile.type.indexOf('image') > -1) {
-        this.format = 'image';
-      }
-      reader.onload = (event) => {
-        this.url = (<FileReader>event.target).result;
-      }
-    }
-  }
-
-  onClear() {
-    this.theForm.reset();
-    this.url = null;
-    this.format = null;
-    this.theFile = null;
-  }
-
+  
   onSave() {
     this.dialog.closeAll();
     let dialogRef = this.dialog.open(ConfirmationAlertComponent, { disableClose: true, width: '40%' });
@@ -135,24 +151,24 @@ export class EventoUpdateComponent implements OnInit {
     this.theInscricao.push(dialogRef.afterClosed().subscribe(result => {
       if (result) {
         let formData: FormData = new FormData();
-        formData.append('classificacao', this.theForm.get('classificacao').value);
-        formData.append('diaInicio', new Date(this.theForm.get('diaInicio').value).toLocaleDateString());
-        formData.append('diaTermino', new Date(this.theForm.get('diaTermino').value).toLocaleDateString());
-        formData.append('descricao', this.theForm.get('descricao').value);
-        if (this.theFile) {
-          formData.append('file', this.theFile, this.theFile.name);
+        formData.append('classificacao', this.getTheForm().get('classificacao').value);
+        formData.append('diaInicio', new Date(this.getTheForm().get('diaInicio').value).toLocaleDateString());
+        formData.append('diaTermino', new Date(this.getTheForm().get('diaTermino').value).toLocaleDateString());
+        formData.append('descricao', this.getTheForm().get('descricao').value);
+        if (this.getTheFile()) {
+          formData.append('file', this.getTheFile(), this.getTheFile().name);
         }
-        formData.append('horaInicio', this.theForm.get('horaInicio').value);
-        formData.append('horaTerminio', this.theForm.get('horaTermino').value);
-        formData.append('tipoEvento', this.theForm.get('tipoEvento').value);
-        formData.append('nome', this.theForm.get('nome').value);
-        formData.append('logradouro', this.theForm.get('logradouro').value);
-        formData.append('cep', this.theForm.get('cep').value);
-        formData.append('bairro', this.theForm.get('bairro').value);
-        formData.append('cidade', this.theForm.get('cidade').value);
-        formData.append('estado', this.theForm.get('estado').value);
-        formData.append('pais', this.theForm.get('pais').value); 
-        this.theInscricao.push(this.theEventoService.update(formData, this.theForm.get('id').value)
+        formData.append('horaInicio', this.getTheForm().get('horaInicio').value);
+        formData.append('horaTerminio', this.getTheForm().get('horaTermino').value);
+        formData.append('tipoEvento', this.getTheForm().get('tipoEvento').value);
+        formData.append('nome', this.getTheForm().get('nome').value);
+        formData.append('logradouro', this.getTheForm().get('logradouro').value);
+        formData.append('cep', this.getTheForm().get('cep').value);
+        formData.append('bairro', this.getTheForm().get('bairro').value);
+        formData.append('cidade', this.getTheForm().get('cidade').value);
+        formData.append('estado', this.getTheForm().get('estado').value);
+        formData.append('pais', this.getTheForm().get('pais').value);
+        this.theInscricao.push(this.theEventoService.update(formData, this.getTheForm().get('id').value)
           .subscribe((event: HttpEvent<Object>) => {
             if (event.type === HttpEventType.Response) {
               this.dialog.closeAll();
@@ -178,4 +194,29 @@ export class EventoUpdateComponent implements OnInit {
     }));
   }
 
+  onSelectFile(event) {
+    this.theFile = event.target.files && event.target.files[0];
+    if (this.getTheFile()) {
+      var reader = new FileReader();
+      reader.readAsDataURL(this.getTheFile());
+      if (this.getTheFile().type.indexOf('image') > -1) {
+        this.format = 'image';
+      }
+      reader.onload = (event) => {
+        this.url = (<FileReader>event.target).result;
+      }
+    }
+  }
+
+  private populaDadosForm(dados) {
+    this.getTheForm().patchValue({
+      logradouro: dados.logradouro,
+      cep: dados.cep,
+      complemento: dados.complemento,
+      bairro: dados.bairro,
+      cidade: dados.localidade,
+      estado: dados.uf,
+      pais: 'Brasil'
+    });
+  }
 }

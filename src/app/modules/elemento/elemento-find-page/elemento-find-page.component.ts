@@ -34,11 +34,12 @@ import { DialogOverviewIframeComponent } from 'src/app/shared/components/dialog-
 })
 export class ElementoFindPageComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  disabledNew: boolean = true;
-  disabledEdit: boolean = true;
-  disabledDel: boolean = true;
-  private theLocalUser: ILocalUser;
+  private delete: boolean;
+  private insert: boolean;  
   private theInscricao: Subscription[] = new Array<Subscription>();
+  private theLocalUser: ILocalUser;
+  private update: boolean;
+
   dataSource: MatTableDataSource<IElementoDTO> = new MatTableDataSource();
   columnsToDisplay = ['titulo', 'tipoElemento'];
   expandedElement: IElementoDTO | null;
@@ -48,8 +49,8 @@ export class ElementoFindPageComponent implements OnInit, OnDestroy, AfterViewIn
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(
-    private theActivatedRoute: ActivatedRoute,
     private dialog: MatDialog,
+    private theActivatedRoute: ActivatedRoute,    
     private theElementoService: ElementoService,
     private theRouter: Router,
     private theUnsubscribeControl: UnsubscribeControlService
@@ -58,14 +59,14 @@ export class ElementoFindPageComponent implements OnInit, OnDestroy, AfterViewIn
       this.theLocalUser = JSON.parse(sessionStorage.getItem('localUser')) as ILocalUser;
       switch (this.theLocalUser.theTipoUsuario) {
         case 1:
-          this.disabledDel = false;
-          this.disabledEdit = false;
-          this.disabledNew = false;
+          this.delete = true;
+          this.insert = true;
+          this.update = true;
           break;
         case 2:
-          this.disabledDel = false;
-          this.disabledEdit = true;
-          this.disabledNew = false;
+          this.delete = true;
+          this.insert = true;
+          this.update = true;
           break;
       }
     }
@@ -81,9 +82,30 @@ export class ElementoFindPageComponent implements OnInit, OnDestroy, AfterViewIn
     ));
   }
 
-  ngOnInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  isDelete(): boolean {
+    return this.delete;
+  }
+
+  isInsert(): boolean {
+    return this.insert;
+  }
+
+  isUpdate(): boolean {
+    return this.update;
+  }
+
+  ngAfterViewInit() {
+    this.theInscricao.push(this.paginator.page
+      .pipe(
+        tap(() => this.onLoadPage())
+      ).subscribe());
   }
 
   ngOnDestroy() {
@@ -92,14 +114,12 @@ export class ElementoFindPageComponent implements OnInit, OnDestroy, AfterViewIn
     this.theUnsubscribeControl.unsubscribe(this.theInscricao);
   }
 
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+  ngOnInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
-  delete(theIElementoDTO: IElementoDTO) {
+  onDelete(theIElementoDTO: IElementoDTO) {
     this.dialog.closeAll();
     let dialogRef = this.dialog.open(ConfirmationAlertComponent, { disableClose: true, width: '40%' });
     let instance = dialogRef.componentInstance;
@@ -128,22 +148,7 @@ export class ElementoFindPageComponent implements OnInit, OnDestroy, AfterViewIn
     }));
   }
 
-  update(theIElementoDTO: IElementoDTO) {
-    this.theElementoService.setIElementoDTO(theIElementoDTO);
-    this.theRouter.navigate(
-      ['editar', theIElementoDTO.id],
-      { relativeTo: this.theActivatedRoute }
-    );
-  }
-
-  ngAfterViewInit() {
-    this.theInscricao.push(this.paginator.page
-      .pipe(
-        tap(() => this.loadPage())
-      ).subscribe());
-  }
-
-  loadPage() {
+  onLoadPage() {
     this.theInscricao.push(this.theElementoService.findPage(
       this.paginator.pageIndex,
       this.paginator.pageSize,
@@ -156,9 +161,17 @@ export class ElementoFindPageComponent implements OnInit, OnDestroy, AfterViewIn
     ));
   }
 
+  onUpdate(theIElementoDTO: IElementoDTO) {
+    this.theElementoService.setIElementoDTO(theIElementoDTO);
+    this.theRouter.navigate(
+      ['editar', theIElementoDTO.id],
+      { relativeTo: this.theActivatedRoute }
+    );
+  }
+
   openDialogAudio(theIElementoDTO: IElementoDTO): void {
     this.dialog.closeAll();
-    let dialogRef = this.dialog.open(DialogOverviewAudioComponent, { });
+    let dialogRef = this.dialog.open(DialogOverviewAudioComponent, {});
     let instance = dialogRef.componentInstance;
     instance.title = theIElementoDTO.titulo;
     instance.subtitle = theIElementoDTO.descricao;
@@ -167,7 +180,7 @@ export class ElementoFindPageComponent implements OnInit, OnDestroy, AfterViewIn
 
   openDialogImage(theIElementoDTO: IElementoDTO): void {
     this.dialog.closeAll();
-    let dialogRef = this.dialog.open(DialogOverviewImageComponent, { });
+    let dialogRef = this.dialog.open(DialogOverviewImageComponent, {});
     let instance = dialogRef.componentInstance;
     instance.title = theIElementoDTO.titulo;
     instance.subtitle = theIElementoDTO.descricao;
@@ -176,7 +189,7 @@ export class ElementoFindPageComponent implements OnInit, OnDestroy, AfterViewIn
 
   openDialogVideo(theIElementoDTO: IElementoDTO): void {
     this.dialog.closeAll();
-    let dialogRef = this.dialog.open(DialogOverviewVideoComponent, { });
+    let dialogRef = this.dialog.open(DialogOverviewVideoComponent, {});
     let instance = dialogRef.componentInstance;
     instance.title = theIElementoDTO.titulo;
     instance.subtitle = theIElementoDTO.descricao;
@@ -185,7 +198,7 @@ export class ElementoFindPageComponent implements OnInit, OnDestroy, AfterViewIn
 
   openDialogIframe(theIElementoDTO: IElementoDTO): void {
     this.dialog.closeAll();
-    let dialogRef = this.dialog.open(DialogOverviewIframeComponent, { });
+    let dialogRef = this.dialog.open(DialogOverviewIframeComponent, {});
     let instance = dialogRef.componentInstance;
     instance.title = theIElementoDTO.titulo;
     instance.subtitle = theIElementoDTO.descricao;
