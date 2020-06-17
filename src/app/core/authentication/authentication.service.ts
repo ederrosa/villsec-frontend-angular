@@ -33,6 +33,11 @@ export class AuthenticationService {
     );
   }
 
+  logout() {
+    this.theStorageService.setLocalUser(null);
+    this.onReloadRoute('');
+  }
+
   onReloadRoute(url: string) {
     this.router.navigateByUrl(url, { skipLocationChange: false })
       .then(() => this.router.navigate([url]));
@@ -66,11 +71,6 @@ export class AuthenticationService {
       theMatricula: matricula
     }
     this.theStorageService.setLocalUser(theUser);
-    this.onReloadRoute('');
-  }
-
-  logout() {
-    this.theStorageService.setLocalUser(null);
     this.onReloadRoute('');
   }
 }

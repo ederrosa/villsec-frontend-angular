@@ -31,22 +31,22 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class ProprietarioFindPageComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  disabledNew: boolean = true;
-  disabledEdit: boolean = true;
-  disabledDel: boolean = true;
-  private theLocalUser: ILocalUser;
+  private delete: boolean;
+  private insert: boolean;
   private theInscricao: Subscription[] = new Array<Subscription>();
-  dataSource: MatTableDataSource<IProprietarioDTO> = new MatTableDataSource();
+  private theLocalUser: ILocalUser;
+  private update: boolean;
+
   columnsToDisplay = ['id', 'matricula', 'nome', 'email'];
+  dataSource: MatTableDataSource<IProprietarioDTO> = new MatTableDataSource();
   expandedElement: IProprietarioDTO | null;
   pageEvent: PageEvent;
-
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(
-    private theActivatedRoute: ActivatedRoute,
     private dialog: MatDialog,
+    private theActivatedRoute: ActivatedRoute,
     private theProprietarioService: ProprietarioService,
     private theRouter: Router,
     private theUnsubscribeControl: UnsubscribeControlService
@@ -55,14 +55,14 @@ export class ProprietarioFindPageComponent implements OnInit, OnDestroy, AfterVi
       this.theLocalUser = JSON.parse(sessionStorage.getItem('localUser')) as ILocalUser;
       switch (this.theLocalUser.theTipoUsuario) {
         case 1:
-          this.disabledDel = true;
-          this.disabledEdit = true;
-          this.disabledNew = true;
+          this.delete = true;
+          this.insert = true;
+          this.update = true;
           break;
         case 2:
-          this.disabledDel = true;
-          this.disabledEdit = true;
-          this.disabledNew = true;
+          this.delete = true;
+          this.insert = true;
+          this.update = true;
           break;
       }
     }
@@ -78,9 +78,30 @@ export class ProprietarioFindPageComponent implements OnInit, OnDestroy, AfterVi
     ));
   }
 
-  ngOnInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  isDelete(): boolean {
+    return this.delete;
+  }
+
+  isInsert(): boolean {
+    return this.insert;
+  }
+
+  isUpdate(): boolean {
+    return this.update;
+  }
+
+  ngAfterViewInit() {
+    this.theInscricao.push(this.paginator.page
+      .pipe(
+        tap(() => this.onLoadPage())
+      ).subscribe());
   }
 
   ngOnDestroy() {
@@ -89,14 +110,12 @@ export class ProprietarioFindPageComponent implements OnInit, OnDestroy, AfterVi
     this.theUnsubscribeControl.unsubscribe(this.theInscricao);
   }
 
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+  ngOnInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
-  delete(theIProprietarioDTO: IProprietarioDTO) {
+  onDelete(theIProprietarioDTO: IProprietarioDTO) {
     this.dialog.closeAll();
     let dialogRef = this.dialog.open(ConfirmationAlertComponent, { disableClose: true, width: '40%' });
     let instance = dialogRef.componentInstance;
@@ -125,22 +144,7 @@ export class ProprietarioFindPageComponent implements OnInit, OnDestroy, AfterVi
     }));
   }
 
-  update(theIProprietarioDTO: IProprietarioDTO) {
-    this.theProprietarioService.setIProprietarioDTO(theIProprietarioDTO);
-    this.theRouter.navigate(
-      ['editar', theIProprietarioDTO.id],
-      { relativeTo: this.theActivatedRoute }
-    );
-  }
-
-  ngAfterViewInit() {
-    this.theInscricao.push(this.paginator.page
-      .pipe(
-        tap(() => this.loadPage())
-      ).subscribe());
-  }
-
-  loadPage() {
+  onLoadPage() {
     this.theInscricao.push(this.theProprietarioService.findPage(
       this.paginator.pageIndex,
       this.paginator.pageSize,
@@ -151,5 +155,13 @@ export class ProprietarioFindPageComponent implements OnInit, OnDestroy, AfterVi
         this.dataSource = new MatTableDataSource(x['content']);
       })
     ));
+  }
+
+  onUpdate(theIProprietarioDTO: IProprietarioDTO) {
+    this.theProprietarioService.setIProprietarioDTO(theIProprietarioDTO);
+    this.theRouter.navigate(
+      ['editar', theIProprietarioDTO.id],
+      { relativeTo: this.theActivatedRoute }
+    );
   }
 }

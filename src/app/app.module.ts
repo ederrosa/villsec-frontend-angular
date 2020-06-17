@@ -33,8 +33,6 @@ const MODULES_LIST = [
   SharedModule
 ]
 
-
-
 const SERVICES_LIST = [
   AuthGuard,
   AuthenticationService,

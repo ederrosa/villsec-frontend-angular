@@ -7,12 +7,12 @@
     </mat-card-header>
     <mat-card-content>
         <div class="example-container mat-elevation-z8">
-            <form class="example-form" [formGroup]="theForm">
+            <form class="example-form" [formGroup]="getTheForm()">
                 <wbr />
                 <table class="example-full-width" cellspacing="0">
                     <tr>
                         <td>
-                            <img [src]="url" *ngIf="format==='image' && url" height="50%" width="60%"> <br />
+                            <img [src]="getUrl()" *ngIf="getFormat()==='image' && getUrl()" height="50%" width="60%"> <br />
                             <wbr />
                             <p>
                                 <input formControlName="file" type='file' (change)="onSelectFile($event)" accept=".jpg,.png" />
@@ -59,7 +59,7 @@
                                         id="genero"
                                         label="Genero"
                                         hint="Selecione o genero."
-                                        [options]="optionsGenero">
+                                        [options]="getOptionsGenero()">
                             </app-select>
                         </td>
                     </tr>
@@ -85,7 +85,7 @@
                                         id="status"
                                         label="Status"
                                         hint="Selecione um dos status."
-                                        [options]="optionsStatus">
+                                        [options]="getOptionsStatus()">
                             </app-select>
                         </td>
                         <td>
@@ -180,7 +180,7 @@
                                         id="tipoTelefone1"
                                         label="Tipo do telefone"
                                         hint="Selecione um dos tipos de telefone."
-                                        [options]="optionsTipoTelefone">
+                                        [options]="getOptionsTipoTelefone()">
                             </app-select>
                         </td>
                     </tr>
@@ -200,7 +200,7 @@
                                         id="tipoTelefone2"
                                         label="Tipo de telefone alternativo"
                                         hint="Selecione um dos tipos de telefone."
-                                        [options]="optionsTipoTelefone">
+                                        [options]="getOptionsTipoTelefone()">
                             </app-select>
                         </td>
                     </tr>
@@ -298,7 +298,7 @@
                 <table class="example-full-width" cellspacing="0">
                     <tr>
                         <td>
-                            <button class="full-width" mat-button color="primary" status="primary" [disabled]="theForm.invalid" (click)="onSave()"><mat-icon>save</mat-icon>Salvar</button>
+                            <button class="full-width" mat-button color="primary" status="primary" [disabled]="getTheForm().invalid" (click)="onSave()"><mat-icon>save</mat-icon>Salvar</button>
                         </td>
                         <td>
                             <button class="full-width" mat-button color="accent" status="primary" (click)="onClear()"><mat-icon>clear</mat-icon>Limpar</button>

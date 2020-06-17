@@ -31,16 +31,16 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class SeguidorFindPageComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  disabledNew: boolean = true;
-  disabledEdit: boolean = true;
-  disabledDel: boolean = true;
-  private theLocalUser: ILocalUser;
+  private delete: boolean;
+  private insert: boolean;
   private theInscricao: Subscription[] = new Array<Subscription>();
-  dataSource: MatTableDataSource<ISeguidorDTO> = new MatTableDataSource();
+  private theLocalUser: ILocalUser;
+  private update: boolean;
+
   columnsToDisplay = ['id', 'matricula', 'nome', 'email'];
+  dataSource: MatTableDataSource<ISeguidorDTO> = new MatTableDataSource();
   expandedElement: ISeguidorDTO | null;
   pageEvent: PageEvent;
-
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -55,14 +55,14 @@ export class SeguidorFindPageComponent implements OnInit, OnDestroy, AfterViewIn
       this.theLocalUser = JSON.parse(sessionStorage.getItem('localUser')) as ILocalUser;
       switch (this.theLocalUser.theTipoUsuario) {
         case 1:
-          this.disabledDel = true;
-          this.disabledEdit = true;
-          this.disabledNew = true;
+          this.delete = true;
+          this.insert = true;
+          this.update = true;
           break;
         case 2:
-          this.disabledDel = true;
-          this.disabledEdit = true;
-          this.disabledNew = true;
+          this.delete = true;
+          this.insert = true;
+          this.update = true;
           break;
       }
     }
@@ -78,9 +78,30 @@ export class SeguidorFindPageComponent implements OnInit, OnDestroy, AfterViewIn
     ));
   }
 
-  ngOnInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  isDelete(): boolean {
+    return this.delete;
+  }
+
+  isInsert(): boolean {
+    return this.insert;
+  }
+
+  isUpdate(): boolean {
+    return this.update;
+  }
+
+  ngAfterViewInit() {
+    this.theInscricao.push(this.paginator.page
+      .pipe(
+        tap(() => this.onLoadPage())
+      ).subscribe());
   }
 
   ngOnDestroy() {
@@ -89,14 +110,12 @@ export class SeguidorFindPageComponent implements OnInit, OnDestroy, AfterViewIn
     this.theUnsubscribeControl.unsubscribe(this.theInscricao);
   }
 
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+  ngOnInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
-  delete(theISeguidorDTO: ISeguidorDTO) {
+  onDelete(theISeguidorDTO: ISeguidorDTO) {
     this.dialog.closeAll();
     let dialogRef = this.dialog.open(ConfirmationAlertComponent, { disableClose: true, width: '40%' });
     let instance = dialogRef.componentInstance;
@@ -125,22 +144,7 @@ export class SeguidorFindPageComponent implements OnInit, OnDestroy, AfterViewIn
     }));
   }
 
-  update(theISeguidorDTO: ISeguidorDTO) {
-    this.theSeguidorService.setISeguidorDTO(theISeguidorDTO);
-    this.theRouter.navigate(
-      ['editar', theISeguidorDTO.id],
-      { relativeTo: this.theActivatedRoute }
-    );
-  }
-
-  ngAfterViewInit() {
-    this.theInscricao.push(this.paginator.page
-      .pipe(
-        tap(() => this.loadPage())
-      ).subscribe());
-  }
-
-  loadPage() {
+  onLoadPage() {
     this.theInscricao.push(this.theSeguidorService.findPage(
       this.paginator.pageIndex,
       this.paginator.pageSize,
@@ -151,5 +155,13 @@ export class SeguidorFindPageComponent implements OnInit, OnDestroy, AfterViewIn
         this.dataSource = new MatTableDataSource(x['content']);
       })
     ));
+  }
+
+  onUpdate(theISeguidorDTO: ISeguidorDTO) {
+    this.theSeguidorService.setISeguidorDTO(theISeguidorDTO);
+    this.theRouter.navigate(
+      ['editar', theISeguidorDTO.id],
+      { relativeTo: this.theActivatedRoute }
+    );
   }
 }

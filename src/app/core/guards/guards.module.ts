@@ -15,8 +15,7 @@ const GUARDS_RESOLVERS_LIST = [
 
     ],
     providers: [
-        ...GUARDS_RESOLVERS_LIST,
-        
+        ...GUARDS_RESOLVERS_LIST,        
     ]
 })
 export class GuardsModule { }

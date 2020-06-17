@@ -63,7 +63,6 @@ export class ErrorInterceptorService implements HttpInterceptor {
           default:
             this.handleDefaultError(error);
         }
-
         return throwError(errorObj);
       })
     );

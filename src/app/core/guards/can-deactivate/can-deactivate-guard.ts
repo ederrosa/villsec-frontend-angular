@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 
 import { ICanDeactivate } from 'src/app/shared/models/domain/icandeactivate';
 
-
 @Injectable({
     providedIn: 'root'
 })

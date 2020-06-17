@@ -18,39 +18,72 @@ import { CepService } from 'src/app/core/services/cep.service';
 })
 export class ProprietarioInsertComponent implements OnInit {
 
-  theForm: FormGroup;
-  url: any;
-  format: string;
-  private theFile: File;
-  private theInscricao: Subscription[] = new Array<Subscription>();
-  optionsTipoTelefone: IOptions[] = [
+  private format: string;
+  private readonly optionsGenero: IOptions[] = [
+    { value: 'Masculino', option: 'Masculino' },
+    { value: 'Feminino', option: 'Feminino' }];
+  private readonly optionsStatus: IOptions[] = [
+    { value: true, option: 'Ativo' },
+    { value: false, option: 'Inativo' }];
+  private readonly optionsTipoTelefone: IOptions[] = [
     { value: 1, option: 'Celular' },
     { value: 2, option: 'Corporativo' },
     { value: 3, option: 'Recado' },
     { value: 4, option: 'Residêncial' },
     { value: 5, option: 'SAC' },
     { value: 6, option: 'Whatsapp' }];
-  optionsGenero: IOptions[] = [
-    { value: 'Masculino', option: 'Masculino' },
-    { value: 'Feminino', option: 'Feminino' }];
-  optionsStatus: IOptions[] = [
-    { value: true, option: 'Ativo' },
-    { value: false, option: 'Inativo' }];
+  private theFile: File;
+  private theForm: FormGroup;
+  private theInscricao: Subscription[] = new Array<Subscription>();
+  private url: any;
 
   constructor(
-    private theFormBuilder: FormBuilder,
-    private theProprietarioService: ProprietarioService,
     private dialog: MatDialog,
     private theCepService: CepService,
+    private theFormBuilder: FormBuilder,
+    private theProprietarioService: ProprietarioService,
     private theUnsubscribeControl: UnsubscribeControlService
   ) { }
 
   consultaCEP() {
-    const cep = this.theForm.get('cep').value;
+    const cep = this.getTheForm().get('cep').value;
     if (cep != null && cep !== '') {
       this.theInscricao.push(this.theCepService.consultaCEP(cep)
-        .subscribe(dados => this.populaDadosForm(dados)));
+        .subscribe(dados => this.onPopulaDadosForm(dados)));
     }
+  }
+
+  getFormat(): string {
+    return this.format;
+  }
+
+  getOptionsGenero(): IOptions[] {
+    return this.optionsGenero;
+  }
+
+  getOptionsStatus(): IOptions[] {
+    return this.optionsStatus;
+  }
+
+  getOptionsTipoTelefone(): IOptions[] {
+    return this.optionsTipoTelefone;
+  }
+
+  getTheFile(): File {
+    return this.theFile;
+  }
+
+  getTheForm(): FormGroup {
+    return this.theForm;
+  }
+
+  getUrl() {
+    return this.url;
+  }
+
+  ngOnDestroy() {
+    this.onClear();
+    this.theUnsubscribeControl.unsubscribe(this.theInscricao);
   }
 
   ngOnInit() {
@@ -82,17 +115,31 @@ export class ProprietarioInsertComponent implements OnInit {
     });
   }
 
-  ngOnDestroy() {
-    this.onClear();
-    this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+  onClear() {
+    this.getTheForm().reset();
+    this.url = null;
+    this.format = null;
+    this.theFile = null;
+  }
+
+  onPopulaDadosForm(dados) {
+    this.getTheForm().patchValue({
+      logradouro: dados.logradouro,
+      cep: dados.cep,
+      complemento: dados.complemento,
+      bairro: dados.bairro,
+      cidade: dados.localidade,
+      estado: dados.uf,
+      pais: 'Brasil'
+    });
   }
 
   onSelectFile(event) {
     this.theFile = event.target.files && event.target.files[0];
-    if (this.theFile) {
+    if (this.getTheFile()) {
       var reader = new FileReader();
-      reader.readAsDataURL(this.theFile);
-      if (this.theFile.type.indexOf('image') > -1) {
+      reader.readAsDataURL(this.getTheFile());
+      if (this.getTheFile().type.indexOf('image') > -1) {
         this.format = 'image';
       }
       reader.onload = (event) => {
@@ -101,41 +148,34 @@ export class ProprietarioInsertComponent implements OnInit {
     }
   }
 
-  onClear() {
-    this.theForm.reset();
-    this.url = null;
-    this.format = null;
-    this.theFile = null;
-  }
-
   onSave() {
     let formData: FormData = new FormData();
-    formData.append('bairro', this.theForm.get('bairro').value);
-    formData.append('cidade', this.theForm.get('cidade').value);
-    formData.append('cep', this.theForm.get('cep').value);
-    formData.append('dataNascimento', new Date(this.theForm.get('dataNascimento').value).toLocaleDateString());
-    formData.append('email', this.theForm.get('email').value);
-    formData.append('estado', this.theForm.get('estado').value);
-    formData.append('facebook', this.theForm.get('facebook').value);
-    formData.append('file', this.theFile, this.theFile.name);
-    formData.append('genero', this.theForm.get('genero').value);
-    formData.append('instagram', this.theForm.get('instagram').value);
-    formData.append('logradouro', this.theForm.get('logradouro').value);
-    formData.append('nome', this.theForm.get('nome').value);
-    formData.append('numeroTelefone1', this.theForm.get('numeroTelefone1').value);
-    if (this.theForm.get('tipoTelefone2').value != '' && this.theForm.get('tipoTelefone2').value != null) {
-      formData.append('numeroTelefone2', this.theForm.get('numeroTelefone2').value);
-      formData.append('tipoTelefone2', this.theForm.get('tipoTelefone2').value);
+    formData.append('bairro', this.getTheForm().get('bairro').value);
+    formData.append('cidade', this.getTheForm().get('cidade').value);
+    formData.append('cep', this.getTheForm().get('cep').value);
+    formData.append('dataNascimento', new Date(this.getTheForm().get('dataNascimento').value).toLocaleDateString());
+    formData.append('email', this.getTheForm().get('email').value);
+    formData.append('estado', this.getTheForm().get('estado').value);
+    formData.append('facebook', this.getTheForm().get('facebook').value);
+    formData.append('file', this.getTheFile(), this.getTheFile().name);
+    formData.append('genero', this.getTheForm().get('genero').value);
+    formData.append('instagram', this.getTheForm().get('instagram').value);
+    formData.append('logradouro', this.getTheForm().get('logradouro').value);
+    formData.append('nome', this.getTheForm().get('nome').value);
+    formData.append('numeroTelefone1', this.getTheForm().get('numeroTelefone1').value);
+    if (this.getTheForm().get('tipoTelefone2').value != '' && this.getTheForm().get('tipoTelefone2').value != null) {
+      formData.append('numeroTelefone2', this.getTheForm().get('numeroTelefone2').value);
+      formData.append('tipoTelefone2', this.getTheForm().get('tipoTelefone2').value);
     }
-    formData.append('pais', this.theForm.get('pais').value);
-    formData.append('senha', this.theForm.get('senha').value);
-    formData.append('sobreMim', this.theForm.get('sobreMim').value);
-    formData.append('spotify', this.theForm.get('spotify').value);
-    formData.append('status', this.theForm.get('status').value);
-    formData.append('tipoTelefone1', this.theForm.get('tipoTelefone1').value);
-    formData.append('twitter', this.theForm.get('twitter').value);
-    formData.append('twitch', this.theForm.get('twitch').value);
-    formData.append('youtube', this.theForm.get('youtube').value);
+    formData.append('pais', this.getTheForm().get('pais').value);
+    formData.append('senha', this.getTheForm().get('senha').value);
+    formData.append('sobreMim', this.getTheForm().get('sobreMim').value);
+    formData.append('spotify', this.getTheForm().get('spotify').value);
+    formData.append('status', this.getTheForm().get('status').value);
+    formData.append('tipoTelefone1', this.getTheForm().get('tipoTelefone1').value);
+    formData.append('twitter', this.getTheForm().get('twitter').value);
+    formData.append('twitch', this.getTheForm().get('twitch').value);
+    formData.append('youtube', this.getTheForm().get('youtube').value);
     let dialogRef = this.dialog.open(ProgressSpinnerOverviewComponent, { disableClose: true, width: '350px', height: '350px' });
     this.theInscricao.push(this.theProprietarioService.insert(formData)
       .subscribe((event: HttpEvent<Object>) => {
@@ -157,18 +197,5 @@ export class ProprietarioInsertComponent implements OnInit {
       }, error => {
 
       }));
-  }
-
-  populaDadosForm(dados) {
-    this.theForm.patchValue({
-      logradouro: dados.logradouro,
-      cep: dados.cep,
-      complemento: dados.complemento,
-      bairro: dados.bairro,
-      cidade: dados.localidade,
-      estado: dados.uf,
-      pais: 'Brasil'
-    });
-  }
-
+  }  
 }

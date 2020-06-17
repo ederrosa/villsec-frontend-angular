@@ -5,76 +5,75 @@ import { AuthenticationService } from '../authentication.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-    selector: 'app-login',
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss']
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
-    theAutenticacao: IAutenticacaoDTO = {
-        id: 0,
-        dtCriacao: "",
-        dtUltimaAlteracao: "",
-        verificationCode: 0,
-        login: "",
-        senha: "",
-        matricula: "",
-        perfil: null,
-        uriImgPerfil: "",
-        nomeImgPerfil: "",
-        tipoUsuario: 0
-    };
+  theAutenticacao: IAutenticacaoDTO = {
+    id: 0,
+    dtCriacao: "",
+    dtUltimaAlteracao: "",
+    verificationCode: 0,
+    login: "",
+    senha: "",
+    matricula: "",
+    perfil: null,
+    uriImgPerfil: "",
+    nomeImgPerfil: "",
+    tipoUsuario: 0
+  };
 
-    theInscricao: Subscription;
-    email = new FormControl('', [Validators.required, Validators.email]);
-    senha = new FormControl('', [Validators.required, Validators.minLength(6)]);
-    hide = true;
+  theInscricao: Subscription;
+  email = new FormControl('', [Validators.required, Validators.email]);
+  senha = new FormControl('', [Validators.required, Validators.minLength(6)]);
+  hide = true;
 
-    constructor(public theAuthenticationService: AuthenticationService) { }
+  constructor(public theAuthenticationService: AuthenticationService) { }
+   
+  getErrorMessageEmail() {
+    return this.email.hasError('required') ? 'Você precisa inserir um Email' :
+      this.email.hasError('email') ? 'Email invalido' : '';
+  }
 
-    ngOnInit() {
-    }
+  getErrorMessageSenha() {
+    return this.senha.hasError('required') ? 'Você precisa inserir uma Senha' :
+      this.senha.hasError('minLength') ? 'Tamanho minimo da senha é de 6 caracteres!' : '';
+  }
 
-    ngOnDestroy() {
-        this.theInscricao.unsubscribe();
-    }
+  logar() {
+    this.theInscricao = this.theAuthenticationService.authenticate(this.theAutenticacao)
+      .subscribe(response => {
+        this.theAuthenticationService.successFulLogin(
+          response.headers.get('Authorization'),
+          response.headers.get('UserType'),
+          response.headers.get('UserUriImgPerfil'),
+          response.headers.get('UserMatricula'));
+      },
+        error => { });
+  }
 
-    getErrorMessageEmail() {
-        return this.email.hasError('required') ? 'Você precisa inserir um Email' :
-            this.email.hasError('email') ? 'Email invalido' : '';
-    }
+  ngOnDestroy() {
+    this.theInscricao.unsubscribe();
+  }
 
-    getErrorMessageSenha() {
-        return this.senha.hasError('required') ? 'Você precisa inserir uma Senha' :
-            this.senha.hasError('minLength') ? 'Tamanho minimo da senha é de 6 caracteres!' : '';
-    }
+  ngOnInit() {
+  }
 
-    logar() {
-        this.theInscricao = this.theAuthenticationService.authenticate(this.theAutenticacao)
-            .subscribe(response => {
-                this.theAuthenticationService.successFulLogin(
-                    response.headers.get('Authorization'),
-                    response.headers.get('UserType'),
-                    response.headers.get('UserUriImgPerfil'),
-                    response.headers.get('UserMatricula'));
-            },
-                error => { });
-    }
+  viewDidEnter() {
+    this.theInscricao = this.theAuthenticationService.refreshToken()
+      .subscribe(response => {
+        this.theAuthenticationService.successFulLogin(
+          response.headers.get('Authorization'),
+          response.headers.get('UserType'),
+          response.headers.get('UserUriImgPerfil'),
+          response.headers.get('UserMatricula'));
+      },
+        error => { });
+  }
 
-    viewDidEnter() {
-        this.theInscricao = this.theAuthenticationService.refreshToken()
-            .subscribe(response => {
-                this.theAuthenticationService.successFulLogin(
-                    response.headers.get('Authorization'),
-                    response.headers.get('UserType'),
-                    response.headers.get('UserUriImgPerfil'),
-                    response.headers.get('UserMatricula'));
-            },
-                error => { });
+  registrar() {
 
-    }
-
-    registrar() {
-
-    }
+  }
 }

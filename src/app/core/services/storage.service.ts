@@ -16,7 +16,6 @@ export class StorageService {
         } else {
             return JSON.parse(theUser);
         }
-
     }
 
     setLocalUser(theUser: ILocalUser) {
