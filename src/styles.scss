@@ -68,8 +68,8 @@ a img {
     right: 20%;
     bottom: -26px;
     z-index: 3;
-    background: #64ffda !important;
-    color: mat-color($accent) !important;
+    background: mat-color($primary) !important;
+    color: mat-color($secondary) !important;
 }
 
 .android-mobile-title {
@@ -175,7 +175,7 @@ a img {
 }
 
 .android-drawer span.mdl-navigation__link.mdl-navigation__link {
-    color: mat-color($accent);
+    color: mat-color($secondary);
 }
 
 .android-drawer .mdl-layout-title {
@@ -353,7 +353,7 @@ a img {
 }
 
 .android-link:hover {
-    color: mat-color($accent) !important;
+    color: mat-color($secondary) !important;
 }
 
 .android-link .material-icons {
@@ -369,7 +369,7 @@ a img {
 }
 
 .android-alt-link:hover {
-    color: mat-color($warn) !important;
+    color: mat-color($danger) !important;
 }
 
 .android-alt-link .material-icons {

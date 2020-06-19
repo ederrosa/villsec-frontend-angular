@@ -6,18 +6,16 @@
 
 // Define your application's custom theme.
 $primary: mat-palette($mat-light-blue, 900);
-$accent: mat-palette($mat-light-blue, A400, A100, A700);
-$warn: mat-palette($mat-red, A700, A400, A100);
-$theme: mat-light-theme($primary, $accent, $warn);
+$secondary: mat-palette($mat-light-blue, A700, A100, A400);
+$success: mat-palette($mat-light-green, A400);
+$info: mat-palette($mat-light-blue, A400);
+$warning: mat-palette($mat-amber, A400);
+$danger: mat-palette($mat-red, A700, A400, A100);
+
 $light: mat-palette($mat-grey, 100);
 $dark: mat-palette($mat-grey, 900);
 
-$success: mat-palette($mat-light-green, A400);
-$warning: mat-palette($mat-amber, A400);
-$info: mat-palette($mat-light-blue, A400);
-$dark: mat-palette($mat-grey, 900);
-$dark: mat-palette($mat-grey, 900);
-$dark: mat-palette($mat-grey, 900);
+$theme: mat-light-theme($primary, $secondary, $danger);
 
 .color-primary {
     background-color: mat-color($primary);
@@ -25,7 +23,7 @@ $dark: mat-palette($mat-grey, 900);
 }
 
 .color-secondary {
-    background-color: mat-color($accent);
+    background-color: mat-color($secondary);
     color: mat-color($light);
 }
 
@@ -35,7 +33,7 @@ $dark: mat-palette($mat-grey, 900);
 }
 
 .color-danger {
-    background-color: mat-color($warn);
+    background-color: mat-color($danger);
     color: mat-color($light);
 }
 

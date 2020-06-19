@@ -4,13 +4,15 @@ import { RouterModule } from '@angular/router';
 
 import { DefaultComponent } from './default.component';
 import { MaterialModule } from '../../configurations/material/material.module';
+import { BannerModule } from 'src/app/modules/banner/banner.module';
 
 @NgModule({
   declarations: [DefaultComponent],
   imports: [
     CommonModule,
+    BannerModule,
     MaterialModule,
-    RouterModule,
+    RouterModule,    
   ],
   exports: [
     DefaultComponent

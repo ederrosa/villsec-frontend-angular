@@ -30,11 +30,13 @@
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "./node_modules/material-design-lite/material.min.css",
+              "./node_modules/swiper/css/swiper.min.css",
               "src/styles.scss",
               "src/theme.scss"
             ],
             "scripts": [
-              "./node_modules/material-design-lite/material.min.js"
+              "./node_modules/material-design-lite/material.min.js",
+              "./node_modules/swiper/js/swiper.min.js"             
             ]
           },
           "configurations": {

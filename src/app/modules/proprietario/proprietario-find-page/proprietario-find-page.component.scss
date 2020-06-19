@@ -46,7 +46,7 @@ tr.example-element-row:not(.example-expanded-row):hover {
 }
 
 tr.example-element-row:not(.example-expanded-row):active {
-    background: mat-color($accent);
+    background: mat-color($secondary);
 }
 
 .example-element-row:hover td {
@@ -56,7 +56,7 @@ tr.example-element-row:not(.example-expanded-row):active {
 }
 
 .example-element-row:active td {
-    background: mat-color($accent);
+    background: mat-color($secondary);
     border-bottom-width: 0;
     color: mat-color($light);
 }
