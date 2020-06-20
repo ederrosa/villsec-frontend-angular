@@ -44,7 +44,6 @@ export class ElementoFindPageComponent implements OnInit, OnDestroy, AfterViewIn
   columnsToDisplay = ['titulo', 'tipoElemento'];
   expandedElement: IElementoDTO | null;
   pageEvent: PageEvent;
-
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 

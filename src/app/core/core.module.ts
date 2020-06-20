@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { InterceptorsModule } from './interceptors/interceptors.module';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { HomeModule } from './home/home.module';
 import { StorageService } from './services/storage.service';
@@ -14,7 +13,6 @@ const CORE_MODULES_LIST = [
     AuthenticationModule,
     GuardsModule,
     HomeModule,
-    InterceptorsModule
 ]
 
 const CORE_SERVICES_LIST = [

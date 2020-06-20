@@ -36,7 +36,8 @@
             ],
             "scripts": [
               "./node_modules/material-design-lite/material.min.js",
-              "./node_modules/swiper/js/swiper.min.js"             
+              "./node_modules/swiper/js/swiper.min.js",
+              "./node_modules/swiper/js/swiper.esm.browser.bundle.min.js"
             ]
           },
           "configurations": {

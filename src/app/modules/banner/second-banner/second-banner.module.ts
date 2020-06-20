@@ -16,6 +16,8 @@ import { RouterModule } from '@angular/router';
   exports: [
     SecondBannerComponent
   ],
+  providers: [
+  ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ]

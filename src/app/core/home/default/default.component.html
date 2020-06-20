@@ -26,7 +26,7 @@
                 <i class="material-icons">more_vert</i>
             </button>
             <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right mdl-js-ripple-effect" for="more-button">
-                <li class="mdl-menu__item" routerLink="/login" (click)="logout()">Login</li>
+                <li class="mdl-menu__item" routerLink="/login">Login</li>
                 <li class="mdl-menu__item" routerLink="/seguidores/novo">Registrar-se</li>
             </ul>
         </div>
@@ -41,7 +41,7 @@
             <a class="mdl-navigation__link" href="#thirdbanner">Eventos</a>
             <a class="mdl-navigation__link" href="#fifthbanner">Arquivos</a>
             <div class="android-drawer-separator"></div>
-            <span class="mdl-navigation__link" routerLink="/login" (click)="logout()">Logout</span>
+            <span class="mdl-navigation__link" routerLink="/login">Login</span>
         </nav>
     </div>
     <div class="android-content mdl-layout__content">
@@ -49,10 +49,9 @@
             <a name="firstbanner"></a>
             <app-first-banner></app-first-banner>
         </div>
-        <div class="android-screen-section mdl-typography--text-center">
-            <a name="secondbanner"></a>
+        
             <app-second-banner></app-second-banner>
-        </div>
+        
         <div class="android-wear-section">
             <a name="thirdbanner"></a>
             <div class="android-wear-band">

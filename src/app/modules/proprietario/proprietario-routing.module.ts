@@ -8,7 +8,7 @@ import { Error404Component } from '../error/error404/error404.component';
 const routes: Routes = [
   { path: 'novo', component: ProprietarioInsertComponent},
   { path: 'editar/:id', component: ProprietarioUpdateComponent},
-  { path: '', component: ProprietarioFindPageComponent },
+  { path: '', component: ProprietarioFindPageComponent},
   { path: '**', component: Error404Component }
 ];
 

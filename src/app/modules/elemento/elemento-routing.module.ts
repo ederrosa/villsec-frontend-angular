@@ -6,11 +6,10 @@ import { ElementoUpdateComponent } from './elemento-update/elemento-update.compo
 import { ElementoFindPageComponent } from './elemento-find-page/elemento-find-page.component';
 import { Error404Component } from '../error/error404/error404.component';
 
-
 const routes: Routes = [
   { path: 'novo', component: ElementoInsertComponent},
   { path: 'editar/:id', component: ElementoUpdateComponent},
-  { path: '', component: ElementoFindPageComponent },
+  { path: '', component: ElementoFindPageComponent},
   { path: '**', component: Error404Component }
 ];
 

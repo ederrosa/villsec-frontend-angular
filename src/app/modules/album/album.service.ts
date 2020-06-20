@@ -41,7 +41,7 @@ export class AlbumService {
   findPage(
     page: number = 0,
     linesPerPage: number = 12,
-    orderBy: string = 'nome',
+    orderBy: string = 'ano',
     direction: string = 'ASC'): Observable<IAlbumDTO[]> {
     return this.http.get<IAlbumDTO[]>(
       `${this.API}/?page=${page}&linesPerPage=${linesPerPage}&orderBy=${orderBy}&direction=${direction}`).pipe(take(1)

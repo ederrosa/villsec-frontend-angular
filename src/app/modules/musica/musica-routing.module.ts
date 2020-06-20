@@ -8,7 +8,7 @@ import { Error404Component } from '../error/error404/error404.component';
 const routes: Routes = [
   { path: 'novo', component: MusicaInsertComponent},
   { path: 'editar/:id', component: MusicaUpdateComponent},
-  { path: '', component: MusicaFindPageComponent },
+  { path: '', component: MusicaFindPageComponent},
   { path: '**', component: Error404Component }
 ];
 

@@ -9,7 +9,7 @@ import { EventoFindPageComponent } from './evento-find-page/evento-find-page.com
 const routes: Routes = [
   { path: 'novo', component: EventoInsertComponent},
   { path: 'editar/:id', component: EventoUpdateComponent},
-  { path: '', component: EventoFindPageComponent },
+  { path: '', component: EventoFindPageComponent},
   { path: '**', component: Error404Component }
 ];
 

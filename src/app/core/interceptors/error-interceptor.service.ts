@@ -51,15 +51,12 @@ export class ErrorInterceptorService implements HttpInterceptor {
           case 401:
             this.handle401();
             break;
-
           case 403:
             this.handle403();
             break;
-
           case 422:
             this.handle422(errorObj);
             break;
-
           default:
             this.handleDefaultError(error);
         }

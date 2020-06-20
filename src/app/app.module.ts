@@ -16,6 +16,7 @@ import { AuthGuard } from './core/guards/can-activate/auth-guard';
 import { AuthenticationService } from './core/authentication/authentication.service';
 import { ErrorInterceptorProvider } from './core/interceptors/error-interceptor.service';
 import { AuthInterceptorProvider } from './core/interceptors/auth-interceptor.service';
+import { BannerModule } from './modules/banner/banner.module';
 
 registerLocaleData(localePt);
 
@@ -28,6 +29,7 @@ const MATERIAL_MODULES_LIST = [
 ]
 
 const MODULES_LIST = [
+  BannerModule,
   CoreModule,
   ErrorModule,
   SharedModule
@@ -36,7 +38,7 @@ const MODULES_LIST = [
 const SERVICES_LIST = [
   AuthGuard,
   AuthenticationService,
-  AuthInterceptorProvider,
+  //AuthInterceptorProvider,
   ErrorInterceptorProvider,
 ]
 

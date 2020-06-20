@@ -14,17 +14,19 @@ export class AuthInterceptorService implements HttpInterceptor{
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-        let localUser = this.theStorageService.getLocalUser();
-        let N = API_CONFIGURATION.baseUrl.length;
-        let requestToAPI = req.url.substring(0, N) == API_CONFIGURATION.baseUrl;
+      let localUser = this.theStorageService.getLocalUser();
+      let N = API_CONFIGURATION.baseUrl.length;
+      let requestToAPI = req.url.substring(0, N) == API_CONFIGURATION.baseUrl;
 
-        if (localUser && requestToAPI) {
-            const authReq = req.clone({ headers: req.headers.set('Authorization', 'Bearer ' + localUser.theToken) });
-            return next.handle(authReq);
-        }
-        else {
-            return next.handle(req);
-        }
+      if (localUser && requestToAPI) {
+        const authReq = req.clone({ headers: req.headers.set('Authorization', 'Bearer ' + localUser.theToken) });
+        return next.handle(authReq);
+      }
+      else {
+        const authReq = req.clone({ headers: req.headers.set('Authorization', '') });
+        return next.handle(authReq);
+      }
+     
     }
 }
 
