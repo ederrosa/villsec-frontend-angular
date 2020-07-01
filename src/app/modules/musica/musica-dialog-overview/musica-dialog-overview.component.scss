@@ -1,0 +1,127 @@
+// Include non-theme styles for core.
+@import '../../../../theme.scss';
+
+.example-container {
+    height: 470px;
+    overflow: auto;
+    width: 97%;
+    display: flex;
+    flex-direction: column;
+    margin: 4px;   
+}
+
+.example-card {
+    width: auto;
+    height: 90%;
+    overflow: auto;    
+}
+
+table {
+    width: 98%;
+    opacity: 0.8;
+}
+
+.mat-form-field {
+    font-size: 15px;
+    width: 100%;
+}
+
+.mat-card-title {
+    background-color: mat-color($light);
+    color: mat-color($dark);
+    font-family: 'MV Boli';
+}
+
+.mat-card-subtitle {
+    background-color: mat-color($light);
+    color: mat-color($dark);
+    font-family: 'MV Boli';
+}
+
+.example-full-width td {
+    text-align: left;
+    font-size: medium;
+}
+
+.mat-header-cell {
+    text-align: center;
+}
+
+td, th :not(.example-full-width) {
+    width: auto;
+    word-wrap: break-word;
+    max-width: 10%;
+    text-align: center;
+}
+
+.example-button-row button,
+.example-button-row a {
+    margin: 20px;
+}
+
+tr.example-detail-row {
+    height: 0;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+    background: mat-color($primary);
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+    background: mat-color($secondary);
+}
+
+.example-element-row:hover td {
+    background: mat-color($primary);
+    border-bottom-width: 0;
+    color: mat-color($light);
+}
+
+.example-element-row:active td {
+    background: mat-color($secondary);
+    border-bottom-width: 0;
+    color: mat-color($light);
+}
+
+.example-element-row td {
+    border-bottom-width: 0;
+    font-size: medium;
+    color: mat-color($dark);
+}
+
+
+.example-element-detail {
+    overflow: auto;
+    display: flex;
+    height: auto;
+    width: auto;
+    min-width: 25%;
+}
+
+.example-element-diagram {
+    min-width: 80px;
+    border: 2px solid mat-color($primary);
+    padding: 8px;
+    font-weight: lighter;
+    margin: 8px 0;
+    height: 70px;
+}
+
+.example-element-img {
+    line-height: normal;
+    max-width: 99%;
+    max-height: 215px;
+}
+
+.example-element-img img {
+    height: 75%;
+}
+
+.example-element-description {
+    padding: 16px;
+    width: 100%;
+}
+
+.example-element-description-attribution {
+    opacity: 0.5;
+}

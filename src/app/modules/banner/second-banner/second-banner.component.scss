@@ -2,8 +2,8 @@
 @import '../../../../theme.scss';
 
 .secondbanner {
-    background: mat-color($light);
-    color: mat-color($dark);
+    background: $black;
+    color: mat-color($light);
     margin: 0;
     padding: 0;
 }
@@ -34,11 +34,15 @@
     align-items: center;
 }
 
+.swiper-pagination{
+    background-color: $white;
+}
+
 .example-card {
-    max-width:300px;
-    max-height:400px;
-    background-color: mat-color($dark);
-    color: mat-color($light);
+    max-width: 100%;
+    max-height: 100%;
+    background-color: mat-color($light);
+    color: mat-color($dark);
 }
 
 .example-card img {
@@ -47,11 +51,11 @@
 }
 
 .example-card mat-card-subtitle {
-    color: mat-color($light);
+    color: mat-color($dark);
     text-align:left;
 }
 
 mat-card-actions :hover{
-    background-color: mat-color($light);
-    color: mat-color($dark);
+    background-color: mat-color($dark);
+    color: mat-color($light);
 }

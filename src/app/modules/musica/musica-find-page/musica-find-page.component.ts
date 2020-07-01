@@ -129,7 +129,6 @@ export class MusicaFindPageComponent implements OnInit, OnDestroy, AfterViewInit
         this.dataSource.sort = this.sort;
       }
     ));
-
     this.theInscricao.push(this.paginator.page
       .pipe(
         tap(() => this.onLoadPage())

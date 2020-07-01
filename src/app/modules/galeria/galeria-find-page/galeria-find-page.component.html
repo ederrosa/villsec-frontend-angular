@@ -1,0 +1,75 @@
+﻿<mat-card>
+    <mat-card-header>
+        <mat-card-title>
+            <div>
+                <button routerLink="/galerias/novo" *ngIf="isInsert()" mat-raised-button color="primary">
+                    <mat-icon>add</mat-icon> Cadastrar uma nova galeria
+                </button>
+            </div>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <h5>Lista de Galerias</h5>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        </mat-form-field>
+        <div class="example-container mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" multiTemplateDataRows matSort>
+                <ng-container matColumnDef="{{ column }}" *ngFor="let column of columnsToDisplay">
+                    <th mat-header-cell *matHeaderCellDef style="font-size:large;"> {{ column }}</th>
+                    <td mat-cell *matCellDef="let element"> {{ element[column] }} </td>
+                </ng-container>
+                <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+                <ng-container matColumnDef="expandedDetail">
+                    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+                        <div class="example-element-detail"
+                             [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                             <div class="example-element-description">
+                                <table class="example-full-width" cellspacing="0">
+                                    <tr>
+                                        <td mat-cell>
+                                            <mat-label><strong>Titulo: </strong> {{ element.titulo }}</mat-label>
+                                        </td>
+                                        <td mat-cell>
+                                            <mat-label><strong>Status: </strong> {{ (element.status)? 'Ativo' : 'Inativo' }}</mat-label>
+                                        </td>                                      
+                                    </tr>
+                                    <tr>
+                                       <td mat-cell>
+                                            <mat-label><strong>Data de Cadastro: </strong> {{ element.dtCriacao }}</mat-label>
+                                        </td>
+                                        <td mat-cell>
+                                            <mat-label><strong>Data da Ultima Alteração no Sistema: </strong> {{ element.dtUltimaAlteracao }}</mat-label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td mat-cell>
+                                            <mat-label><strong>Descrição: </strong> {{ element.descricao }}</mat-label>
+                                        </td>                                       
+                                    </tr>
+                                </table>
+                                <div class="example-button-row">
+                                    <button (click)="onUpdate(element)" *ngIf="isUpdate()" mat-button color="accent">
+                                        <mat-icon>edit</mat-icon> Editar
+                                    </button>
+                                    <button (click)="onDelete(element)" *ngIf="isDelete()" mat-button color="warn">
+                                        <mat-icon>clear</mat-icon> Deletar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true"></tr>
+                <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
+                    class="example-element-row"
+                    [class.example-expanded-row]="expandedElement === element"
+                    (click)="expandedElement = expandedElement === element ? null : element"></tr>
+                <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+            </table>
+            <mat-paginator (page)="pageEvent = $event"></mat-paginator>
+        </div>
+    </mat-card-content>
+</mat-card>

@@ -1,0 +1,88 @@
+﻿<mat-card class="example-card">
+    <mat-card-header>
+        <mat-card-title>
+            <h4>Formularios de alteração de galerias.</h4>
+        </mat-card-title>
+        <mat-card-subtitle>V1LLSEC</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="example-container mat-elevation-z8">
+            <form class="example-form" [formGroup]="getTheForm()">
+                <table class="example-full-width" cellspacing="0">
+                    <tr>
+                       <td>
+                            <app-input formControlName="id"
+                                       id="id"
+                                       label="Codígo"
+                                       hint="Codígo"
+                                       isReadyOnly="false"
+                                       disabled="true">
+                            </app-input>
+                            <app-input formControlName="dtCriacao"
+                                       id="dtCriacao"
+                                       label="Data de Cadastro no Sistema"
+                                       hint="Data de realização do cadastro!"
+                                       isReadyOnly="false"
+                                       disabled="true">
+                            </app-input>
+                        </td>
+                    </tr>
+                </table>
+                <wbr />
+                <table>
+                    <tr>
+                        <td>
+                            <app-input formControlName="titulo"
+                                       id="titulo"
+                                       label="Título da Galeria"
+                                       minlength="1"
+                                       maxlength="100"
+                                       placeholder="Insira o titulo para sua galeria."
+                                       hint="Ex.: festiva Lotus Azul hehehehe">
+                            </app-input>
+                        </td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <td>
+                            <app-textarea formControlName="descricao"
+                                          id="descricao"
+                                          label="Descrição da Galeria"
+                                          maxlength="255"
+                                          placeholder="Insira uma descrição para sua galeria">
+                            </app-textarea>
+                        </td>
+                    </tr>
+                </table>
+                <table class="example-full-width" cellspacing="0">
+                    <tr>
+                        <td>
+                            <app-select formControlName="status"
+                                        id="status"
+                                        label="Status"
+                                        hint="Selecione um dos status."
+                                        [options]="getOptionsStatus()">
+                            </app-select>
+                        </td>                        
+                    </tr>
+                </table>
+                <table class="example-full-width" cellspacing="0">
+                    <tr>
+                        <td>
+                            <button class="full-width" mat-button color="primary" status="primary" [disabled]="getTheForm().invalid" (click)="onSave()"><mat-icon>save</mat-icon>Salvar</button>
+                        </td>
+                        <td>
+                            <button class="full-width" mat-button color="accent" status="primary" (click)="onClear()"><mat-icon>clear</mat-icon>Limpar</button>
+                        </td>
+                        <td>
+                            <button class="full-width" mat-button color="warn" status="warn" routerLink="/galerias"><mat-icon>keyboard_return</mat-icon>Voltar</button>
+                        </td>
+                    </tr>
+                </table>
+                <wbr />
+            </form>
+        </div>
+    </mat-card-content>
+</mat-card>
+

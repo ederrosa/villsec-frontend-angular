@@ -1,11 +1,9 @@
 ﻿<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
     <div class="android-header mdl-layout__header mdl-layout__header--waterfall">
         <div class="mdl-layout__header-row">
-            <a href="#firstbanner">
-                <span class="android-title mdl-layout-title">
-                    <img class="android-logo-image" src="assets/images/villsec-logo-barra-principal.png">
-                </span>
-            </a>
+            <span class="android-title mdl-layout-title mdl-navigation__link">
+                <img class="android-logo-image" src="../../../../assets/images/villsec-logo-barra-principal.png">
+            </span>
             <!-- Add spacer, to align navigation to the right in desktop -->
             <div class="android-header-spacer mdl-layout-spacer"></div>
             <div class="android-search-box mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right mdl-textfield--full-width">
@@ -13,10 +11,10 @@
             <!-- Navigation -->
             <div class="android-navigation-container">
                 <nav class="android-navigation mdl-navigation">
-                    <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#secondbanner">Albuns</a>
-                    <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#thirdbanner">Eventos</a>
-                    <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#fifthbanner">Arquivos</a>
-                    <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#sixthbanner">Mídias</a>
+                    <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#secondbanner"><mat-icon class="example-icon">album</mat-icon> Albuns</a>
+                    <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#thirdbanner"><mat-icon class="example-icon">event</mat-icon> Eventos</a>
+                    <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#fifthbanner"><mat-icon class="example-icon">folder_open</mat-icon> Arquivos</a>
+                    <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#sixthbanner"><mat-icon class="example-icon">contacts</mat-icon> Contatos</a>
                 </nav>
             </div>
             <span class="android-mobile-title mdl-layout-title">
@@ -36,41 +34,30 @@
             <img class="android-logo-image" src="assets/images/villsec-logo-barra-principal.png">
         </span>
         <nav class="mdl-navigation">
-            <a class="mdl-navigation__link" href="#fourthbanner">Contatos</a>
-            <a class="mdl-navigation__link" href="#secondbanner">Albuns</a>
-            <a class="mdl-navigation__link" href="#thirdbanner">Eventos</a>
-            <a class="mdl-navigation__link" href="#fifthbanner">Arquivos</a>
+            <a class="mdl-navigation__link" href="#secondbanner"><mat-icon class="example-icon">album</mat-icon> Albuns</a>
+            <a class="mdl-navigation__link" href="#thirdbanner"><mat-icon class="example-icon">event</mat-icon> Eventos</a>
+            <a class="mdl-navigation__link" href="#fifthbanner"><mat-icon class="example-icon">folder_open</mat-icon> Arquivos</a>
+            <a class="mdl-navigation__link" href="#fourthbanner"><mat-icon class="example-icon">contacts</mat-icon> Contatos</a>
             <div class="android-drawer-separator"></div>
-            <span class="mdl-navigation__link" routerLink="/login">Login</span>
+            <span class="mdl-navigation__link" routerLink="/login"><mat-icon class="example-icon">login</mat-icon> Login</span>
         </nav>
     </div>
     <div class="android-content mdl-layout__content">
-        <div class="android-be-together-section mdl-typography--text-center">
-            <a name="firstbanner"></a>
-            <app-first-banner></app-first-banner>
-        </div>
-        
-            <app-second-banner></app-second-banner>
-        
-        <div class="android-wear-section">
-            <a name="thirdbanner"></a>
-            <div class="android-wear-band">
-                <app-third-banner></app-third-banner>
-            </div>
-        </div>
-        <div class="android-customized-section">
-            <a name="fourthbanner"></a>
+
+        <app-first-banner></app-first-banner>
+
+        <app-second-banner></app-second-banner>
+
+        <div class="background_banner">
+            <app-third-banner></app-third-banner>
+
             <app-fourth-banner></app-fourth-banner>
-        </div>
-        <div class="android-more-section">
-            <a name="fifthbanner"></a>
+
             <app-fifth-banner></app-fifth-banner>
         </div>
-        <footer class="android-footer mdl-mega-footer">
-            <a name="sixthbanner"></a>
-            <app-sixth-banner></app-sixth-banner>
-        </footer>
+
+        <app-sixth-banner></app-sixth-banner>
+
     </div>
 </div>
-<script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 

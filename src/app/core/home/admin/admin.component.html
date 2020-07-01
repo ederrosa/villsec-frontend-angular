@@ -11,35 +11,53 @@
             <div class="android-navigation-container">
                 <nav class="android-navigation mdl-navigation">
                     <a class="mdl-navigation__link mdl-typography--text-uppercase" mat-menu-item
+                       [matMenuTriggerFor]="albuns">
+                        <mat-icon class="example-icon">album</mat-icon> Album
+                    </a>
+                    <a class="mdl-navigation__link mdl-typography--text-uppercase" mat-menu-item
+                       [matMenuTriggerFor]="eventos">
+                        <mat-icon class="example-icon">event</mat-icon> Evento
+                    </a>
+                    <a class="mdl-navigation__link mdl-typography--text-uppercase" mat-menu-item
+                       [matMenuTriggerFor]="galerias">
+                        <mat-icon class="example-icon">folder_open</mat-icon> Galeria
+                    </a>
+                    <a class="mdl-navigation__link mdl-typography--text-uppercase" mat-menu-item
                        [matMenuTriggerFor]="usuarios">
                         <mat-icon class="example-icon">person</mat-icon>Usuários
                     </a>
-                    <a class="mdl-navigation__link mdl-typography--text-uppercase" mat-menu-item
-                       [matMenuTriggerFor]="midias">
-                        <mat-icon class="example-icon">storage</mat-icon>Mídias
-                    </a>
-                    <mat-menu #usuarios="matMenu">
-                        <button routerLink="/proprietarios" mat-menu-item>
-                            <mat-icon class="example-icon">account_box</mat-icon>Proprietários
-                        </button>
-                        <button routerLink="/seguidores" mat-menu-item>
-                            <mat-icon class="example-icon">account_box</mat-icon>Seguidores
-                        </button>
-                    </mat-menu>
-                    <mat-menu #midias="matMenu">
+                    <mat-menu #albuns="matMenu">
                         <button routerLink="/albuns" mat-menu-item>
-                            <mat-icon class="example-icon">album</mat-icon>Álbuns
-                        </button>
-                        <button routerLink="/elementos" mat-menu-item>
-                            <mat-icon class="example-icon">folder_open</mat-icon>Elementos
-                        </button>
-                        <button routerLink="/eventos" mat-menu-item>
-                            <mat-icon class="example-icon">event_note</mat-icon>Eventos
+                            <mat-icon class="example-icon">album</mat-icon> Albuns
                         </button>
                         <button routerLink="/musicas" mat-menu-item>
-                            <mat-icon class="example-icon">audiotrack</mat-icon>Músicas
+                            <mat-icon class="example-icon">library_music</mat-icon> Músicas
                         </button>
                     </mat-menu>
+                    <mat-menu #eventos="matMenu">
+                        <button routerLink="/eventos" mat-menu-item>
+                            <mat-icon class="example-icon">event_note</mat-icon> Eventos
+                        </button>
+                    </mat-menu>
+                    <mat-menu #galerias="matMenu">
+                        <button routerLink="/galerias" mat-menu-item>
+                            <mat-icon class="example-icon">local_library</mat-icon> Galerias
+                        </button>
+                        <button routerLink="/imagens" mat-menu-item>
+                            <mat-icon class="example-icon">photo_library</mat-icon> Fotos
+                        </button>
+                        <button routerLink="/videos" mat-menu-item>
+                            <mat-icon class="example-icon">video_library</mat-icon> Vídeos
+                        </button>
+                    </mat-menu>
+                    <mat-menu #usuarios="matMenu">
+                        <button routerLink="/proprietarios" mat-menu-item>
+                            <mat-icon class="example-icon">account_box</mat-icon> Proprietários
+                        </button>
+                        <button routerLink="/seguidores" mat-menu-item>
+                            <mat-icon class="example-icon">account_box</mat-icon> Seguidores
+                        </button>
+                    </mat-menu>                    
                 </nav>
             </div>
             <span class="android-mobile-title mdl-layout-title ">
@@ -59,24 +77,31 @@
             <img class="android-logo-image" src="../../../../assets/images/villsec-logo-barra-principal.png">
         </span>
         <nav class="mdl-navigation">
+            <a class="mdl-navigation__link" routerLink="/albuns">
+                <mat-icon class="example-icon">album</mat-icon> Álbuns
+            </a>
+            <a class="mdl-navigation__link" routerLink="/eventos">
+                <mat-icon class="example-icon">event_note</mat-icon> Eventos
+            </a>
+            <a class="mdl-navigation__link" routerLink="/imagens">
+                <mat-icon class="example-icon">photo_library</mat-icon> Fotos
+            </a>
+            <a class="mdl-navigation__link" routerLink="/galerias">
+                <mat-icon class="example-icon">local_library</mat-icon> Galerias
+            </a>
+            <a class="mdl-navigation__link" routerLink="/musicas">
+                <mat-icon class="example-icon">library_music</mat-icon> Músicas
+            </a>
+            <a class="mdl-navigation__link" routerLink="/videos">
+                <mat-icon class="example-icon">video_library</mat-icon> Vídeos
+            </a>
+            <div class="android-drawer-separator"></div>
             <span class="mdl-navigation__link" routerLink="/proprietarios">
                 <mat-icon class="example-icon">person</mat-icon> Proprietários
             </span>
             <span class="mdl-navigation__link" routerLink="/seguidores">
                 <mat-icon class="example-icon">person</mat-icon> Seguidores
             </span>
-            <a class="mdl-navigation__link" routerLink="/albuns">
-                <mat-icon class="example-icon">album</mat-icon> Álbuns
-            </a>
-            <a class="mdl-navigation__link" routerLink="/elementos">
-                <mat-icon class="example-icon">folder_open</mat-icon> Elementos
-            </a>
-            <a class="mdl-navigation__link" routerLink="/eventos">
-                <mat-icon class="example-icon">event_note</mat-icon> Eventos
-            </a>
-            <a class="mdl-navigation__link" routerLink="/musicas">
-                <mat-icon class="example-icon">audiotrack</mat-icon> Músicas
-            </a>
             <div class="android-drawer-separator"></div>
             <span class="mdl-navigation__link" routerLink="/" (click)="logout()">
                 <mat-icon class="example-icon">power_settings_new</mat-icon> Sair

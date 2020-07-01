@@ -8,11 +8,8 @@ import { AuthenticationService } from '../../authentication/authentication.servi
 })
 export class DefaultComponent implements OnInit {
 
-  constructor(private theAuthenticationServices: AuthenticationService) { }
+  constructor() { }
 
   ngOnInit(): void {
-  } 
-  logout() {
-    this.theAuthenticationServices.logout();
   }
 }

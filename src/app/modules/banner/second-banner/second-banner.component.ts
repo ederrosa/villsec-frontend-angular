@@ -11,6 +11,8 @@ import Swiper from 'swiper';
 import { IAlbumDTO } from 'src/app/shared/models/dtos/ialbum-dto';
 import { AlbumService } from '../../album/album.service';
 import { UnsubscribeControlService } from 'src/app/core/services/unsubscribe-control.service';
+import { SwiperService } from 'src/app/core/services/swiper.service';
+import { MusicaDialogOverviewComponent } from '../../musica/musica-dialog-overview/musica-dialog-overview.component';
 
 @Component({
   selector: 'app-second-banner',
@@ -21,7 +23,7 @@ export class SecondBannerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private mySwiper: Swiper;
   private theInscricao: Subscription[] = new Array<Subscription>();
-  theObservable: Observable<any>;
+  private theObservable: Observable<any>;
 
   dataSource: MatTableDataSource<IAlbumDTO> = new MatTableDataSource();
   pageEvent: PageEvent;
@@ -31,8 +33,8 @@ export class SecondBannerComponent implements OnInit, OnDestroy, AfterViewInit {
     private dialog: MatDialog,
     private theAlbumService: AlbumService,
     private changeDetectorRef: ChangeDetectorRef,
+    private theSwiperService: SwiperService,
     private theUnsubscribeControl: UnsubscribeControlService
-
   ) {
     this.theInscricao.push(this.theAlbumService.findPage().subscribe(
       (x => {
@@ -47,12 +49,17 @@ export class SecondBannerComponent implements OnInit, OnDestroy, AfterViewInit {
     ));
   }
 
+  getTheObservable(): any {
+    return this.theObservable;
+  }
+
   ngAfterViewInit() {
     this.theInscricao.push(this.paginator.page
       .pipe(
         tap(() => this.onLoadPage())
-      ).subscribe());
-    this.mySwiper = this.onSwiperBuild();
+    ).subscribe());
+    this.mySwiper = this.theSwiperService.getSwiperCoverflow();
+    this.mySwiper.update();
   }
 
   ngOnDestroy() {
@@ -80,28 +87,16 @@ export class SecondBannerComponent implements OnInit, OnDestroy, AfterViewInit {
         this.theObservable = this.dataSource.connect();
       })
     ));
-
+    this.mySwiper.update();
   }
 
-  private onSwiperBuild(): Swiper {
-    return new Swiper('.swiper-container', {
-      effect: 'coverflow',
-      grabCursor: true,
-      centeredSlides: true,
-      observer: true,
-      observerParents: true,
-      observeSlideChildren: true,
-      slidesPerView: 'auto',
-      coverflowEffect: {
-        rotate: 50,
-        stretch: 0,
-        depth: 100,
-        modifier: 1,
-        slideShadows: true,
-      },
-      pagination: {
-        el: '.swiper-pagination',
-      },
-    });
+  onPlay(theIAlbumDTO: IAlbumDTO) {
+    this.theAlbumService.setIAlbumDTO(theIAlbumDTO);
+    this.dialog.closeAll();
+    let dialogRef = this.dialog.open(MusicaDialogOverviewComponent, { width: '90%' });
+    let instance = dialogRef.componentInstance;
+    instance.album_id = theIAlbumDTO.id;
+    instance.album_nome = theIAlbumDTO.nome;
+    instance.album_capa = theIAlbumDTO.capaUrl;
   }
 }

@@ -1,12 +1,11 @@
 ﻿<div class="android-screen-section mdl-typography--text-center  secondbanner">
-    <wbr />
     <a name="secondbanner"></a>
-    <div class="mdl-typography--display-1-color-contrast">Albuns</div>
+    <div class="mdl-typography--display-1-color-contrast"><mat-icon class="example-icon">album</mat-icon> Albuns</div>
     <div class="android-screens">
         <!-- Swiper -->
         <div class="swiper-container">
             <div class="swiper-wrapper">
-                <div class="swiper-slide" *ngFor="let element of theObservable | async">
+                <div class="swiper-slide" *ngFor="let element of getTheObservable() | async">
                     <mat-card class="example-card">
                         <mat-card-header>
                             <mat-card-title>{{ element.nome }}</mat-card-title>
@@ -15,16 +14,13 @@
                         </mat-card-header>
                         <img mat-card-image src="{{ element.capaUrl }}">
                         <mat-card-actions>
-                            <button mat-button>Play</button>
+                            <button mat-button (click)="onPlay(element)"><mat-icon class="example-icon">play_arrow</mat-icon> Play</button>
                         </mat-card-actions>
                     </mat-card>
                 </div>
             </div>
-            <!-- Add Pagination -->
-            <div class="swiper-pagination"></div>
         </div>
         <mat-paginator (page)="pageEvent = $event"></mat-paginator>
-        <wbr />      
-    </div>
+    </div>   
 </div>
 
