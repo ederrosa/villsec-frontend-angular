@@ -175,7 +175,6 @@ export class MusicaUpdateComponent implements OnInit, OnDestroy, AfterViewInit {
         }
         formData.append('idioma', this.getTheForm().get('idioma').value);
         formData.append('nome', this.getTheForm().get('nome').value);
-        formData.append('albumID', this.getTheAlbumForm().get('theAlbumID').value);
         this.theInscricao.push(this.theMusicaService.update(formData, this.getTheForm().get('id').value)
           .subscribe((event: HttpEvent<Object>) => {
             if (event.type === HttpEventType.Response) {

@@ -37,7 +37,7 @@ export class GaleriaFindPageComponent implements OnInit, OnDestroy, AfterViewIni
   private theLocalUser: ILocalUser;
   private update: boolean; 
 
-  columnsToDisplay = ['titulo'];
+  columnsToDisplay = ['id','titulo'];
   dataSource: MatTableDataSource<IGaleriaDTO> = new MatTableDataSource();
   expandedElement: IGaleriaDTO | null;
   pageEvent: PageEvent;

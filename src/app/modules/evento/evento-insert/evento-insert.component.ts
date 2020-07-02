@@ -55,7 +55,7 @@ export class EventoInsertComponent implements OnInit, OnDestroy{
     return this.theForm;
   }
 
-  getUrl(): string {
+  getUrl(): any {
     return this.url;
   }
 

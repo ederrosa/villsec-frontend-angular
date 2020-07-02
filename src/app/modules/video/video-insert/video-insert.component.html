@@ -1,0 +1,91 @@
+﻿<mat-card class="example-card">
+    <mat-card-header>
+        <mat-card-title>
+            <h4>Formulario de registros de vídeos.</h4>
+        </mat-card-title>
+        <mat-card-subtitle>V1LLSEC</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-horizontal-stepper [linear]="isLinear()" labelPosition="bottom" #stepper>
+            <mat-step [stepControl]="getTheGaleriaForm()">
+                <form>
+                    <ng-template matStepLabel>PASSO 1: Selecione o Galeria.</ng-template>
+                    <app-galeria-table></app-galeria-table>
+                </form>
+            </mat-step>
+            <mat-step [stepControl]="getTheForm()">
+                <div class="example-container mat-elevation-z8">
+                    <form class="example-form" [formGroup]="getTheForm()">
+                        <ng-template matStepLabel>PASSO 2: Dados do Vídeo.</ng-template>
+                        <table class="example-full-width" cellspacing="0">
+                            <tr>
+                                <td>
+                                    <video [src]="getUrl()" *ngIf="getFormat()==='video' && getUrl()" height="50%" controls></video> <br />
+                                    <iframe [src]="getUrl() | safe " *ngIf="getUrl() && !getFormat()" width="640px" height="360px"></iframe> <br />
+                                    <wbr />
+                                    <p>
+                                        <input formControlName="file" type='file' (change)="onSelectFile($event)" accept=".mp4,.avi" />
+                                    </p>
+                                </td>
+                            </tr>
+                        </table>
+                        <wbr />
+                        <table>
+                            <tr>
+                                <td>
+                                    <p>
+                                        <app-input formControlName="embed"
+                                                   id="embed"
+                                                   label="Url do arquivo"
+                                                   minlength="0"
+                                                   maxlength="1000"
+                                                   placeholder="Informe a url"
+                                                   hint="Use esse campo caso o vídeo for muito pesado, colocando apenas no link para armazenamento!"
+                                                   (theBlur)="setUrl()">
+                                        </app-input>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <app-textarea formControlName="descricao"
+                                                  id="descricao"
+                                                  label="Descrição do Vídeo"
+                                                  maxlength="255"
+                                                  placeholder="Insira uma descrição do vídeo">
+                                    </app-textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <app-input formControlName="titulo"
+                                               id="titulo"
+                                               label="Título para o Vídeo"
+                                               minlength="1"
+                                               maxlength="255"
+                                               placeholder="Informe um título para o vídeo">
+                                    </app-input>
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="example-full-width" cellspacing="0">
+                            <tr>
+                                <td>
+                                    <button class="full-width" mat-button color="primary" status="primary" [disabled]="getTheForm().invalid" (click)="onSave()"><mat-icon>save</mat-icon>Salvar</button>
+                                </td>
+                                <td>
+                                    <button class="full-width" mat-button color="accent" status="primary" (click)="onClear()"><mat-icon>clear</mat-icon>Limpar</button>
+                                </td>
+                                <td>
+                                    <button class="full-width" mat-button color="warn" status="warn" routerLink="/videos"><mat-icon>keyboard_return</mat-icon>Voltar</button>
+                                </td>
+                            </tr>
+                        </table>
+                        <wbr />
+                    </form>
+                </div>
+            </mat-step>
+        </mat-horizontal-stepper>
+    </mat-card-content>
+</mat-card>
+

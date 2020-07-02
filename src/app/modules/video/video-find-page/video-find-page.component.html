@@ -1,0 +1,84 @@
+﻿<mat-card class="example-card">
+    <mat-card-header>
+        <mat-card-title>
+            <h6>Lista de Vídeo</h6>
+        </mat-card-title>
+        <mat-card-subtitle>V1LLSEC</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-horizontal-stepper [linear]="getLinear()" #stepper>
+            <mat-step [stepControl]="getTheGaleriaForm()">
+                <form>
+                    <ng-template matStepLabel>Selecione o Galeria.</ng-template>
+                    <app-galeria-table></app-galeria-table>
+                </form>
+            </mat-step>
+            <mat-step>
+                <ng-template matStepLabel>Lista de Vídeos</ng-template>
+                <mat-card-title>
+                    <div>
+                        <button routerLink="/videos/novo" *ngIf="getInsert()" mat-raised-button color="primary">
+                            <mat-icon>add</mat-icon> Cadastrar uma nova vídeo
+                        </button>
+                    </div>
+                </mat-card-title>
+                <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                </mat-form-field>
+                <div class="example-container">
+                    <table mat-table
+                           [dataSource]="dataSource" multiTemplateDataRows
+                           class="mat-elevation-z8">
+                        <ng-container matColumnDef="{{ column }}" *ngFor="let column of columnsToDisplay">
+                            <th mat-header-cell *matHeaderCellDef style="font-size:large;"> {{ column }}</th>
+                            <td mat-cell *matCellDef="let element"> {{ element[column] }} </td>
+                        </ng-container>
+                        <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+                        <ng-container matColumnDef="expandedDetail">
+                            <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+                                <div class="example-element-detail"
+                                     [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                                    <div class="example-element-diagram">
+                                        <div class="example-element-img mat-elevation-z8">
+                                            <video class="example-element-img" src="{{ element.arquivoUrl }}" *ngIf="element.arquivoUrl != ''" controls (click)="openDialogVideo(element)"></video> <br />
+                                            <iframe class="example-element-img" [src]=" element.embed | safe " *ngIf="element.embed != ''" (click)="openDialogIframe(element)"></iframe> <br />
+                                        </div>
+                                    </div>
+                                    <div class="example-element-description">
+                                        <table class="example-full-width" cellspacing="0">
+                                            <tr>
+                                                <td mat-cell>
+                                                    <mat-label><strong>Descrição: </strong> {{ element.descricao }}</mat-label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td mat-cell>
+                                                    <mat-label><strong>Título do Vídeo: </strong> {{ element.titulo }}</mat-label>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <div class="example-button-row">
+                                            <button (click)="onUpdate(element)" *ngIf="getUpdate()" mat-button color="accent">
+                                                <mat-icon>edit</mat-icon> Editar
+                                            </button>
+                                            <button (click)="onDelete(element)" *ngIf="getDelete()" mat-button color="warn">
+                                                <mat-icon>clear</mat-icon> Deletar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true"></tr>
+                        <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
+                            class="example-element-row"
+                            [class.example-expanded-row]="expandedElement === element"
+                            (click)="expandedElement = expandedElement === element ? null : element"></tr>
+                        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+                    </table>
+                    <mat-paginator (page)="pageEvent = $event"></mat-paginator>
+                </div>
+            </mat-step>
+        </mat-horizontal-stepper>
+    </mat-card-content>
+</mat-card>

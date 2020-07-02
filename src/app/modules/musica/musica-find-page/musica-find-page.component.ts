@@ -51,7 +51,6 @@ export class MusicaFindPageComponent implements OnInit, OnDestroy, AfterViewInit
 
   constructor(
     private dialog: MatDialog,
-    private theActivatedRoute: ActivatedRoute,
     private theAlbumService: AlbumService,
     private theFormBuilder: FormBuilder,    
     private theMusicaService: MusicaService,
@@ -167,7 +166,7 @@ export class MusicaFindPageComponent implements OnInit, OnDestroy, AfterViewInit
               instance.title = "Status: " + event.status;
               instance.subTitle = 'Deletando!...';
               instance.classCss = 'color-success';
-              instance.message = event.statusText + '!! A avaliação física foi Deletado com sucesso!';
+              instance.message = event.statusText + '!! A Música foi Deletada com sucesso!';
               instance.urlNavigate = '/musicas';
               this.theRouter.navigate(['/']);
             }

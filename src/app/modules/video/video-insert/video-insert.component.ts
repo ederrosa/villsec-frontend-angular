@@ -1,104 +1,120 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { HttpEventType, HttpEvent } from '@angular/common/http';
 
 import { Subscription } from 'rxjs';
-import { ElementoService } from '../elemento.service';
+import { VideoService } from '../video.service';
 import { UnsubscribeControlService } from 'src/app/core/services/unsubscribe-control.service';
 import { ProgressSpinnerOverviewComponent } from 'src/app/shared/components/progress-spinner/progress-spinner-overview/progress-spinner-overview.component';
 import { InformativeAlertComponent } from 'src/app/shared/components/alerts/informative-alert/informative-alert.component';
-import { IOptions } from 'src/app/shared/components/fields/select/select.component';
+import { GaleriaService } from '../../galeria/galeria.service';
 
 @Component({
-  selector: 'app-elemento-insert',
-  templateUrl: './elemento-insert.component.html',
-  styleUrls: ['./elemento-insert.component.scss']
+  selector: 'app-video-insert',
+  templateUrl: './video-insert.component.html',
+  styleUrls: ['./video-insert.component.scss']
 })
-export class ElementoInsertComponent implements OnInit {
+export class VideoInsertComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private format: string;
-  private readonly optionsTipoElemento: IOptions[] = [
-    { value: 1, option: 'Imagem' },
-    { value: 2, option: 'Vídeo' },
-    { value: 3, option: 'LiveStream' },
-    { value: 4, option: 'Show' },
-    { value: 5, option: 'Áudio' }];
-  private readonly optionsStatus: IOptions[] = [
-    { value: true, option: 'Ativo' },
-    { value: false, option: 'Inativo' }];
+  private readonly linear: boolean = true;
+  private theGaleriaForm: FormGroup;
+  private theForm: FormGroup; 
   private theFile: File;
-  private theForm: FormGroup;
   private theInscricao: Subscription[] = new Array<Subscription>();
   private url: any;
 
   constructor(
     private dialog: MatDialog,
-    private theElementoService: ElementoService,
-    private theFormBuilder: FormBuilder,
-    private theUnsubscribeControl: UnsubscribeControlService
+    private theGaleriaService: GaleriaService,
+    private theFormBuilder: FormBuilder,    
+    private theVideoService: VideoService,
+    private theUnsubscribeControl: UnsubscribeControlService,
   ) { }
 
   getFormat(): string {
     return this.format;
   }
 
-  getOptionsTipoElemento(): IOptions[] {
-    return this.optionsTipoElemento;
-  }
-
-  getOptionsStatus(): IOptions[] {
-    return this.optionsStatus;
-  }
-
-  getTheFile(): File {
-    return this.theFile;
+  getTheGaleriaForm(): FormGroup {
+    return this.theGaleriaForm;
   }
 
   getTheForm(): FormGroup {
     return this.theForm;
   }
 
+  getTheFile(): File {
+    return this.theFile;
+  }
+
   getUrl() {
     return this.url;
+  }
+  
+  isLinear(): boolean {
+    return this.linear;
+  }
+
+  ngAfterViewInit(): void {
+    this.theInscricao.push(this.theGaleriaService.eventEmitter.subscribe(
+      theGaleria => {
+        this.getTheGaleriaForm().patchValue({
+          theGaleriaID: theGaleria.id
+        });
+      }
+    ));
   }
 
   ngOnDestroy() {
     this.onClear();
     this.theUnsubscribeControl.unsubscribe(this.theInscricao);
   }
-
+   
   ngOnInit() {
     this.theForm = this.theFormBuilder.group({
-      file: [''],
       descricao: ['', [Validators.required]],
       embed: [''],
-      tipoElemento: ['', [Validators.required]],
       titulo: ['', [Validators.required]],
-      status: ['', [Validators.required]],
+    });
+    this.theGaleriaForm = this.theFormBuilder.group({
+      theGaleriaID: ['', [Validators.required]]
     });
   }
 
   onClear() {
-    this.theForm.reset();
+    this.getTheForm().reset();
     this.url = null;
     this.format = null;
     this.theFile = null;
   }
 
+  onSelectFile(event) {
+    this.theFile = event.target.files && event.target.files[0];
+    if (this.getTheFile()) {
+      var reader = new FileReader();
+      reader.readAsDataURL(this.getTheFile());
+      if (this.getTheFile().type.indexOf('video') > -1) {
+        this.format = 'video';
+      }
+      reader.onload = (event) => {
+        this.url = (<FileReader>event.target).result;
+      }
+    }
+  }
+
   onSave() {
     let formData: FormData = new FormData();
+    formData.append('descricao', this.getTheForm().get('descricao').value);
+    formData.append('embed', this.getTheForm().get('embed').value);
+    formData.append('titulo', this.getTheForm().get('titulo').value);
     if (this.getTheFile()) {
       formData.append('file', this.getTheFile(), this.getTheFile().name);
-    } else if (this.getTheForm().get('embed').valid) {
-      formData.append('embed', this.getTheForm().get('embed').value);
     }
-    formData.append('descricao', this.getTheForm().get('descricao').value);
-    formData.append('tipoElemento', this.getTheForm().get('tipoElemento').value);
-    formData.append('titulo', this.getTheForm().get('titulo').value);
-    formData.append('status', this.getTheForm().get('status').value);
+    formData.append('galeriaID', this.getTheGaleriaForm().get('theGaleriaID').value);
     let dialogRef = this.dialog.open(ProgressSpinnerOverviewComponent, { disableClose: true, width: '350px', height: '350px' });
-    this.theInscricao.push(this.theElementoService.insert(formData)
+    this.theInscricao.push(this.theVideoService.insert(formData)
       .subscribe((event: HttpEvent<Object>) => {
         if (event.type === HttpEventType.Response) {
           this.dialog.closeAll();
@@ -107,7 +123,7 @@ export class ElementoInsertComponent implements OnInit {
           instance.title = "Status: " + event.status;
           instance.subTitle = 'OK!...';
           instance.classCss = 'color-success';
-          instance.message = event.statusText + '!! O novo Arquivo foi armazenado com sucesso!';
+          instance.message = event.statusText + '!! O novo vídeo foi armazenado com sucesso!';
           this.onClear();
         } else if (event.type === HttpEventType.UploadProgress) {
           let instance = dialogRef.componentInstance;
@@ -118,24 +134,6 @@ export class ElementoInsertComponent implements OnInit {
       }, error => {
 
       }));
-  }
-
-  onSelectFile(event) {
-    this.theFile = event.target.files && event.target.files[0];
-    if (this.getTheFile()) {
-      var reader = new FileReader();
-      reader.readAsDataURL(this.getTheFile());
-      if (this.theFile.type.indexOf('image') > -1) {
-        this.format = 'image';
-      } else if (this.getTheFile().type.indexOf('video') > -1) {
-        this.format = 'video';
-      } else if (this.getTheFile().type.indexOf('audio') > -1) {
-        this.format = 'audio';
-      }
-      reader.onload = (event) => {
-        this.url = (<FileReader>event.target).result;
-      }
-    }
   }
 
   setUrl() {

@@ -16,12 +16,7 @@ const routes: Routes = [
         path: 'albuns',
         loadChildren: () => import('./modules/album/album.module').then(m => m.AlbumModule),
         canActivate: [AuthGuard],
-      },
-      {
-        path: 'elementos',
-        loadChildren: () => import('./modules/elemento/elemento.module').then(m => m.ElementoModule),
-        canActivate: [AuthGuard],
-      },
+      },     
       {
         path: 'eventos',
         loadChildren: () => import('./modules/evento/evento.module').then(m => m.EventoModule),
@@ -45,6 +40,11 @@ const routes: Routes = [
       {
         path: 'seguidores',
         loadChildren: () => import('./modules/seguidor/seguidor.module').then(m => m.SeguidorModule),
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'videos',
+        loadChildren: () => import('./modules/video/video.module').then(m => m.VideoModule),
         canActivate: [AuthGuard],
       },
     ]

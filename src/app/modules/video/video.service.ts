@@ -1,29 +1,30 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { API_CONFIGURATION } from 'src/configurations/api.configuration';
-import { IElementoDTO } from 'src/app/shared/models/dtos/ielemento-dto';
 import { take } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+
+import { API_CONFIGURATION } from 'src/configurations/api.configuration';
+import { IVideoDTO } from 'src/app/shared/models/dtos/ivideo-dto';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ElementoService {
+export class VideoService {
 
-  private readonly API = API_CONFIGURATION.baseUrl + '/elementos';
-  private theIElementoDTO: IElementoDTO;
-  eventEmitter = new EventEmitter<IElementoDTO>();
+  private readonly API = API_CONFIGURATION.baseUrl + '/videos';
+  private theIVideoDTO: IVideoDTO;
+  eventEmitter = new EventEmitter<IVideoDTO>();
 
   constructor(public http: HttpClient) { }
 
-  getIElementoDTO(): IElementoDTO {
-    return this.theIElementoDTO;
+  getIVideoDTO(): IVideoDTO {
+    return this.theIVideoDTO;
   }
 
-  setIElementoDTO(theIElementoDTO: IElementoDTO): void {
-    this.theIElementoDTO = theIElementoDTO;
-    this.eventEmitter.emit(this.theIElementoDTO);
+  setIVideoDTO(theIVideoDTO: IVideoDTO): void {
+    this.theIVideoDTO = theIVideoDTO;
+    this.eventEmitter.emit(this.theIVideoDTO);
   }
 
   delete(id: number) {
@@ -35,16 +36,17 @@ export class ElementoService {
   }
 
   find(id: number) {
-    return this.http.get<IElementoDTO>(`${this.API}/${id}`).pipe(take(1));
+    return this.http.get<IVideoDTO>(`${this.API}/${id}`).pipe(take(1));
   }
 
   findPage(
     page: number = 0,
     linesPerPage: number = 12,
     orderBy: string = 'titulo',
-    direction: string = 'ASC'): Observable<IElementoDTO[]> {
-    return this.http.get<IElementoDTO[]>(
-      `${this.API}/?page=${page}&linesPerPage=${linesPerPage}&orderBy=${orderBy}&direction=${direction}`).pipe(take(1)
+    direction: string = 'ASC',
+    theGaleria: number): Observable<IVideoDTO[]> {
+    return this.http.get<IVideoDTO[]>(
+      `${this.API}/?page=${page}&linesPerPage=${linesPerPage}&orderBy=${orderBy}&direction=${direction}&theGaleria=${theGaleria}`).pipe(take(1)
       );
   }
 

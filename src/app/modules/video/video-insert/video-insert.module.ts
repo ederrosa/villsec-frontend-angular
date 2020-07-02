@@ -1,28 +1,29 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ElementoUpdateComponent } from './elemento-update.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { MaterialModule } from 'src/app/core/configurations/material/material.module';
-import { PipesModule } from 'src/app/shared/pipes/pipes.module';
+
+import { VideoInsertComponent } from './video-insert.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { MaterialModule } from 'src/app/core/configurations/material/material.module';
+import { GaleriaModule } from '../../galeria/galeria.module';
 
 @NgModule({
-  declarations: [ElementoUpdateComponent],
+  declarations: [VideoInsertComponent],
   imports: [
     CommonModule,
-    FormsModule,
     MaterialModule,
-    PipesModule,
+    FormsModule,
     ReactiveFormsModule,
+    GaleriaModule,
     RouterModule,
-    SharedModule
+    SharedModule,
   ],
   exports: [
-    ElementoUpdateComponent
+    VideoInsertComponent
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ]
 })
-export class ElementoUpdateModule { }
+export class VideoInsertModule { }

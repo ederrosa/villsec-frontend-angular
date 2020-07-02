@@ -4,26 +4,27 @@ import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 import { tap } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
+
 import { ILocalUser } from 'src/app/shared/models/domain/ilocal-user';
-import { IElementoDTO } from 'src/app/shared/models/dtos/ielemento-dto';
-import { ElementoService } from '../elemento.service';
+import { IVideoDTO } from 'src/app/shared/models/dtos/ivideo-dto';
+import { VideoService } from '../video.service';
 import { UnsubscribeControlService } from 'src/app/core/services/unsubscribe-control.service';
 import { ConfirmationAlertComponent } from 'src/app/shared/components/alerts/confirmation-alert/confirmation-alert.component';
 import { InformativeAlertComponent } from 'src/app/shared/components/alerts/informative-alert/informative-alert.component';
-import { DialogOverviewImageComponent } from 'src/app/shared/components/dialog-overview/dialog-overview-image/dialog-overview-image.component';
-import { DialogOverviewAudioComponent } from 'src/app/shared/components/dialog-overview/dialog-overview-audio/dialog-overview-audio.component';
+import { GaleriaService } from '../../galeria/galeria.service';
 import { DialogOverviewVideoComponent } from 'src/app/shared/components/dialog-overview/dialog-overview-video/dialog-overview-video.component';
 import { DialogOverviewIframeComponent } from 'src/app/shared/components/dialog-overview/dialog-overview-iframe/dialog-overview-iframe.component';
 
 @Component({
-  selector: 'app-elemento-find-page',
-  templateUrl: './elemento-find-page.component.html',
-  styleUrls: ['./elemento-find-page.component.scss'],
+  selector: 'app-video-find-page',
+  templateUrl: './video-find-page.component.html',
+  styleUrls: ['./video-find-page.component.scss'],
   animations: [
     trigger('detailExpand', [
       state('collapsed', style({ height: '0px', minHeight: '0' })),
@@ -32,25 +33,28 @@ import { DialogOverviewIframeComponent } from 'src/app/shared/components/dialog-
     ]),
   ],
 })
-export class ElementoFindPageComponent implements OnInit, OnDestroy, AfterViewInit {
+export class VideoFindPageComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private delete: boolean;
-  private insert: boolean;  
+  private insert: boolean;
+  private readonly linear: boolean = true;
+  private theGaleriaForm: FormGroup;  
   private theInscricao: Subscription[] = new Array<Subscription>();
   private theLocalUser: ILocalUser;
   private update: boolean;
 
-  dataSource: MatTableDataSource<IElementoDTO> = new MatTableDataSource();
-  columnsToDisplay = ['titulo', 'tipoElemento'];
-  expandedElement: IElementoDTO | null;
+  dataSource: MatTableDataSource<IVideoDTO> = new MatTableDataSource();
+  columnsToDisplay = ['id', 'titulo'];
+  expandedElement: IVideoDTO | null;
   pageEvent: PageEvent;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(
     private dialog: MatDialog,
-    private theActivatedRoute: ActivatedRoute,    
-    private theElementoService: ElementoService,
+    private theGaleriaService: GaleriaService,
+    private theFormBuilder: FormBuilder,    
+    private theVideoService: VideoService,
     private theRouter: Router,
     private theUnsubscribeControl: UnsubscribeControlService
   ) {
@@ -69,16 +73,6 @@ export class ElementoFindPageComponent implements OnInit, OnDestroy, AfterViewIn
           break;
       }
     }
-    this.theInscricao.push(this.theElementoService.findPage().subscribe(
-      (x => {
-        this.paginator.pageSizeOptions = [12, 24, 48, 100];
-        this.paginator.length = x['totalElements'];
-        this.paginator.showFirstLastButtons = true;
-        this.paginator.pageSize = x['size'];
-        this.paginator.pageIndex = x['number'];
-        this.dataSource = new MatTableDataSource(x['content']);
-      })
-    ));
   }
 
   applyFilter(filterValue: string) {
@@ -88,19 +82,53 @@ export class ElementoFindPageComponent implements OnInit, OnDestroy, AfterViewIn
     }
   }
 
-  isDelete(): boolean {
+  getDelete(): boolean {
     return this.delete;
   }
 
-  isInsert(): boolean {
+  getInsert(): boolean {
     return this.insert;
   }
 
-  isUpdate(): boolean {
+  getLinear(): boolean {
+    return this.linear;
+  }
+
+  getTheGaleriaForm(): FormGroup {
+    return this.theGaleriaForm;
+  }
+
+  getUpdate(): boolean {
     return this.update;
   }
 
   ngAfterViewInit() {
+    this.theInscricao.push(this.theGaleriaService.eventEmitter.subscribe(
+      theIGaleria => {
+        this.getTheGaleriaForm().patchValue({
+          theIGaleria: theIGaleria.id
+        });
+        this.theInscricao.push(this.theVideoService.findPage(
+          0,
+          12,
+          'titulo',
+          'ASC',
+          theIGaleria.id).subscribe(
+            (x => {
+              this.paginator.pageSizeOptions = [12, 24, 48, 100];
+              this.paginator.length = x['totalElements'];
+              this.paginator.showFirstLastButtons = true;
+              this.paginator.pageSize = x['size'];
+              this.paginator.pageIndex = x['number'];
+              this.paginator.pageIndex = x['number'];
+              this.dataSource = new MatTableDataSource(x['content']);
+            })
+          )
+        );
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      }
+    ));
     this.theInscricao.push(this.paginator.page
       .pipe(
         tap(() => this.onLoadPage())
@@ -116,9 +144,12 @@ export class ElementoFindPageComponent implements OnInit, OnDestroy, AfterViewIn
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.theGaleriaForm = this.theFormBuilder.group({
+      theIGaleria: ['', [Validators.required]]
+    });
   }
 
-  onDelete(theIElementoDTO: IElementoDTO) {
+  onDelete(theIVideoDTO: IVideoDTO) {
     this.dialog.closeAll();
     let dialogRef = this.dialog.open(ConfirmationAlertComponent, { disableClose: true, width: '40%' });
     let instance = dialogRef.componentInstance;
@@ -127,7 +158,7 @@ export class ElementoFindPageComponent implements OnInit, OnDestroy, AfterViewIn
     instance.classCss = 'color-danger';
     this.theInscricao.push(dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.theInscricao.push(this.theElementoService.delete(theIElementoDTO.id)
+        this.theInscricao.push(this.theVideoService.delete(theIVideoDTO.id)
           .subscribe((event: HttpEvent<Object>) => {
             if (event.type == HttpEventType.Response) {
               this.dialog.closeAll();
@@ -136,8 +167,8 @@ export class ElementoFindPageComponent implements OnInit, OnDestroy, AfterViewIn
               instance.title = "Status: " + event.status;
               instance.subTitle = 'Deletando!...';
               instance.classCss = 'color-success';
-              instance.message = event.statusText + '!! O Arquivo foi Deletado com sucesso!';
-              instance.urlNavigate = '/elementos';
+              instance.message = event.statusText + '!! O vídeo foi deletado com sucesso!';
+              instance.urlNavigate = '/videos';
               this.theRouter.navigate(['/']);
             }
           }, error => {
@@ -148,59 +179,41 @@ export class ElementoFindPageComponent implements OnInit, OnDestroy, AfterViewIn
   }
 
   onLoadPage() {
-    this.theInscricao.push(this.theElementoService.findPage(
-      this.paginator.pageIndex,
-      this.paginator.pageSize,
+    this.theInscricao.push(this.theVideoService.findPage(
+      0,
+      12,
       'titulo',
-      'ASC'
-    ).subscribe(
-      (x => {
-        this.dataSource = new MatTableDataSource(x['content']);
-      })
-    ));
-  }
+      'ASC',
+      this.getTheGaleriaForm().get('theIGaleria').value).subscribe(
+        (x => {
+          this.dataSource = new MatTableDataSource(x['content']);
+        })
+      )
+    );
+  } 
 
-  onUpdate(theIElementoDTO: IElementoDTO) {
-    this.theElementoService.setIElementoDTO(theIElementoDTO);
+  onUpdate(theIVideoDTO: IVideoDTO) {
+    this.theVideoService.setIVideoDTO(theIVideoDTO);
     this.theRouter.navigate(
-      ['editar', theIElementoDTO.id],
-      { relativeTo: this.theActivatedRoute }
+      ['videos/editar', theIVideoDTO.id]
     );
   }
 
-  openDialogAudio(theIElementoDTO: IElementoDTO): void {
-    this.dialog.closeAll();
-    let dialogRef = this.dialog.open(DialogOverviewAudioComponent, {});
-    let instance = dialogRef.componentInstance;
-    instance.title = theIElementoDTO.titulo;
-    instance.subtitle = theIElementoDTO.descricao;
-    instance.url = theIElementoDTO.elementoUrl;
-  }
-
-  openDialogImage(theIElementoDTO: IElementoDTO): void {
-    this.dialog.closeAll();
-    let dialogRef = this.dialog.open(DialogOverviewImageComponent, {});
-    let instance = dialogRef.componentInstance;
-    instance.title = theIElementoDTO.titulo;
-    instance.subtitle = theIElementoDTO.descricao;
-    instance.url = theIElementoDTO.elementoUrl;
-  }
-
-  openDialogVideo(theIElementoDTO: IElementoDTO): void {
+  openDialogVideo(theIVideoDTO: IVideoDTO): void {
     this.dialog.closeAll();
     let dialogRef = this.dialog.open(DialogOverviewVideoComponent, {});
     let instance = dialogRef.componentInstance;
-    instance.title = theIElementoDTO.titulo;
-    instance.subtitle = theIElementoDTO.descricao;
-    instance.url = theIElementoDTO.elementoUrl;
+    instance.title = theIVideoDTO.titulo;
+    instance.subtitle = theIVideoDTO.descricao;
+    instance.url = theIVideoDTO.arquivoUrl;
   }
 
-  openDialogIframe(theIElementoDTO: IElementoDTO): void {
+  openDialogIframe(theIVideoDTO: IVideoDTO): void {
     this.dialog.closeAll();
     let dialogRef = this.dialog.open(DialogOverviewIframeComponent, {});
     let instance = dialogRef.componentInstance;
-    instance.title = theIElementoDTO.titulo;
-    instance.subtitle = theIElementoDTO.descricao;
-    instance.url = theIElementoDTO.embed;
+    instance.title = theIVideoDTO.titulo;
+    instance.subtitle = theIVideoDTO.descricao;
+    instance.url = theIVideoDTO.embed;
   }
 }

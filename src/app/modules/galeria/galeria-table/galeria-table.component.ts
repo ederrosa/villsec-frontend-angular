@@ -30,7 +30,7 @@ export class GaleriaTableComponent implements OnInit, OnDestroy, AfterViewInit {
   private theInscricao: Subscription[] = new Array<Subscription>();
   private theLocalUser: ILocalUser;
 
-  columnsToDisplay = ['titulo'];
+  columnsToDisplay = ['id','titulo'];
   dataSource: MatTableDataSource<IGaleriaDTO> = new MatTableDataSource();
   expandedElement: IGaleriaDTO | null;
   pageEvent: PageEvent;
