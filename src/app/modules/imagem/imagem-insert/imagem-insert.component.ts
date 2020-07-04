@@ -4,18 +4,18 @@ import { MatDialog } from '@angular/material/dialog';
 import { HttpEventType, HttpEvent } from '@angular/common/http';
 
 import { Subscription } from 'rxjs';
-import { VideoService } from '../video.service';
+import { ImagemService } from '../imagem.service';
 import { UnsubscribeControlService } from 'src/app/core/services/unsubscribe-control.service';
 import { ProgressSpinnerOverviewComponent } from 'src/app/shared/components/progress-spinner/progress-spinner-overview/progress-spinner-overview.component';
 import { InformativeAlertComponent } from 'src/app/shared/components/alerts/informative-alert/informative-alert.component';
 import { GaleriaService } from '../../galeria/galeria.service';
 
 @Component({
-  selector: 'app-video-insert',
-  templateUrl: './video-insert.component.html',
-  styleUrls: ['./video-insert.component.scss']
+  selector: 'app-imagem-insert',
+  templateUrl: './imagem-insert.component.html',
+  styleUrls: ['./imagem-insert.component.scss']
 })
-export class VideoInsertComponent implements OnInit, OnDestroy, AfterViewInit {
+export class ImagemInsertComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private format: string;
   private readonly linear: boolean = true;
@@ -29,7 +29,7 @@ export class VideoInsertComponent implements OnInit, OnDestroy, AfterViewInit {
     private dialog: MatDialog,
     private theGaleriaService: GaleriaService,
     private theFormBuilder: FormBuilder,    
-    private theVideoService: VideoService,
+    private theImagemService: ImagemService,
     private theUnsubscribeControl: UnsubscribeControlService,
   ) { }
 
@@ -75,7 +75,6 @@ export class VideoInsertComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit() {
     this.theForm = this.theFormBuilder.group({
       descricao: ['', [Validators.required]],
-      embed: [''],
       titulo: ['', [Validators.required]],
     });
     this.theGaleriaForm = this.theFormBuilder.group({
@@ -95,8 +94,8 @@ export class VideoInsertComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.getTheFile()) {
       var reader = new FileReader();
       reader.readAsDataURL(this.getTheFile());
-      if (this.getTheFile().type.indexOf('video') > -1) {
-        this.format = 'video';
+      if (this.getTheFile().type.indexOf('image') > -1) {
+        this.format = 'image';
       }
       reader.onload = (event) => {
         this.url = (<FileReader>event.target).result;
@@ -107,14 +106,13 @@ export class VideoInsertComponent implements OnInit, OnDestroy, AfterViewInit {
   onSave() {
     let formData: FormData = new FormData();
     formData.append('descricao', this.getTheForm().get('descricao').value);
-    formData.append('embed', this.getTheForm().get('embed').value);
     formData.append('titulo', this.getTheForm().get('titulo').value);
     if (this.getTheFile()) {
       formData.append('file', this.getTheFile(), this.getTheFile().name);
     }
     formData.append('galeriaID', this.getTheGaleriaForm().get('theGaleriaID').value);
     let dialogRef = this.dialog.open(ProgressSpinnerOverviewComponent, { disableClose: true, width: '350px', height: '350px' });
-    this.theInscricao.push(this.theVideoService.insert(formData)
+    this.theInscricao.push(this.theImagemService.insert(formData)
       .subscribe((event: HttpEvent<Object>) => {
         if (event.type === HttpEventType.Response) {
           this.dialog.closeAll();
@@ -123,7 +121,7 @@ export class VideoInsertComponent implements OnInit, OnDestroy, AfterViewInit {
           instance.title = "Status: " + event.status;
           instance.subTitle = 'OK!...';
           instance.classCss = 'color-success';
-          instance.message = event.statusText + '!! O novo vídeo foi armazenado com sucesso!';
+          instance.message = event.statusText + '!! A nova imagem foi armazenada com sucesso!';
           this.onClear();
         } else if (event.type === HttpEventType.UploadProgress) {
           let instance = dialogRef.componentInstance;
@@ -134,11 +132,5 @@ export class VideoInsertComponent implements OnInit, OnDestroy, AfterViewInit {
       }, error => {
 
       }));
-  }
-
-  setUrl() {
-    this.url = this.getTheForm().get('embed').value;
-    this.format = null;
-    this.theFile = null;
   }
 }

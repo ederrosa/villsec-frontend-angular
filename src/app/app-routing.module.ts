@@ -28,6 +28,11 @@ const routes: Routes = [
         canActivate: [AuthGuard],
       },
       {
+        path: 'imagens',
+        loadChildren: () => import('./modules/imagem/imagem.module').then(m => m.ImagemModule),
+        canActivate: [AuthGuard],
+      },
+      {
         path: 'musicas',
         loadChildren: () => import('./modules/musica/musica.module').then(m => m.MusicaModule),
         canActivate: [AuthGuard],

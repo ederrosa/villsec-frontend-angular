@@ -159,7 +159,7 @@ export class EventoUpdateComponent implements OnInit, OnDestroy {
           formData.append('file', this.getTheFile(), this.getTheFile().name);
         }
         formData.append('horaInicio', this.getTheForm().get('horaInicio').value);
-        formData.append('horaTerminio', this.getTheForm().get('horaTermino').value);
+        formData.append('horaTermino', this.getTheForm().get('horaTermino').value);
         formData.append('tipoEvento', this.getTheForm().get('tipoEvento').value);
         formData.append('nome', this.getTheForm().get('nome').value);
         formData.append('logradouro', this.getTheForm().get('logradouro').value);

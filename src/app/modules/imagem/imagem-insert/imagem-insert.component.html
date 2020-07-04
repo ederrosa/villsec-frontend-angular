@@ -1,0 +1,75 @@
+﻿<mat-card class="example-card">
+    <mat-card-header>
+        <mat-card-title>
+            <h4>Formulario de registros de imagens.</h4>
+        </mat-card-title>
+        <mat-card-subtitle>V1LLSEC</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-horizontal-stepper [linear]="isLinear()" labelPosition="bottom" #stepper>
+            <mat-step [stepControl]="getTheGaleriaForm()">
+                <form>
+                    <ng-template matStepLabel>PASSO 1: Selecione o Galeria.</ng-template>
+                    <app-galeria-table></app-galeria-table>
+                </form>
+            </mat-step>
+            <mat-step [stepControl]="getTheForm()">
+                <div class="example-container mat-elevation-z8">
+                    <form class="example-form" [formGroup]="getTheForm()">
+                        <ng-template matStepLabel>PASSO 2: Dados do Imagens.</ng-template>
+                        <table class="example-full-width" cellspacing="0">
+                            <tr>
+                                <td>
+                                    <img [src]="getUrl()" *ngIf="getFormat()==='image' && getUrl()" height="35%"> <br />
+                                    <wbr />
+                                    <p>
+                                        <input formControlName="file" type='file' (change)="onSelectFile($event)" accept=".mp4,.avi" />
+                                    </p>
+                                </td>
+                            </tr>
+                        </table>
+                        <wbr />
+                        <table>
+                           <tr>
+                                <td>
+                                    <app-textarea formControlName="descricao"
+                                                  id="descricao"
+                                                  label="Descrição da Imagem"
+                                                  maxlength="255"
+                                                  placeholder="Insira uma descrição para a Imagem">
+                                    </app-textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <app-input formControlName="titulo"
+                                               id="titulo"
+                                               label="Título para a Imagem"
+                                               minlength="1"
+                                               maxlength="255"
+                                               placeholder="Informe um título para a imagem">
+                                    </app-input>
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="example-full-width" cellspacing="0">
+                            <tr>
+                                <td>
+                                    <button class="full-width" mat-button color="primary" status="primary" [disabled]="getTheForm().invalid" (click)="onSave()"><mat-icon>save</mat-icon>Salvar</button>
+                                </td>
+                                <td>
+                                    <button class="full-width" mat-button color="accent" status="primary" (click)="onClear()"><mat-icon>clear</mat-icon>Limpar</button>
+                                </td>
+                                <td>
+                                    <button class="full-width" mat-button color="warn" status="warn" routerLink="/imagens"><mat-icon>keyboard_return</mat-icon>Voltar</button>
+                                </td>
+                            </tr>
+                        </table>
+                        <wbr />
+                    </form>
+                </div>
+            </mat-step>
+        </mat-horizontal-stepper>
+    </mat-card-content>
+</mat-card>
+

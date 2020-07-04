@@ -5,21 +5,21 @@ import { HttpEventType, HttpEvent } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs';
-import { VideoService } from '../video.service';
+import { ImagemService } from '../imagem.service';
 import { UnsubscribeControlService } from 'src/app/core/services/unsubscribe-control.service';
 import { ProgressSpinnerOverviewComponent } from 'src/app/shared/components/progress-spinner/progress-spinner-overview/progress-spinner-overview.component';
 import { InformativeAlertComponent } from 'src/app/shared/components/alerts/informative-alert/informative-alert.component';
 import { ConfirmationAlertComponent } from 'src/app/shared/components/alerts/confirmation-alert/confirmation-alert.component';
 import { switchMap, map } from 'rxjs/operators';
-import { IVideoDTO } from 'src/app/shared/models/dtos/ivideo-dto';
+import { IImagemDTO } from 'src/app/shared/models/dtos/iimagem-dto';
 import { GaleriaService } from '../../galeria/galeria.service';
 
 @Component({
-  selector: 'app-video-update',
-  templateUrl: './video-update.component.html',
-  styleUrls: ['./video-update.component.scss']
+  selector: 'app-imagem-update',
+  templateUrl: './imagem-update.component.html',
+  styleUrls: ['./imagem-update.component.scss']
 })
-export class VideoUpdateComponent implements OnInit, OnDestroy, AfterViewInit {
+export class ImagemUpdateComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private format: string;
   private readonly linear: boolean = true;
@@ -34,7 +34,7 @@ export class VideoUpdateComponent implements OnInit, OnDestroy, AfterViewInit {
     private theActivatedRoute: ActivatedRoute,
     private theGaleriaService: GaleriaService,
     private theFormBuilder: FormBuilder,
-    private theVideoService: VideoService,
+    private theImagemService: ImagemService,
     private theUnsubscribeControl: UnsubscribeControlService
   ) { }
 
@@ -82,19 +82,18 @@ export class VideoUpdateComponent implements OnInit, OnDestroy, AfterViewInit {
       id: [''],
       dtCriacao: [''],
       descricao: ['', [Validators.required]],
-      embed: [''],
       titulo: ['', [Validators.required]],
     });
     this.theGaleriaForm = this.theFormBuilder.group({
       theGaleriaID: ['', [Validators.required]]
     });
-    if (this.theVideoService.getIVideoDTO() == null) {
+    if (this.theImagemService.getIImagemDTO() == null) {
       this.theActivatedRoute.params.pipe(
         map((params: any) => params['id']),
-        switchMap(id => this.theVideoService.find(id))
-      ).subscribe(theIVideoDTO => this.onFormUpdate(theIVideoDTO));
+        switchMap(id => this.theImagemService.find(id))
+      ).subscribe(theIImagemDTO => this.onFormUpdate(theIImagemDTO));
     } else {
-      this.onFormUpdate(this.theVideoService.getIVideoDTO());
+      this.onFormUpdate(this.theImagemService.getIImagemDTO());
     }
   }
 
@@ -105,19 +104,14 @@ export class VideoUpdateComponent implements OnInit, OnDestroy, AfterViewInit {
     this.theFile = null;
   }
 
-  onFormUpdate(theIVideoDTO: IVideoDTO): void {
-    if (theIVideoDTO.arquivoUrl != null && theIVideoDTO.arquivoUrl != '') {
-      this.format = 'video';
-      this.url = theIVideoDTO.arquivoUrl;
-    } else if (theIVideoDTO.embed != null && theIVideoDTO.embed != '') {
-      this.url = theIVideoDTO.embed;
-    }      
+  onFormUpdate(theIImagemDTO: IImagemDTO): void {
+    this.format = 'image';
+    this.url = theIImagemDTO.arquivoUrl;   
     this.getTheForm().patchValue({
-      id: theIVideoDTO.id,
-      dtCriacao: theIVideoDTO.dtCriacao,
-      descricao: theIVideoDTO.descricao,
-      embed: theIVideoDTO.embed,
-      titulo: theIVideoDTO.titulo
+      id: theIImagemDTO.id,
+      dtCriacao: theIImagemDTO.dtCriacao,
+      descricao: theIImagemDTO.descricao,
+      titulo: theIImagemDTO.titulo
     });
   }
 
@@ -126,8 +120,8 @@ export class VideoUpdateComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.getTheFile()) {
       var reader = new FileReader();
       reader.readAsDataURL(this.getTheFile());
-      if (this.getTheFile().type.indexOf('video') > -1) {
-        this.format = 'video';
+      if (this.getTheFile().type.indexOf('image') > -1) {
+        this.format = 'image';
       }
       reader.onload = (event) => {
         this.url = (<FileReader>event.target).result;
@@ -146,12 +140,11 @@ export class VideoUpdateComponent implements OnInit, OnDestroy, AfterViewInit {
       if (result) {
         let formData: FormData = new FormData();
         formData.append('descricao', this.getTheForm().get('descricao').value);
-        formData.append('embed', this.getTheForm().get('embed').value);
         formData.append('titulo', this.getTheForm().get('titulo').value);
         if (this.getTheFile()) {
           formData.append('file', this.getTheFile(), this.getTheFile().name);
         }
-        this.theInscricao.push(this.theVideoService.update(formData, this.getTheForm().get('id').value)
+        this.theInscricao.push(this.theImagemService.update(formData, this.getTheForm().get('id').value)
           .subscribe((event: HttpEvent<Object>) => {
             if (event.type === HttpEventType.Response) {
               this.dialog.closeAll();
@@ -160,8 +153,8 @@ export class VideoUpdateComponent implements OnInit, OnDestroy, AfterViewInit {
               instance.title = "Status: " + event.status;
               instance.subTitle = 'Alterado!...';
               instance.classCss = 'color-success';
-              instance.message = event.statusText + '!! A Video foi alterado com sucesso!';
-              instance.urlNavigate = '/videos';
+              instance.message = event.statusText + '!! A Imagem foi alterada com sucesso!';
+              instance.urlNavigate = '/imagens';
             } else if (event.type === HttpEventType.UploadProgress) {
               this.dialog.closeAll();
               let dialogRef = this.dialog.open(ProgressSpinnerOverviewComponent, { disableClose: true, width: '350px', height: '350px' });
@@ -175,11 +168,5 @@ export class VideoUpdateComponent implements OnInit, OnDestroy, AfterViewInit {
           }));
       }
     }));
-  }
-
-  setUrl() {
-    this.url = this.getTheForm().get('embed').value;
-    this.format = null;
-    this.theFile = null;
   }
 }

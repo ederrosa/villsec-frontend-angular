@@ -6,12 +6,13 @@
     color: mat-color($light);
     margin: 0;
     padding: 0;
+    padding-top: 30px;
 }
 
 .swiper-container {
     width: 100%;
-    padding-top: 50px;
-    padding-bottom: 50px;
+    padding-top: 35px;
+    padding-bottom: 35px;
 }
 
 .swiper-slide {
@@ -34,7 +35,7 @@
     align-items: center;
 }
 
-.swiper-pagination{
+.swiper-pagination {
     background-color: $white;
 }
 
@@ -52,10 +53,10 @@
 
 .example-card mat-card-subtitle {
     color: mat-color($dark);
-    text-align:left;
+    text-align: left;
 }
 
-mat-card-actions :hover{
+mat-card-actions :hover {
     background-color: mat-color($dark);
     color: mat-color($light);
 }

@@ -7,8 +7,14 @@
 /*@import '~@angular/material/prebuilt-themes/purple-green.css';*/
 /*@import '~@angular/material/prebuilt-themes/pink-bluegrey.css';*/
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: $fontPrimary;
+}
 
 /**
  * Copyright 2015 Google Inc. All Rights Reserved.
@@ -129,9 +135,9 @@ a img {
 
 .android-navigation a:hover {
     width: auto;
-    align-content:center;
-    font-family:'MV Boli';
-    font-size:20px;
+    align-content: center;
+    font-family: $fontSecondary;
+    font-size: 20px;
 }
 
 .android-search-box.is-focused + .android-navigation-container {
@@ -183,7 +189,7 @@ a img {
 
 .android-drawer .mdl-navigation__link.mdl-navigation__link:hover {
     font-size: 20px;
-    font-family:'MV Boli';
+    font-family: $fontSecondary;
 }
 
 .android-drawer span.mdl-navigation__link.mdl-navigation__link {
@@ -203,17 +209,17 @@ a img {
 
 .android-be-together-section {
     position: relative;
-    height: 800px;
+    height: auto;
     width: auto;
     background-color: mat-color($light);
-    background: url('assets/images/camada1.png') center 30% no-repeat;
+    background: url('assets/images/camada1.png') center 40% no-repeat;
     background-size: cover;
 }
 
 .logo-font {
-    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+    font-family: $fontSecondary;
     line-height: 1;
-    color: #767777;
+    color: mat-color($light);
     font-weight: 500;
 }
 
@@ -229,11 +235,10 @@ a img {
 
 .android-create-character {
     font-size: 30px;
-    padding-top: 410px;
+    padding-top: 25%;
 }
 
 .android-create-character a {
-
     text-decoration: none;
     color: mat-color($light);
     font-weight: 300;
@@ -333,7 +338,7 @@ a img {
 
 
 .android-wear-section {
-    position: relative;   
+    position: relative;
     height: 800px;
 }
 
@@ -342,8 +347,9 @@ a img {
     bottom: 0;
     width: 100%;
     text-align: center;
-    background-color: mat-color($light);
-    opacity: 0.8;
+    background-color: mat-color($dark);
+    color: $white;
+    opacity: 0.9;
 }
 
 .android-wear-band-text {
@@ -351,7 +357,7 @@ a img {
     margin-left: 25%;
     padding: 24px;
     text-align: left;
-    color: mat-color($light);
+    color: mat-color($dark);
 }
 
 .android-wear-band-text p {

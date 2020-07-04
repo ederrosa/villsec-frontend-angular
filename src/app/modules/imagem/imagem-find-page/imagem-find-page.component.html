@@ -1,7 +1,7 @@
 ﻿<mat-card class="example-card">
     <mat-card-header>
         <mat-card-title>
-            <h6>Lista de Vídeo</h6>
+            <h6>Lista de Imagens</h6>
         </mat-card-title>
         <mat-card-subtitle>V1LLSEC</mat-card-subtitle>
     </mat-card-header>
@@ -14,11 +14,11 @@
                 </form>
             </mat-step>
             <mat-step>
-                <ng-template matStepLabel>Lista de Vídeos</ng-template>
+                <ng-template matStepLabel>Lista de Imagens</ng-template>
                 <mat-card-title>
                     <div>
-                        <button routerLink="/videos/novo" *ngIf="getInsert()" mat-raised-button color="primary">
-                            <mat-icon>add</mat-icon> Cadastrar um novo vídeo
+                        <button routerLink="/imagens/novo" *ngIf="getInsert()" mat-raised-button color="primary">
+                            <mat-icon>add</mat-icon> Cadastrar uma nova Imagem
                         </button>
                     </div>
                 </mat-card-title>
@@ -40,8 +40,7 @@
                                      [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
                                     <div class="example-element-diagram">
                                         <div class="example-element-img mat-elevation-z8">
-                                            <video class="example-element-img" src="{{ element.arquivoUrl }}" *ngIf="element.arquivoUrl != ''" controls (click)="openDialogVideo(element)"></video> <br />
-                                            <iframe class="example-element-img" [src]=" element.embed | safe " *ngIf="element.embed != ''" (click)="openDialogIframe(element)"></iframe> <br />
+                                            <img class="example-element-img" src="{{ element.arquivoUrl }}" (click)="openDialogImage(element)">
                                         </div>
                                     </div>
                                     <div class="example-element-description">

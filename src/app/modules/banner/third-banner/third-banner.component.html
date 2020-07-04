@@ -1,17 +1,37 @@
 ﻿<div class="android-wear-section">
     <a name="thirdbanner"></a>
-    <div class="android-wear-band">
-        <div class="android-wear-band-text">
-            <div class="mdl-typography--display-2 mdl-typography--font-thin">The best of Google built in</div>
-            <p class="mdl-typography--headline mdl-typography--font-thin">
-                Android works perfectly with your favourite apps like Google Maps,
-                Calendar and YouTube.
-            </p>
-            <p>
-                <a class="mdl-typography--font-regular mdl-typography--text-uppercase android-alt-link" href="">
-                    See what's new in the Play Store&nbsp;<i class="material-icons">chevron_right</i>
-                </a>
-            </p>
+    <div class="title_thirdbanner">
+        <div class="mdl-typography--display-2 mdl-typography--font-thin"><mat-icon class="example-icon">event_note</mat-icon> Eventos</div>
+        <!-- Swiper -->
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        </mat-form-field>
+    </div>
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide" *ngFor="let element of getTheObservable() | async">
+                <mat-card class="example-card">
+                    <mat-card-header>
+                        <mat-card-title>{{ element.nome }}</mat-card-title>
+                    </mat-card-header>
+                    <img mat-card-image src="{{ element.folderUrl }}" (click)="openDialogImage(element)">
+                    <mat-card-content>
+                        <mat-card-subtitle><strong>Data de Início:</strong> {{ element.diaInicio | date: 'mediumDate' }} &nbsp;&nbsp;<strong>às</strong> {{ element.horaInicio }}</mat-card-subtitle>
+                        <mat-card-subtitle><strong>Data de Término:</strong> {{ element.diaTermino | date: 'mediumDate' }} &nbsp;&nbsp;<strong>às</strong> {{ element.horaTermino }}</mat-card-subtitle>
+                        <mat-card-subtitle><strong>Tipo:</strong> {{ element.tipoEvento }}</mat-card-subtitle>
+                        <mat-card-subtitle><strong>Classificação:</strong> {{ element.classificacao }}</mat-card-subtitle>
+                        <mat-card-subtitle><strong>Pais:</strong> {{ element.pais }} &nbsp;&nbsp;<strong>Estado:</strong> {{ element.estado }}  </mat-card-subtitle>
+                        <mat-card-subtitle><strong>Cidade:</strong> {{ element.cidade }}</mat-card-subtitle>
+                        <mat-card-subtitle><strong>Bairro:</strong> {{ element.bairro }}</mat-card-subtitle>
+                        <mat-card-subtitle><strong>Endereço:</strong> {{ element.logradouro }}</mat-card-subtitle>
+                        <mat-card-subtitle><strong>CEP:</strong> {{ element.cep }}</mat-card-subtitle>
+                        <p>
+                            {{ element.descricao }}
+                        </p>
+                    </mat-card-content>                    
+                </mat-card>
+            </div>
         </div>
     </div>
+    <mat-paginator (page)="pageEvent = $event"></mat-paginator>
 </div>

@@ -59,7 +59,7 @@ export class SecondBannerComponent implements OnInit, OnDestroy, AfterViewInit {
         tap(() => this.onLoadPage())
     ).subscribe());
     this.mySwiper = this.theSwiperService.getSwiperCoverflow();
-    this.mySwiper.update();
+    this.mySwiper.update;
   }
 
   ngOnDestroy() {
@@ -87,7 +87,7 @@ export class SecondBannerComponent implements OnInit, OnDestroy, AfterViewInit {
         this.theObservable = this.dataSource.connect();
       })
     ));
-    this.mySwiper.update();
+    this.mySwiper.update;
   }
 
   onPlay(theIAlbumDTO: IAlbumDTO) {
