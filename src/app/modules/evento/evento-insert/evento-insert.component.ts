@@ -16,7 +16,7 @@ import { CepService } from 'src/app/core/services/cep.service';
   templateUrl: './evento-insert.component.html',
   styleUrls: ['./evento-insert.component.scss']
 })
-export class EventoInsertComponent implements OnInit, OnDestroy{
+export class EventoInsertComponent implements OnInit, OnDestroy {
 
   private format: string;
   private readonly optionsTipoEvento: IOptions[] = [
@@ -31,7 +31,7 @@ export class EventoInsertComponent implements OnInit, OnDestroy{
   private theInscricao: Subscription[] = new Array<Subscription>();
   private url: any;
 
-  constructor(    
+  constructor(
     private dialog: MatDialog,
     private theCepService: CepService,
     private theEventoService: EventoService,
@@ -88,6 +88,7 @@ export class EventoInsertComponent implements OnInit, OnDestroy{
       descricao: ['', [Validators.required]],
       horaInicio: ['', [Validators.required]],
       horaTermino: ['', [Validators.required]],
+      ingressoUrl: [''],
       nome: ['', [Validators.required]],
       tipoEvento: ['', [Validators.required]],
       logradouro: ['', [Validators.required]],
@@ -101,23 +102,22 @@ export class EventoInsertComponent implements OnInit, OnDestroy{
 
   onSave() {
     let formData: FormData = new FormData();
+    formData.append('bairro', this.getTheForm().get('bairro').value);
+    formData.append('cep', this.getTheForm().get('cep').value);
+    formData.append('cidade', this.getTheForm().get('cidade').value);
     formData.append('classificacao', this.getTheForm().get('classificacao').value);
+    formData.append('descricao', this.getTheForm().get('descricao').value);
     formData.append('diaInicio', new Date(this.getTheForm().get('diaInicio').value).toLocaleDateString());
     formData.append('diaTermino', new Date(this.getTheForm().get('diaTermino').value).toLocaleDateString());
-    formData.append('descricao', this.getTheForm().get('descricao').value);
-    if (this.getTheFile()) {
-      formData.append('file', this.getTheFile(), this.getTheFile().name);
-    }
+    formData.append('estado', this.getTheForm().get('estado').value);
+    formData.append('file', this.getTheFile(), this.getTheFile().name);
     formData.append('horaInicio', this.getTheForm().get('horaInicio').value);
     formData.append('horaTermino', this.getTheForm().get('horaTermino').value);
-    formData.append('tipoEvento', this.getTheForm().get('tipoEvento').value);
-    formData.append('nome', this.getTheForm().get('nome').value);
+    formData.append('ingressoUrl', this.getTheForm().get('ingressoUrl').value);
     formData.append('logradouro', this.getTheForm().get('logradouro').value);
-    formData.append('cep', this.getTheForm().get('cep').value);
-    formData.append('bairro', this.getTheForm().get('bairro').value);
-    formData.append('cidade', this.getTheForm().get('cidade').value);
-    formData.append('estado', this.getTheForm().get('estado').value);
+    formData.append('nome', this.getTheForm().get('nome').value);
     formData.append('pais', this.getTheForm().get('pais').value);
+    formData.append('tipoEvento', this.getTheForm().get('tipoEvento').value);
     let dialogRef = this.dialog.open(ProgressSpinnerOverviewComponent, { disableClose: true, width: '350px', height: '350px' });
     this.theInscricao.push(this.theEventoService.insert(formData)
       .subscribe((event: HttpEvent<Object>) => {

@@ -8,10 +8,11 @@
     <mat-card-content>
         <div class="example-container mat-elevation-z8">
             <form class="example-form" [formGroup]="getTheForm()">
+                <wbr />
                 <table class="example-full-width" cellspacing="0">
                     <tr>
                         <td>
-                            <img [src]="getUrl()" *ngIf="getFormat()==='image' && getUrl()" height="20%"> <br />
+                            <img [src]="getUrl()" *ngIf="getFormat()==='image' && getUrl()" height="280px"> <br />
                             <wbr />
                             <p>
                                 <input formControlName="file" type='file' (change)="onSelectFile($event)" accept=".jpg,.png" />
@@ -55,10 +56,21 @@
                         <td>
                             <app-textarea formControlName="descricao"
                                           id="descricao"
-                                          label="Descrição do Álbum"
+                                          label="Descrição do Evento"
                                           maxlength="50"
-                                          placeholder="Insira uma descrição do álbum">
+                                          placeholder="Insira uma descrição do Evento">
                             </app-textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <app-input formControlName="ingressoUrl"
+                                       id="ingressoUrl"
+                                       label="Link para o site de compra dos ingressos"
+                                       minlength="0"
+                                       maxlength="100"
+                                       placeholder="Link para adquirir o ingresso.">
+                            </app-input>
                         </td>
                     </tr>
                 </table>

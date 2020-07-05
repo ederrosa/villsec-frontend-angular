@@ -5,8 +5,6 @@ import { RouterModule } from '@angular/router';
 import { EventoFindPageComponent } from './evento-find-page.component';
 import { MaterialModule } from 'src/app/core/configurations/material/material.module';
 
-
-
 @NgModule({
   declarations: [EventoFindPageComponent],
   imports: [

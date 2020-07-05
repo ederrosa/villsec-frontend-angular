@@ -39,10 +39,21 @@
                         <td>
                             <app-textarea formControlName="descricao"
                                           id="descricao"
-                                          label="Descrição do Álbum"
+                                          label="Descrição do Evento"
                                           maxlength="50"
-                                          placeholder="Insira uma descrição do álbum">
+                                          placeholder="Insira uma descrição do Evento">
                             </app-textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <app-input formControlName="ingressoUrl"
+                                       id="ingressoUrl"
+                                       label="Link para o site de compra dos ingressos"
+                                       minlength="0"
+                                       maxlength="100"
+                                       placeholder="Link para adquirir o ingresso.">
+                            </app-input>
                         </td>
                     </tr>
                 </table>

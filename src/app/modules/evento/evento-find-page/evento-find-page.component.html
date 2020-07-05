@@ -43,7 +43,6 @@
                                         <td mat-cell>
                                             <mat-label><strong>Classificação: </strong> {{ element.classificacao }}</mat-label>
                                         </td>
-                                       
                                     </tr>
                                     <tr>
                                         <td mat-cell>
@@ -52,9 +51,7 @@
                                         <td mat-cell>
                                             <mat-label><strong>Data de Termíno do Evento: </strong> {{ element.diaTermino | date: 'mediumDate' }} às {{ element.horaTermino }}</mat-label>
                                         </td>
-                                        <td>
-
-                                        </td>
+                                        <td></td>
                                     </tr>
                                     <tr>
                                         <td mat-cell>
@@ -77,13 +74,17 @@
                                         </td>
                                         <td mat-cell>
                                             <mat-label><strong>Pais: </strong> {{ element.pais }}</mat-label>
-                                        </td>                                       
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td mat-cell>
                                             <mat-label><strong>Descrição: </strong> {{ element.descricao }}</mat-label>
                                         </td>
-
+                                    </tr>
+                                    <tr *ngIf="element.ingressoUrl != null && element.ingressoUrl != ''">
+                                        <td mat-cell>
+                                            <mat-label><strong><a href="{{ element?.ingressoUrl }}">Link para o Ingresso!!</a> </strong></mat-label>
+                                        </td>
                                     </tr>
                                 </table>
                                 <div class="example-button-row">

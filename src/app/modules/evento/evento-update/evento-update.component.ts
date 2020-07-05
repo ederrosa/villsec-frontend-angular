@@ -98,6 +98,7 @@ export class EventoUpdateComponent implements OnInit, OnDestroy {
       descricao: ['', [Validators.required]],
       horaInicio: ['', [Validators.required]],
       horaTermino: ['', [Validators.required]],
+      ingressoUrl: [''],
       nome: ['', [Validators.required]],
       tipoEvento: ['', [Validators.required]],
       logradouro: ['', [Validators.required]],
@@ -130,6 +131,7 @@ export class EventoUpdateComponent implements OnInit, OnDestroy {
       descricao: theIEventoDTO.descricao,
       horaInicio: theIEventoDTO.horaInicio.toString(),
       horaTermino: theIEventoDTO.horaTermino.toString(),
+      ingressoUrl: theIEventoDTO.ingressoUrl,
       nome: theIEventoDTO.nome,
       tipoEvento: this.theFieldsService.getItemOfSelect(this.getOptionsTipoEvento(), theIEventoDTO.tipoEvento),
       logradouro: theIEventoDTO.logradouro,
@@ -151,23 +153,24 @@ export class EventoUpdateComponent implements OnInit, OnDestroy {
     this.theInscricao.push(dialogRef.afterClosed().subscribe(result => {
       if (result) {
         let formData: FormData = new FormData();
+        formData.append('bairro', this.getTheForm().get('bairro').value);
+        formData.append('cep', this.getTheForm().get('cep').value);
+        formData.append('cidade', this.getTheForm().get('cidade').value);
         formData.append('classificacao', this.getTheForm().get('classificacao').value);
+        formData.append('descricao', this.getTheForm().get('descricao').value);
         formData.append('diaInicio', new Date(this.getTheForm().get('diaInicio').value).toLocaleDateString());
         formData.append('diaTermino', new Date(this.getTheForm().get('diaTermino').value).toLocaleDateString());
-        formData.append('descricao', this.getTheForm().get('descricao').value);
+        formData.append('estado', this.getTheForm().get('estado').value);
         if (this.getTheFile()) {
           formData.append('file', this.getTheFile(), this.getTheFile().name);
         }
         formData.append('horaInicio', this.getTheForm().get('horaInicio').value);
         formData.append('horaTermino', this.getTheForm().get('horaTermino').value);
-        formData.append('tipoEvento', this.getTheForm().get('tipoEvento').value);
-        formData.append('nome', this.getTheForm().get('nome').value);
+        formData.append('ingressoUrl', this.getTheForm().get('ingressoUrl').value);
         formData.append('logradouro', this.getTheForm().get('logradouro').value);
-        formData.append('cep', this.getTheForm().get('cep').value);
-        formData.append('bairro', this.getTheForm().get('bairro').value);
-        formData.append('cidade', this.getTheForm().get('cidade').value);
-        formData.append('estado', this.getTheForm().get('estado').value);
+        formData.append('nome', this.getTheForm().get('nome').value);
         formData.append('pais', this.getTheForm().get('pais').value);
+        formData.append('tipoEvento', this.getTheForm().get('tipoEvento').value);       
         this.theInscricao.push(this.theEventoService.update(formData, this.getTheForm().get('id').value)
           .subscribe((event: HttpEvent<Object>) => {
             if (event.type === HttpEventType.Response) {
@@ -177,7 +180,7 @@ export class EventoUpdateComponent implements OnInit, OnDestroy {
               instance.title = "Status: " + event.status;
               instance.subTitle = 'Alterado!...';
               instance.classCss = 'color-success';
-              instance.message = event.statusText + '!! O Evento foi alterada com sucesso!';
+              instance.message = event.statusText + '!! O Evento foi alterado com sucesso!';
               instance.urlNavigate = '/eventos';
             } else if (event.type === HttpEventType.UploadProgress) {
               this.dialog.closeAll();
