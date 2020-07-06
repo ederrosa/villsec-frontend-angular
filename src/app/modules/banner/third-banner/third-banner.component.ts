@@ -22,7 +22,7 @@ import { SwiperService } from 'src/app/core/services/swiper.service';
 })
 export class ThirdBannerComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  private mySwiper: Swiper;
+  private theThirdBannerSwiper: Swiper;
   private theInscricao: Subscription[] = new Array<Subscription>();
   private theObservable: Observable<any>;
   dataSource: MatTableDataSource<IEventoDTO> = new MatTableDataSource();
@@ -66,12 +66,12 @@ export class ThirdBannerComponent implements OnInit, OnDestroy, AfterViewInit {
       .pipe(
         tap(() => this.onLoadPage())
     ).subscribe());
-    this.mySwiper = this.theSwiperService.getSwiperCoverflow();
-    this.mySwiper.update;
+    this.theThirdBannerSwiper = this.theSwiperService.getSwiperCoverflow("swiper-thirdbanner");
+    this.theThirdBannerSwiper.update();
   }
 
   ngOnDestroy() {
-    this.mySwiper = null;
+    this.theThirdBannerSwiper = null;
     if (this.dataSource) {
       this.dataSource.disconnect();
     }
@@ -96,7 +96,7 @@ export class ThirdBannerComponent implements OnInit, OnDestroy, AfterViewInit {
       this.theObservable = this.dataSource.connect();
       })
     ));
-    this.mySwiper.update;
+    this.theThirdBannerSwiper.update();
   }
 
   openDialogImage(theIEvenoDTO: IEventoDTO): void {

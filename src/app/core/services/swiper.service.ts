@@ -9,8 +9,8 @@ export class SwiperService {
 
   constructor() { }
 
-  getSwiperCoverflow(): Swiper {
-    return new Swiper('.swiper-container', {
+  getSwiperCoverflow(theClass: string): Swiper {
+    return new Swiper(`.${theClass}`, {
       effect: 'coverflow',
       grabCursor: true,
       centeredSlides: true,
@@ -28,8 +28,8 @@ export class SwiperService {
     });
   }
 
-  getSwiperCube(): Swiper {
-    return new Swiper('.swiper-container', {
+  getSwiperCube(theClass: string): Swiper {
+    return new Swiper(`.${theClass}`, {
       effect: 'cube',
       grabCursor: true,
       observer: true,
@@ -40,10 +40,7 @@ export class SwiperService {
         slideShadows: true,
         shadowOffset: 20,
         shadowScale: 0.94,
-      },
-      pagination: {
-        el: '.swiper-pagination',
-      },
+      }
     });
   }
 }

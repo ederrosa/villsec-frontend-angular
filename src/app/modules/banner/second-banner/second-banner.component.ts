@@ -21,7 +21,7 @@ import { MusicaDialogOverviewComponent } from '../../musica/musica-dialog-overvi
 })
 export class SecondBannerComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  private mySwiper: Swiper;
+  private theSecondBannerSwiper: Swiper;
   private theInscricao: Subscription[] = new Array<Subscription>();
   private theObservable: Observable<any>;
 
@@ -58,13 +58,13 @@ export class SecondBannerComponent implements OnInit, OnDestroy, AfterViewInit {
       .pipe(
         tap(() => this.onLoadPage())
     ).subscribe());
-    this.mySwiper = this.theSwiperService.getSwiperCoverflow();
-    this.mySwiper.update;
+    this.theSecondBannerSwiper = this.theSwiperService.getSwiperCoverflow("swiper-secondbanner");
+    this.theSecondBannerSwiper.update();
   }
 
   ngOnDestroy() {
     this.theUnsubscribeControl.unsubscribe(this.theInscricao);
-    this.mySwiper = null;
+    this.theSecondBannerSwiper = null;
     if (this.dataSource) {
       this.dataSource.disconnect();
     }
@@ -87,7 +87,7 @@ export class SecondBannerComponent implements OnInit, OnDestroy, AfterViewInit {
         this.theObservable = this.dataSource.connect();
       })
     ));
-    this.mySwiper.update;
+    this.theSecondBannerSwiper.update();
   }
 
   onPlay(theIAlbumDTO: IAlbumDTO) {

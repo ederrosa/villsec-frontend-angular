@@ -1,6 +1,9 @@
 // Include non-theme styles for core.
 @import '../../../../theme.scss';
 
+.swiper-thirdbanner {
+}
+
 .swiper-container {
     width: 100%;
     padding-top: 30px;
@@ -50,7 +53,7 @@ mat-card-actions :hover {
 }
 
 mat-form-field {
-    width: 90%;    
+    width: 90%;
 }
 
 .title_thirdbanner {
@@ -58,4 +61,3 @@ mat-form-field {
     color: $black;
     text-align: center;
 }
-

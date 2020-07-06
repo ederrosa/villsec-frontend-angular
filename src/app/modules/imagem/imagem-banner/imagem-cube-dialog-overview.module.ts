@@ -1,27 +1,25 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FourthBannerComponent } from './fourth-banner.component';
+import { ImagemCubeDialogOverviewComponent } from './imagem-cube-dialog-overview.component';
 import { MaterialModule } from 'src/app/core/configurations/material/material.module';
 import { PipesModule } from 'src/app/shared/pipes/pipes.module';
 import { RouterModule } from '@angular/router';
-import { GaleriaModule } from '../../galeria/galeria.module';
-import { ImagemModule } from '../../imagem/imagem.module';
 
 @NgModule({
-  declarations: [FourthBannerComponent],
+  declarations: [ImagemCubeDialogOverviewComponent],
   imports: [
     CommonModule,
-    GaleriaModule,
-    ImagemModule,
     MaterialModule,
     PipesModule,
     RouterModule,
   ],
   exports: [
-    FourthBannerComponent
+    ImagemCubeDialogOverviewComponent
+  ],
+  providers: [
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ]
 })
-export class FourthBannerModule { }
+export class ImagemCubeDialogOverviewModule { }

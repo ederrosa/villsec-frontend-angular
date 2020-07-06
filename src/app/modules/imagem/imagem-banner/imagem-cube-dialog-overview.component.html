@@ -1,0 +1,18 @@
+﻿<div class="swiper-container swiper-imagem-cube-dialog-overview">
+    <div class="swiper-wrapper">
+        <div class="swiper-slide" *ngFor="let element of getTheObservable() | async">
+            <mat-card class="example-card">
+                <mat-card-header>
+                    <mat-card-title><strong>Título:</strong> {{ element.titulo }}</mat-card-title>
+                </mat-card-header>
+                <img mat-card-image src="{{ element.arquivoUrl }}" download="w3logo">
+                <mat-card-content>
+                    <mat-card-subtitle><strong>Comentário:</strong> {{ element.descricao }}</mat-card-subtitle>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+    <mat-paginator (page)="pageEvent = $event"></mat-paginator>
+</div>
+
+

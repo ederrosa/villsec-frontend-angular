@@ -20,10 +20,10 @@
                         <table class="example-full-width" cellspacing="0">
                             <tr>
                                 <td>
-                                    <img [src]="getUrl()" *ngIf="getFormat()==='image' && getUrl()" height="35%"> <br />
+                                    <img [src]="getUrl()" *ngIf="getFormat()==='image' && getUrl()" width="426px" height="240px"> <br />
                                     <wbr />
                                     <p>
-                                        <input formControlName="file" type='file' (change)="onSelectFile($event)" accept=".mp4,.avi" />
+                                        <input formControlName="file" type='file' (change)="onSelectFile($event)" accept=".jpg,.png" />
                                     </p>
                                 </td>
                             </tr>

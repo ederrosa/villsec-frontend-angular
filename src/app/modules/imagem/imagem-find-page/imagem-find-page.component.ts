@@ -110,7 +110,7 @@ export class ImagemFindPageComponent implements OnInit, OnDestroy, AfterViewInit
         this.theInscricao.push(this.theImagemService.findPage(
           0,
           12,
-          'titulo',
+          'dtUltimaAlteracao',
           'ASC',
           theIGaleria.id).subscribe(
             (x => {
@@ -181,7 +181,7 @@ export class ImagemFindPageComponent implements OnInit, OnDestroy, AfterViewInit
     this.theInscricao.push(this.theImagemService.findPage(
       0,
       12,
-      'titulo',
+      'dtUltimaAlteracao',
       'ASC',
       this.getTheGaleriaForm().get('theIGaleria').value).subscribe(
         (x => {

@@ -7,7 +7,7 @@
             <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
         </mat-form-field>
     </div>
-    <div class="swiper-container">
+    <div class="swiper-container swiper-thirdbanner">
         <div class="swiper-wrapper">
             <div class="swiper-slide" *ngFor="let element of getTheObservable() | async">
                 <mat-card class="example-card">
