@@ -10,6 +10,7 @@ import { ProgressSpinnerOverviewComponent } from 'src/app/shared/components/prog
 import { InformativeAlertComponent } from 'src/app/shared/components/alerts/informative-alert/informative-alert.component';
 import { IOptions } from 'src/app/shared/components/fields/select/select.component';
 import { CepService } from 'src/app/core/services/cep.service';
+import { PatternService } from 'src/app/core/services/pattern.service';
 
 @Component({
   selector: 'app-evento-insert',
@@ -34,8 +35,9 @@ export class EventoInsertComponent implements OnInit, OnDestroy {
   constructor(
     private dialog: MatDialog,
     private theCepService: CepService,
-    private theEventoService: EventoService,
+    private theEventoService: EventoService,   
     private theFormBuilder: FormBuilder,
+    private thePatternService: PatternService,
     private theUnsubscribeControl: UnsubscribeControlService
   ) { }
 
@@ -88,7 +90,7 @@ export class EventoInsertComponent implements OnInit, OnDestroy {
       descricao: ['', [Validators.required]],
       horaInicio: ['', [Validators.required]],
       horaTermino: ['', [Validators.required]],
-      ingressoUrl: [''],
+      ingressoUrl: ['', Validators.pattern(this.thePatternService.getRegexUrl())],
       nome: ['', [Validators.required]],
       tipoEvento: ['', [Validators.required]],
       logradouro: ['', [Validators.required]],

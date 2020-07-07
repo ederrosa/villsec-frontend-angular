@@ -7,8 +7,10 @@ import { VideoService } from './video.service';
 import { VideoFindPageModule } from './video-find-page/video-find-page.module';
 import { VideoInsertModule } from './video-insert/video-insert.module';
 import { VideoUpdateModule } from './video-update/video-update.module';
+import { VideoCubeDialogOverviewModule } from './video-cube-dialog-overview/video-cube-dialog-overview.module';
 
 const MODULES_LIST = [
+  VideoCubeDialogOverviewModule,
   VideoFindPageModule,
   VideoInsertModule,
   VideoUpdateModule

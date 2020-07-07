@@ -42,7 +42,7 @@
                         <table class="example-full-width" cellspacing="0">
                             <tr>
                                 <td>
-                                    <img [src]="getUrl()" *ngIf="getFormat()==='image' && getUrl()" height="35%">
+                                    <img [src]="getUrl()" *ngIf="getFormat()==='image' && getUrl()" width="426px" height="240px">
                                     <wbr />
                                     <p>
                                         <input formControlName="file" type='file' (change)="onSelectFile($event)" accept=".jpg,.png" />

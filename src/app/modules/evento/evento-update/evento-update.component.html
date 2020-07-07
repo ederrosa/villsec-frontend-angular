@@ -12,7 +12,7 @@
                 <table class="example-full-width" cellspacing="0">
                     <tr>
                         <td>
-                            <img [src]="getUrl()" *ngIf="getFormat()==='image' && getUrl()" height="280px"> <br />
+                            <img [src]="getUrl()" *ngIf="getFormat()==='image' && getUrl()" width="426px" height="240px"> <br />
                             <wbr />
                             <p>
                                 <input formControlName="file" type='file' (change)="onSelectFile($event)" accept=".jpg,.png" />
@@ -67,8 +67,7 @@
                             <app-input formControlName="ingressoUrl"
                                        id="ingressoUrl"
                                        label="Link para o site de compra dos ingressos"
-                                       minlength="0"
-                                       maxlength="100"
+                                       type="url"
                                        placeholder="Link para adquirir o ingresso.">
                             </app-input>
                         </td>

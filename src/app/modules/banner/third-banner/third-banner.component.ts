@@ -65,7 +65,7 @@ export class ThirdBannerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.theInscricao.push(this.paginator.page
       .pipe(
         tap(() => this.onLoadPage())
-    ).subscribe());
+      ).subscribe());
     this.theThirdBannerSwiper = this.theSwiperService.getSwiperCoverflow("swiper-thirdbanner");
     this.theThirdBannerSwiper.update();
   }
@@ -92,8 +92,8 @@ export class ThirdBannerComponent implements OnInit, OnDestroy, AfterViewInit {
       'DESC'
     ).subscribe(
       (x => {
-      this.dataSource = new MatTableDataSource(x['content']);
-      this.theObservable = this.dataSource.connect();
+        this.dataSource = new MatTableDataSource(x['content']);
+        this.theObservable = this.dataSource.connect();
       })
     ));
     this.theThirdBannerSwiper.update();
@@ -106,5 +106,5 @@ export class ThirdBannerComponent implements OnInit, OnDestroy, AfterViewInit {
     instance.title = theIEvenoDTO.nome;
     instance.subtitle = 'V1llsec';
     instance.url = theIEvenoDTO.folderUrl;
-  }  
+  }
 }

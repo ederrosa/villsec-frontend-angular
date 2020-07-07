@@ -10,6 +10,7 @@ import { ProgressSpinnerOverviewComponent } from 'src/app/shared/components/prog
 import { InformativeAlertComponent } from 'src/app/shared/components/alerts/informative-alert/informative-alert.component';
 import { IOptions } from 'src/app/shared/components/fields/select/select.component';
 import { CepService } from 'src/app/core/services/cep.service';
+import { PatternService } from 'src/app/core/services/pattern.service';
 
 @Component({
   selector: 'app-proprietario-insert',
@@ -41,6 +42,7 @@ export class ProprietarioInsertComponent implements OnInit {
     private dialog: MatDialog,
     private theCepService: CepService,
     private theFormBuilder: FormBuilder,
+    private thePatternService: PatternService,
     private theProprietarioService: ProprietarioService,
     private theUnsubscribeControl: UnsubscribeControlService
   ) { }
@@ -94,10 +96,10 @@ export class ProprietarioInsertComponent implements OnInit {
       dataNascimento: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.maxLength(120), Validators.email]],
       estado: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(1)]],
-      facebook: [''],
+      facebook: ['', Validators.pattern(this.thePatternService.getRegexUrl())],
       file: ['', [Validators.required]],
       genero: ['', [Validators.required]],
-      instagram: [''],
+      instagram: ['', Validators.pattern(this.thePatternService.getRegexUrl())],
       logradouro: ['', [Validators.required, Validators.maxLength(100), Validators.minLength(1)]],
       nome: ['', [Validators.required, Validators.maxLength(100), Validators.minLength(4)]],
       numeroTelefone1: ['', [Validators.required, Validators.maxLength(20), Validators.minLength(4)]],
@@ -105,13 +107,13 @@ export class ProprietarioInsertComponent implements OnInit {
       pais: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(1)]],
       senha: ['', [Validators.required, Validators.maxLength(20), Validators.minLength(6)]],
       sobreMim: [''],
-      spotify: [''],
+      spotify: ['', Validators.pattern(this.thePatternService.getRegexUrl())],
       status: ['', [Validators.required]],
       tipoTelefone1: ['', [Validators.required]],
       tipoTelefone2: [''],
-      twitter: [''],
-      twitch: [''],
-      youtube: [''],
+      twitter: ['', Validators.pattern(this.thePatternService.getRegexUrl())],
+      twitch: ['', Validators.pattern(this.thePatternService.getRegexUrl())],
+      youtube: ['', Validators.pattern(this.thePatternService.getRegexUrl())],
     });
   }
 

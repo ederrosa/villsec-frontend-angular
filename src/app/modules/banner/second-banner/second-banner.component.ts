@@ -57,7 +57,7 @@ export class SecondBannerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.theInscricao.push(this.paginator.page
       .pipe(
         tap(() => this.onLoadPage())
-    ).subscribe());
+      ).subscribe());
     this.theSecondBannerSwiper = this.theSwiperService.getSwiperCoverflow("swiper-secondbanner");
     this.theSecondBannerSwiper.update();
   }

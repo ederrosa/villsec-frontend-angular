@@ -1,0 +1,64 @@
+// Include non-theme styles for core.
+@import '../../../../theme.scss';
+
+.example-container {
+    height: 450px;
+    width: auto;
+    overflow: auto;
+}
+
+table {
+    width: 98%;
+}
+
+.example-full-width td {
+    text-align: left;
+    font-size: medium;
+}
+
+.mat-header-cell {
+    text-align: center;
+}
+
+td, th :not(.example-full-width) {
+    width: auto;
+    word-wrap: break-word;
+    max-width: 10%;
+    text-align: center;
+}
+
+tr.example-detail-row {
+    height: 0;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+    background: mat-color($primary);
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+    background: mat-color($secondary);
+}
+
+.example-element-row:hover td {
+    background: mat-color($primary);
+    border-bottom-width: 0;
+    color: mat-color($light);
+}
+
+.example-element-row:active td {
+    background: mat-color($secondary);
+    border-bottom-width: 0;
+    color: mat-color($light);
+}
+
+.example-element-row td {
+    border-bottom-width: 0;
+    font-size: medium;
+    color: mat-color($dark);
+}
+
+.title_fifthbanner {
+    background-color: $white;
+    color: $black;
+    text-align: center;
+}

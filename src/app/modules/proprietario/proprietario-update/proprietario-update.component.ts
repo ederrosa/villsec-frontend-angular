@@ -15,6 +15,7 @@ import { switchMap, map } from 'rxjs/operators';
 import { IProprietarioDTO } from 'src/app/shared/models/dtos/iproprietario-dto';
 import { IOptions } from 'src/app/shared/components/fields/select/select.component';
 import { CepService } from 'src/app/core/services/cep.service';
+import { PatternService } from 'src/app/core/services/pattern.service';
 
 @Component({
   selector: 'app-proprietario-update',
@@ -48,6 +49,7 @@ export class ProprietarioUpdateComponent implements OnInit, OnDestroy {
     private theCepService: CepService,
     private theFieldsService: FieldsService,
     private theFormBuilder: FormBuilder,
+    private thePatternService: PatternService,
     private theProprietarioService: ProprietarioService,
     private theUnsubscribeControl: UnsubscribeControlService
   ) { }

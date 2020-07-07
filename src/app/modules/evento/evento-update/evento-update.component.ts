@@ -15,6 +15,7 @@ import { switchMap, map } from 'rxjs/operators';
 import { IEventoDTO } from 'src/app/shared/models/dtos/ievento-dto';
 import { IOptions } from 'src/app/shared/components/fields/select/select.component';
 import { CepService } from 'src/app/core/services/cep.service';
+import { PatternService } from 'src/app/core/services/pattern.service';
 
 
 @Component({
@@ -44,6 +45,7 @@ export class EventoUpdateComponent implements OnInit, OnDestroy {
     private theEventoService: EventoService,
     private theFieldsService: FieldsService,
     private theFormBuilder: FormBuilder,
+    private thePatternService: PatternService,
     private theUnsubscribeControl: UnsubscribeControlService
   ) { }
 
@@ -98,7 +100,7 @@ export class EventoUpdateComponent implements OnInit, OnDestroy {
       descricao: ['', [Validators.required]],
       horaInicio: ['', [Validators.required]],
       horaTermino: ['', [Validators.required]],
-      ingressoUrl: [''],
+      ingressoUrl: ['', Validators.pattern(this.thePatternService.getRegexUrl())],
       nome: ['', [Validators.required]],
       tipoEvento: ['', [Validators.required]],
       logradouro: ['', [Validators.required]],

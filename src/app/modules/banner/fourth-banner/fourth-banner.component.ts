@@ -2,7 +2,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { PageEvent, MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatSort } from '@angular/material/sort';
 
 import { Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -11,7 +10,7 @@ import { UnsubscribeControlService } from 'src/app/core/services/unsubscribe-con
 import { IGaleriaDTO } from 'src/app/shared/models/dtos/igaleria-dto';
 import { GaleriaService } from '../../galeria/galeria.service';
 import { MatDialog } from '@angular/material/dialog';
-import { ImagemCubeDialogOverviewComponent } from '../../imagem/imagem-banner/imagem-cube-dialog-overview.component';
+import { ImagemCubeDialogOverviewComponent } from '../../imagem/imagem-cube-dialog-overview/imagem-cube-dialog-overview.component';
 
 @Component({
   selector: 'app-fourth-banner',
@@ -25,16 +24,14 @@ import { ImagemCubeDialogOverviewComponent } from '../../imagem/imagem-banner/im
     ]),
   ],
 })
-export class FourthBannerComponent implements OnInit, OnDestroy, AfterViewInit{
+export class FourthBannerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private theInscricao: Subscription[] = new Array<Subscription>();
   columnsToDisplay = ['titulo', 'descricao'];
   dataSource: MatTableDataSource<IGaleriaDTO> = new MatTableDataSource();
   expandedElement: IGaleriaDTO | null;
   pageEvent: PageEvent;
-
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(
     private dialog: MatDialog,
@@ -53,13 +50,6 @@ export class FourthBannerComponent implements OnInit, OnDestroy, AfterViewInit{
     ));
   }
 
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
-
   ngAfterViewInit() {
     this.theInscricao.push(this.paginator.page
       .pipe(
@@ -75,7 +65,6 @@ export class FourthBannerComponent implements OnInit, OnDestroy, AfterViewInit{
 
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
   }
 
   onLoadPage() {
@@ -93,8 +82,8 @@ export class FourthBannerComponent implements OnInit, OnDestroy, AfterViewInit{
 
   onSelected(theIGaleriaDTO: IGaleriaDTO): void {
     this.dialog.closeAll();
-    let dialogRef = this.dialog.open(ImagemCubeDialogOverviewComponent, { });
+    let dialogRef = this.dialog.open(ImagemCubeDialogOverviewComponent, {});
     let instance = dialogRef.componentInstance;
-    instance.galeriaID = theIGaleriaDTO.id;  
+    instance.galeriaID = theIGaleriaDTO.id;
   }
 }

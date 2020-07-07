@@ -1,27 +1,25 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FifthBannerComponent } from './fifth-banner.component';
+import { VideoCubeDialogOverviewComponent } from './video-cube-dialog-overview.component';
 import { MaterialModule } from 'src/app/core/configurations/material/material.module';
 import { PipesModule } from 'src/app/shared/pipes/pipes.module';
 import { RouterModule } from '@angular/router';
-import { GaleriaModule } from '../../galeria/galeria.module';
-import { VideoModule } from '../../video/video.module';
 
 @NgModule({
-  declarations: [FifthBannerComponent],
+  declarations: [VideoCubeDialogOverviewComponent],
   imports: [
     CommonModule,
-    GaleriaModule,
     MaterialModule,
     PipesModule,
     RouterModule,
-    VideoModule
   ],
   exports: [
-    FifthBannerComponent
+    VideoCubeDialogOverviewComponent
+  ],
+  providers: [
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ]
 })
-export class FifthBannerModule { }
+export class VideoCubeDialogOverviewModule { }

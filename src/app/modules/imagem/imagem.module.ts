@@ -7,7 +7,7 @@ import { ImagemService } from './imagem.service';
 import { ImagemFindPageModule } from './imagem-find-page/imagem-find-page.module';
 import { ImagemInsertModule } from './imagem-insert/imagem-insert.module';
 import { ImagemUpdateModule } from './imagem-update/imagem-update.module';
-import { ImagemCubeDialogOverviewModule } from './imagem-banner/imagem-cube-dialog-overview.module';
+import { ImagemCubeDialogOverviewModule } from './imagem-cube-dialog-overview/imagem-cube-dialog-overview.module';
 
 const MODULES_LIST = [
   ImagemCubeDialogOverviewModule,

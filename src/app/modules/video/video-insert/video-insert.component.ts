@@ -9,6 +9,7 @@ import { UnsubscribeControlService } from 'src/app/core/services/unsubscribe-con
 import { ProgressSpinnerOverviewComponent } from 'src/app/shared/components/progress-spinner/progress-spinner-overview/progress-spinner-overview.component';
 import { InformativeAlertComponent } from 'src/app/shared/components/alerts/informative-alert/informative-alert.component';
 import { GaleriaService } from '../../galeria/galeria.service';
+import { PatternService } from 'src/app/core/services/pattern.service';
 
 @Component({
   selector: 'app-video-insert',
@@ -20,7 +21,7 @@ export class VideoInsertComponent implements OnInit, OnDestroy, AfterViewInit {
   private format: string;
   private readonly linear: boolean = true;
   private theGaleriaForm: FormGroup;
-  private theForm: FormGroup; 
+  private theForm: FormGroup;
   private theFile: File;
   private theInscricao: Subscription[] = new Array<Subscription>();
   private url: any;
@@ -28,9 +29,10 @@ export class VideoInsertComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private dialog: MatDialog,
     private theGaleriaService: GaleriaService,
-    private theFormBuilder: FormBuilder,    
-    private theVideoService: VideoService,
+    private theFormBuilder: FormBuilder,
+    private thePatternService: PatternService,
     private theUnsubscribeControl: UnsubscribeControlService,
+    private theVideoService: VideoService
   ) { }
 
   getFormat(): string {
@@ -52,7 +54,7 @@ export class VideoInsertComponent implements OnInit, OnDestroy, AfterViewInit {
   getUrl() {
     return this.url;
   }
-  
+
   isLinear(): boolean {
     return this.linear;
   }
@@ -71,11 +73,11 @@ export class VideoInsertComponent implements OnInit, OnDestroy, AfterViewInit {
     this.onClear();
     this.theUnsubscribeControl.unsubscribe(this.theInscricao);
   }
-   
+
   ngOnInit() {
     this.theForm = this.theFormBuilder.group({
       descricao: ['', [Validators.required]],
-      embed: [''],
+      embed: ['', [Validators.pattern(this.thePatternService.getRegexUrl())]],
       titulo: ['', [Validators.required]],
     });
     this.theGaleriaForm = this.theFormBuilder.group({
@@ -137,8 +139,10 @@ export class VideoInsertComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   setUrl() {
-    this.url = this.getTheForm().get('embed').value;
-    this.format = null;
-    this.theFile = null;
+    if (this.getTheForm().get('embed').valid) {
+      this.url = this.getTheForm().get('embed').value;
+      this.format = null;
+      this.theFile = null;
+    }
   }
 }

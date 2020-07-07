@@ -1,0 +1,47 @@
+// Include non-theme styles for core.
+@import '../../../../theme.scss';
+
+.example-card {
+    height:90%;
+    background-color: $black;
+    color: $white;
+    opacity: 0.9;
+}
+
+.example-card iframe {
+    width: 100%;
+    height: 75%;
+    padding: 15px;
+}
+
+.example-card video {
+    width: 100%;
+    height: 75%;
+    padding: 15px;
+}
+
+.example-card mat-card-title {
+    color: mat-color($light);
+    text-align: center;
+}
+
+.example-card mat-card-subtitle {
+    color: mat-color($light);
+    text-align: left;
+}
+
+.swiper-container {
+    width: 1024px;
+    height: 85%;
+    position: absolute;
+    left: 12%;
+    top: 5%;  
+}
+
+.swiper-slide {
+    background-position: center;
+    background-size: cover;
+}
+
+.swiper-video-cube-dialog-overview {
+}

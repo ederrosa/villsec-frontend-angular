@@ -12,7 +12,7 @@
                 <table class="example-full-width" cellspacing="0">
                     <tr>
                         <td>
-                            <img [src]="getUrl()" *ngIf="getFormat()==='image' && getUrl()" height="50%" width="60%"> <br />
+                            <img [src]="getUrl()" *ngIf="getFormat()==='image' && getUrl()" width="426px" height="240px"> <br />
                             <wbr />
                             <p>
                                 <input formControlName="file" type='file' (change)="onSelectFile($event)" accept=".jpg,.png" />
@@ -211,8 +211,7 @@
                             <app-input formControlName="facebook"
                                        id="facebook"
                                        label="FACEBOOK"
-                                       minlength="1"
-                                       maxlength="255"
+                                       type="url"
                                        placeholder="link para o facebook.">
                             </app-input>
                         </td>
@@ -224,8 +223,7 @@
                             <app-input formControlName="instagram"
                                        id="instagram"
                                        label="INSTAGRAM"
-                                       minlength="1"
-                                       maxlength="255"
+                                       typeof="url"
                                        placeholder="Link para o Instagram.">
                             </app-input>
                         </td>
@@ -237,8 +235,7 @@
                             <app-input formControlName="spotify"
                                        id="spotify"
                                        label="SPOTIFY"
-                                       minlength="1"
-                                       maxlength="255"
+                                       type="url"
                                        placeholder="Link para o spotify.">
                             </app-input>
                         </td>
@@ -250,8 +247,7 @@
                             <app-input formControlName="twitter"
                                        id="twitter"
                                        label="TWITTER"
-                                       minlength="1"
-                                       maxlength="255"
+                                       type="url"
                                        placeholder="Link para o Twitter.">
                             </app-input>
                         </td>
@@ -263,8 +259,7 @@
                             <app-input formControlName="twitch"
                                        id="twitch"
                                        label="TWITCH"
-                                       minlength="1"
-                                       maxlength="255"
+                                       type="url"
                                        placeholder="Link para a Twitch.">
                             </app-input>
                         </td>
@@ -276,8 +271,7 @@
                             <app-input formControlName="youtube"
                                        id="youtube"
                                        label="YOUTUBE"
-                                       minlength="1"
-                                       maxlength="255"
+                                       type="url"
                                        placeholder="Link para o Youtube.">
                             </app-input>
                         </td>

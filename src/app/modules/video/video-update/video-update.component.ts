@@ -13,6 +13,7 @@ import { ConfirmationAlertComponent } from 'src/app/shared/components/alerts/con
 import { switchMap, map } from 'rxjs/operators';
 import { IVideoDTO } from 'src/app/shared/models/dtos/ivideo-dto';
 import { GaleriaService } from '../../galeria/galeria.service';
+import { PatternService } from 'src/app/core/services/pattern.service';
 
 @Component({
   selector: 'app-video-update',
@@ -34,6 +35,7 @@ export class VideoUpdateComponent implements OnInit, OnDestroy, AfterViewInit {
     private theActivatedRoute: ActivatedRoute,
     private theGaleriaService: GaleriaService,
     private theFormBuilder: FormBuilder,
+    private thePatternService: PatternService,
     private theVideoService: VideoService,
     private theUnsubscribeControl: UnsubscribeControlService
   ) { }
@@ -82,7 +84,7 @@ export class VideoUpdateComponent implements OnInit, OnDestroy, AfterViewInit {
       id: [''],
       dtCriacao: [''],
       descricao: ['', [Validators.required]],
-      embed: [''],
+      embed: ['', [Validators.pattern(this.thePatternService.getRegexUrl())]],
       titulo: ['', [Validators.required]],
     });
     this.theGaleriaForm = this.theFormBuilder.group({
@@ -178,8 +180,10 @@ export class VideoUpdateComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   setUrl() {
-    this.url = this.getTheForm().get('embed').value;
-    this.format = null;
-    this.theFile = null;
+    if (this.theForm.get('embed').valid) {
+      this.url = this.getTheForm().get('embed').value;
+      this.format = null;
+      this.theFile = null;
+    }
   }
 }

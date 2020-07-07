@@ -7,30 +7,30 @@ import { Subscription, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { UnsubscribeControlService } from 'src/app/core/services/unsubscribe-control.service';
-import { IImagemDTO } from 'src/app/shared/models/dtos/iimagem-dto';
-import { ImagemService } from '../imagem.service';
+import { IVideoDTO } from 'src/app/shared/models/dtos/ivideo-dto';
+import { VideoService } from '../video.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { SwiperService } from 'src/app/core/services/swiper.service';
 
 @Component({
-  selector: 'app-imagem-cube-dialog-overview',
-  templateUrl: './imagem-cube-dialog-overview.component.html',
-  styleUrls: ['./imagem-cube-dialog-overview.component.scss']
+  selector: 'app-video-cube-dialog-overview',
+  templateUrl: './video-cube-dialog-overview.component.html',
+  styleUrls: ['./video-cube-dialog-overview.component.scss']
 })
-export class ImagemCubeDialogOverviewComponent implements OnInit, OnDestroy, AfterViewInit {
+export class VideoCubeDialogOverviewComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @Input() galeriaID: number;
-  private theImagemCubeDialogOverviewSwiper: Swiper;
+  private theVideoCubeDialogOverviewSwiper: Swiper;
   private theInscricao: Subscription[] = new Array<Subscription>();
   private theObservable: Observable<any>;
-  dataSource: MatTableDataSource<IImagemDTO> = new MatTableDataSource();
+  dataSource: MatTableDataSource<IVideoDTO> = new MatTableDataSource();
   pageEvent: PageEvent;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
- 
-  constructor(   
+
+  constructor(
     private changeDetectorRef: ChangeDetectorRef,
-    private theImagemService: ImagemService,
-    public dialogRef: MatDialogRef<ImagemCubeDialogOverviewComponent>,
+    private theVideoService: VideoService,
+    public dialogRef: MatDialogRef<VideoCubeDialogOverviewComponent>,
     private theSwiperService: SwiperService,
     private theUnsubscribeControl: UnsubscribeControlService
   ) {
@@ -49,11 +49,11 @@ export class ImagemCubeDialogOverviewComponent implements OnInit, OnDestroy, Aft
   }
 
   ngAfterViewInit() {
-    this.theInscricao.push(this.theImagemService.findPage(
+    this.theInscricao.push(this.theVideoService.findPage(
       0,
       12,
-      'titulo',
-      'ASC',
+      'dtUltimaAlteracao',
+      'DESC',
       this.galeriaID).subscribe(
         (x => {
           this.paginator.pageSizeOptions = [12, 24, 48, 100];
@@ -62,8 +62,8 @@ export class ImagemCubeDialogOverviewComponent implements OnInit, OnDestroy, Aft
           this.paginator.pageSize = x['size'];
           this.paginator.pageIndex = x['number'];
           this.paginator.pageIndex = x['number'];
-        this.dataSource = new MatTableDataSource(x['content']);
-        this.theObservable = this.dataSource.connect();
+          this.dataSource = new MatTableDataSource(x['content']);
+          this.theObservable = this.dataSource.connect();
         })
       )
     );
@@ -71,14 +71,14 @@ export class ImagemCubeDialogOverviewComponent implements OnInit, OnDestroy, Aft
     this.theInscricao.push(this.paginator.page
       .pipe(
         tap(() => this.onLoadPage())
-    ).subscribe());
-    this.theImagemCubeDialogOverviewSwiper = this.theSwiperService.getSwiperCube("swiper-imagem-cube-dialog-overview");
-    this.theImagemCubeDialogOverviewSwiper.update();
+      ).subscribe());
+    this.theVideoCubeDialogOverviewSwiper = this.theSwiperService.getSwiperCube("swiper-video-cube-dialog-overview");
+    this.theVideoCubeDialogOverviewSwiper.update();
   }
 
   ngOnDestroy() {
     this.theUnsubscribeControl.unsubscribe(this.theInscricao);
-    this.theImagemCubeDialogOverviewSwiper = null;
+    this.theVideoCubeDialogOverviewSwiper = null;
     if (this.dataSource) {
       this.dataSource.disconnect();
     }
@@ -88,20 +88,20 @@ export class ImagemCubeDialogOverviewComponent implements OnInit, OnDestroy, Aft
     this.dataSource.paginator = this.paginator;
     this.changeDetectorRef.detectChanges();
   }
-  
+
   onLoadPage() {
-    this.theInscricao.push(this.theImagemService.findPage(
+    this.theInscricao.push(this.theVideoService.findPage(
       0,
       12,
-      'titulo',
-      'ASC',
+      'dtUltimaAlteracao',
+      'DESC',
       this.galeriaID).subscribe(
         (x => {
-        this.dataSource = new MatTableDataSource(x['content']);
-        this.theObservable = this.dataSource.connect();
+          this.dataSource = new MatTableDataSource(x['content']);
+          this.theObservable = this.dataSource.connect();
         })
       )
     );
-    this.theImagemCubeDialogOverviewSwiper.update();
-  }  
+    this.theVideoCubeDialogOverviewSwiper.update();
+  }
 }

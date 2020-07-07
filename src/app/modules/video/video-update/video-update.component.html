@@ -42,11 +42,11 @@
                         <table class="example-full-width" cellspacing="0">
                             <tr>
                                 <td>
-                                    <video [src]="getUrl()" *ngIf="getFormat()==='video' && getUrl()" height="50%" controls></video> <br />
-                                    <iframe [src]="getUrl() | safe " *ngIf="getUrl() && !getFormat()" width="640px" height="360px"></iframe> <br />
+                                    <video [src]="getUrl()" *ngIf="getFormat()==='video' && getUrl()" width="426px" height="240px" controls></video> <br />
+                                    <iframe [src]="getUrl() | safe " *ngIf="getUrl() && !getFormat()" width="426px" height="240px"></iframe> <br />
                                     <wbr />
                                     <p>
-                                        <input formControlName="file" type='file' (change)="onSelectFile($event)" accept=".jpg,.png,.mp4,.avi" />
+                                        <input formControlName="file" type='file' (change)="onSelectFile($event)" accept=".mp4,.avi" />
                                     </p>
                                 </td>
                             </tr>
@@ -59,8 +59,7 @@
                                         <app-input formControlName="embed"
                                                    id="embed"
                                                    label="Url do arquivo"
-                                                   minlength="0"
-                                                   maxlength="1000"
+                                                   type="url"
                                                    placeholder="Informe a url"
                                                    hint="Use esse campo caso o vídeo for muito pesado, colocando apenas no link para armazenamento!"
                                                    (theBlur)="setUrl()">

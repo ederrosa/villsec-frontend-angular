@@ -2,18 +2,13 @@
 @import '../../../../theme.scss';
 
 .example-container {
-    height: 470px;
+    height: 450px;
     width: auto;
-    overflow: auto;  
+    overflow: auto;
 }
 
 table {
     width: 98%;
-}
-
-.mat-form-field {
-    font-size: 15px;
-    width: 100%;
 }
 
 .example-full-width td {
@@ -30,11 +25,6 @@ td, th :not(.example-full-width) {
     word-wrap: break-word;
     max-width: 10%;
     text-align: center;
-}
-
-.example-button-row button,
-.example-button-row a {
-    margin: 35px;
 }
 
 tr.example-detail-row {
@@ -65,19 +55,6 @@ tr.example-element-row:not(.example-expanded-row):active {
     border-bottom-width: 0;
     font-size: medium;
     color: mat-color($dark);
-}
-
-
-.example-element-detail {
-    overflow: auto;
-    display: flex;
-    height: auto;
-    width: auto;   
-}
-
-.example-element-description {
-    padding: 16px;
-    width: 100%;
 }
 
 .title_fourthbanner {
