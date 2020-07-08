@@ -66,16 +66,20 @@ export class ThirdBannerComponent implements OnInit, OnDestroy, AfterViewInit {
       .pipe(
         tap(() => this.onLoadPage())
       ).subscribe());
-    this.theThirdBannerSwiper = this.theSwiperService.getSwiperCoverflow("swiper-thirdbanner");
+    this.theThirdBannerSwiper = this.theSwiperService
+      .getSwiperCoverflow(
+        "swiper-thirdbanner",
+        'horizontal'
+      );
     this.theThirdBannerSwiper.update();
   }
 
   ngOnDestroy() {
-    this.theThirdBannerSwiper = null;
-    if (this.dataSource) {
-      this.dataSource.disconnect();
-    }
     this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+    this.dataSource.disconnect();
+    this.dataSource = null;
+    this.theThirdBannerSwiper.destroy(true, true);
+    this.theThirdBannerSwiper = null;
   }
 
   ngOnInit() {

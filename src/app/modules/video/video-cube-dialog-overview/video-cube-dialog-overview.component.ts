@@ -37,13 +37,6 @@ export class VideoCubeDialogOverviewComponent implements OnInit, OnDestroy, Afte
 
   }
 
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
-
   getTheObservable(): any {
     return this.theObservable;
   }
@@ -72,16 +65,20 @@ export class VideoCubeDialogOverviewComponent implements OnInit, OnDestroy, Afte
       .pipe(
         tap(() => this.onLoadPage())
       ).subscribe());
-    this.theVideoCubeDialogOverviewSwiper = this.theSwiperService.getSwiperCube("swiper-video-cube-dialog-overview");
+    this.theVideoCubeDialogOverviewSwiper = this.theSwiperService
+      .getSwiperCube(
+        "swiper-video-cube-dialog-overview",
+        'horizontal'
+      );
     this.theVideoCubeDialogOverviewSwiper.update();
   }
 
   ngOnDestroy() {
     this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+    this.dataSource.disconnect();
+    this.dataSource = null;
+    this.theVideoCubeDialogOverviewSwiper.destroy(true, true);
     this.theVideoCubeDialogOverviewSwiper = null;
-    if (this.dataSource) {
-      this.dataSource.disconnect();
-    }
   }
 
   ngOnInit() {

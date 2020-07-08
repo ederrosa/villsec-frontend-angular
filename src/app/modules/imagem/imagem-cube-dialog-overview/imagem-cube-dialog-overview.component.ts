@@ -37,13 +37,6 @@ export class ImagemCubeDialogOverviewComponent implements OnInit, OnDestroy, Aft
 
   }
 
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
-
   getTheObservable(): any {
     return this.theObservable;
   }
@@ -72,16 +65,20 @@ export class ImagemCubeDialogOverviewComponent implements OnInit, OnDestroy, Aft
       .pipe(
         tap(() => this.onLoadPage())
       ).subscribe());
-    this.theImagemCubeDialogOverviewSwiper = this.theSwiperService.getSwiperCube("swiper-imagem-cube-dialog-overview");
+    this.theImagemCubeDialogOverviewSwiper = this.theSwiperService
+      .getSwiperCube(
+        "swiper-imagem-cube-dialog-overview",
+        'horizontal'
+      );
     this.theImagemCubeDialogOverviewSwiper.update();
   }
 
   ngOnDestroy() {
     this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+    this.dataSource.disconnect();
+    this.dataSource = null;   
+    this.theImagemCubeDialogOverviewSwiper.destroy(true, true);
     this.theImagemCubeDialogOverviewSwiper = null;
-    if (this.dataSource) {
-      this.dataSource.disconnect();
-    }
   }
 
   ngOnInit() {

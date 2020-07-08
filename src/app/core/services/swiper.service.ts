@@ -9,9 +9,10 @@ export class SwiperService {
 
   constructor() { }
 
-  getSwiperCoverflow(theClass: string): Swiper {
+  getSwiperCoverflow(theClass: string, theDirection: string): Swiper {
     return new Swiper(`.${theClass}`, {
       effect: 'coverflow',
+      direction: theDirection,
       grabCursor: true,
       centeredSlides: true,
       observer: true,
@@ -24,13 +25,18 @@ export class SwiperService {
         depth: 100,
         modifier: 1,
         slideShadows: false,
-      }
+      },
+      keyboard: {
+        enabled: true,
+        onlyInViewport: false,
+      },
     });
   }
 
-  getSwiperCube(theClass: string): Swiper {
+  getSwiperCube(theClass: string, theDirection: string): Swiper {
     return new Swiper(`.${theClass}`, {
       effect: 'cube',
+      direction: theDirection,
       grabCursor: true,
       observer: true,
       observerParents: true,
@@ -40,7 +46,11 @@ export class SwiperService {
         slideShadows: true,
         shadowOffset: 20,
         shadowScale: 0.94,
-      }
+      },
+      keyboard: {
+        enabled: true,
+        onlyInViewport: false,
+      },
     });
   }
 }

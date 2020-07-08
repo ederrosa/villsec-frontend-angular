@@ -58,16 +58,20 @@ export class SecondBannerComponent implements OnInit, OnDestroy, AfterViewInit {
       .pipe(
         tap(() => this.onLoadPage())
       ).subscribe());
-    this.theSecondBannerSwiper = this.theSwiperService.getSwiperCoverflow("swiper-secondbanner");
+    this.theSecondBannerSwiper = this.theSwiperService
+      .getSwiperCoverflow(
+        "swiper-secondbanner",
+        'horizontal'
+      );
     this.theSecondBannerSwiper.update();
   }
 
   ngOnDestroy() {
     this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+    this.dataSource.disconnect();
+    this.dataSource = null;
+    this.theSecondBannerSwiper.destroy(true, true);
     this.theSecondBannerSwiper = null;
-    if (this.dataSource) {
-      this.dataSource.disconnect();
-    }
   }
 
   ngOnInit(): void {
