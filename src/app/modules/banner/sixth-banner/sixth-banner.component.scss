@@ -16,3 +16,97 @@
 
 .swiper-footer {
 }
+
+.fa {
+    padding: 20px;
+    font-size: 30px;
+    width: 50px;
+    text-align: center;
+    text-decoration: none;
+    margin: 5px 2px;
+}
+
+.fa:hover {
+    opacity: 0.7;
+    padding: 20px;
+    font-size: 30px;
+    width: 40px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 50%;
+}
+
+.fa-discord {
+    background: #738ADB;
+    color: white;
+}
+
+.fa-facebook {
+    background: #3B5998;
+    color: white;
+}
+
+.fa-google {
+    background: #dd4b39;
+    color: white;
+}
+
+.fa-instagram {
+    background: #125688;
+    color: white;
+}
+
+.fa-linkedin {
+    background: #007bb5;
+    color: white;
+}
+
+.fa-reddit {
+    background: #ff5700;
+    color: white;
+}
+
+.fa-spotify {
+    background: #1db954;
+    color: white;
+}
+
+.fa-twitch {
+    background: #6441a5;
+    color: white;
+}
+
+.fa-twitter {
+    background: #55ACEE;
+    color: white;
+}
+
+.fa-youtube {
+    background: #bb0000;
+    color: white;
+}
+
+.example-full-width td {
+    text-align: left;
+    font-size: medium;
+}
+
+
+.example-element-img {
+    line-height: normal;
+    max-width: 100px;
+    max-height: 80px;
+}
+
+.example-element-img img {
+    height: auto;
+}
+
+.example-element-description {
+    padding: 16px;
+    width: 100%;
+}
+
+.example-element-description-attribution {
+    opacity: 0.5;
+}

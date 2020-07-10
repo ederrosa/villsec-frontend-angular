@@ -14,6 +14,7 @@ export interface IProprietarioDTO extends IEntidadeDominioDTO {
   cidade: string;
   estado: string;
   pais: string;
+  googleMapsUrl: string;
   numeroTelefone1: string;
   tipoTelefone1: string;
   numeroTelefone2: string;
@@ -22,7 +23,7 @@ export interface IProprietarioDTO extends IEntidadeDominioDTO {
   genero: string;
   statusPessoa: boolean;
   dataNascimento: string;
-  sobreMin: string;
+  sobreMim: string;
   facebook: string;
   instagram: string;
   spotify: string;

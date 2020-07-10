@@ -88,6 +88,7 @@ export class EventoInsertComponent implements OnInit, OnDestroy {
       diaInicio: ['', [Validators.required]],
       diaTermino: ['', [Validators.required]],
       descricao: ['', [Validators.required]],
+      googleMapsUrl: [''],
       horaInicio: ['', [Validators.required]],
       horaTermino: ['', [Validators.required]],
       ingressoUrl: ['', Validators.pattern(this.thePatternService.getRegexUrl())],
@@ -113,6 +114,9 @@ export class EventoInsertComponent implements OnInit, OnDestroy {
     formData.append('diaTermino', new Date(this.getTheForm().get('diaTermino').value).toLocaleDateString());
     formData.append('estado', this.getTheForm().get('estado').value);
     formData.append('file', this.getTheFile(), this.getTheFile().name);
+    if (this.getTheForm().get('googleMapsUrl').value != null && this.getTheForm().get('googleMapsUrl').value != '') {
+      formData.append('googleMapsUrl', this.getTheForm().get('googleMapsUrl').value);
+    } 
     formData.append('horaInicio', this.getTheForm().get('horaInicio').value);
     formData.append('horaTermino', this.getTheForm().get('horaTermino').value);
     formData.append('ingressoUrl', this.getTheForm().get('ingressoUrl').value);

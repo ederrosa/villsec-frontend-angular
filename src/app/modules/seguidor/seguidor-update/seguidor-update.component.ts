@@ -109,7 +109,7 @@ export class SeguidorUpdateComponent implements OnInit, OnDestroy {
       nome: ['', [Validators.required, Validators.maxLength(100), Validators.minLength(4)]],
       numeroTelefone1: ['', [Validators.required, Validators.maxLength(20), Validators.minLength(4)]],
       pais: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(1)]],
-      senha: ['', [Validators.required, Validators.maxLength(20), Validators.minLength(6)]],
+      senha: ['', [Validators.maxLength(20), Validators.minLength(6)]],
       status: ['', [Validators.required]],
       tipoTelefone1: ['', [Validators.required]],
     });
@@ -148,7 +148,6 @@ export class SeguidorUpdateComponent implements OnInit, OnDestroy {
       nome: theISeguidorDTO.nome,
       numeroTelefone1: theISeguidorDTO.numeroTelefone1,
       pais: theISeguidorDTO.pais,
-      senha: theISeguidorDTO.senha,
       status: this.theFieldsService.getItemOfSelect(this.getOptionsStatus(), theISeguidorDTO.statusPessoa),
       tipoTelefone1: this.theFieldsService.getItemOfSelect(this.getOptionsTipoTelefone(), theISeguidorDTO.tipoTelefone1),
     });

@@ -4,13 +4,15 @@ import { SixthBannerComponent } from './sixth-banner.component';
 import { MaterialModule } from 'src/app/core/configurations/material/material.module';
 import { PipesModule } from 'src/app/shared/pipes/pipes.module';
 import { RouterModule } from '@angular/router';
+import { ProprietarioModule } from '../../proprietario/proprietario.module';
 
 @NgModule({
   declarations: [SixthBannerComponent],
   imports: [
     CommonModule,
-    MaterialModule,
+    MaterialModule,    
     PipesModule,
+    ProprietarioModule,
     RouterModule,
   ],
   exports: [

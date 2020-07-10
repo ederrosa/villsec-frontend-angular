@@ -10,6 +10,7 @@ export interface IEventoDTO extends IEntidadeDominioDTO{
   horaTermino: string;  
   folderName: string;
   folderUrl: string;
+  googleMapsUrl: string;
   ingressoUrl: string;
   nome: string;
   tipoEvento: string;

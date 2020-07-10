@@ -103,13 +103,14 @@ export class ProprietarioUpdateComponent implements OnInit, OnDestroy {
       estado: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(1)]],
       facebook: [''],
       genero: ['', [Validators.required]],
+      googleMapsUrl: [''],
       instagram: [''],
       logradouro: ['', [Validators.required, Validators.maxLength(100), Validators.minLength(1)]],
       nome: ['', [Validators.required, Validators.maxLength(100), Validators.minLength(4)]],
       numeroTelefone1: ['', [Validators.required, Validators.maxLength(20), Validators.minLength(4)]],
       numeroTelefone2: [''],
       pais: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(1)]],
-      senha: ['', [Validators.required, Validators.maxLength(20), Validators.minLength(6)]],
+      senha: ['', [Validators.maxLength(20), Validators.minLength(6)]],
       sobreMim: [''],
       spotify: [''],
       status: ['', [Validators.required]],
@@ -156,14 +157,14 @@ export class ProprietarioUpdateComponent implements OnInit, OnDestroy {
       estado: theIProprietarioDTO.estado,
       facebook: theIProprietarioDTO.facebook,
       genero: this.theFieldsService.getItemOfSelect(this.optionsGenero, theIProprietarioDTO.genero),
+      googleMapsUrl: theIProprietarioDTO.googleMapsUrl,
       instagram: theIProprietarioDTO.instagram,
       logradouro: theIProprietarioDTO.logradouro,
       nome: theIProprietarioDTO.nome,
       numeroTelefone1: theIProprietarioDTO.numeroTelefone1,
       numeroTelefone2: theIProprietarioDTO.numeroTelefone2,
       pais: theIProprietarioDTO.pais,
-      senha: theIProprietarioDTO.senha,
-      sobreMim: theIProprietarioDTO.sobreMin,
+      sobreMim: theIProprietarioDTO.sobreMim,
       spotify: theIProprietarioDTO.spotify,
       status: this.theFieldsService.getItemOfSelect(this.optionsStatus, theIProprietarioDTO.statusPessoa),
       tipoTelefone1: this.theFieldsService.getItemOfSelect(this.optionsTipoTelefone, theIProprietarioDTO.tipoTelefone1),
@@ -218,6 +219,9 @@ export class ProprietarioUpdateComponent implements OnInit, OnDestroy {
         formData.append('estado', this.getTheForm().get('estado').value);
         formData.append('facebook', this.getTheForm().get('facebook').value);
         formData.append('genero', this.getTheForm().get('genero').value);
+        if (this.getTheForm().get('googleMapsUrl').value != null && this.getTheForm().get('googleMapsUrl').value != '') {
+          formData.append('googleMapsUrl', this.getTheForm().get('googleMapsUrl').value);
+        } 
         formData.append('instagram', this.getTheForm().get('instagram').value);
         formData.append('logradouro', this.getTheForm().get('logradouro').value);
         formData.append('nome', this.getTheForm().get('nome').value);
