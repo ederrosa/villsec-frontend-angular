@@ -1,27 +1,27 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { LoginComponent } from './login/login.component';
 import { MaterialModule } from '../configurations/material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
-const LOGIN_COMPONENTS_LIST = [
-  LoginComponent
-]
+import { RouterModule } from '@angular/router';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
-  declarations: [
-    ...LOGIN_COMPONENTS_LIST
-  ],
+  declarations: [LoginComponent],
   imports: [
     CommonModule,
-    MaterialModule,
     FormsModule,
+    MaterialModule,
     ReactiveFormsModule,
+    RouterModule,
+    SharedModule
   ],
   exports: [
-    FormsModule,
-    ReactiveFormsModule,
+    LoginComponent
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
   ]
 })
 export class AuthenticationModule { }

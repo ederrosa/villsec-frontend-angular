@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
@@ -14,18 +14,31 @@ import { StorageService } from '../services/storage.service';
 })
 export class AuthenticationService {
 
+  private readonly API = API_CONFIGURATION.baseUrl;
+  eventEmitter = new EventEmitter<IAutenticacaoDTO>();
+  private theIAutenticacaoDTO: IAutenticacaoDTO;
   private theJwtHelper: JwtHelperService = new JwtHelperService();
-
+   
   constructor(
     private http: HttpClient,
     private theStorageService: StorageService,
     private router: Router
   ) { }
 
-  authenticate(theAutenticacao: IAutenticacaoDTO) {
+  getTheIAutenticacaoDTO(): IAutenticacaoDTO {
+    return this.theIAutenticacaoDTO;
+  }
+
+  setTheIAutenticacaoDTO(theIAutenticacaoDTO: IAutenticacaoDTO) {
+    this.theIAutenticacaoDTO = theIAutenticacaoDTO;
+    this.eventEmitter.emit(this.theIAutenticacaoDTO);
+  }
+
+  authenticate(theFormData: FormData) {
+    console.log(theFormData);
     return this.http.post(
-      API_CONFIGURATION.baseUrl + "/login",
-      theAutenticacao,
+      this.API + "/login",
+      theFormData,
       {
         observe: 'response',
         responseType: 'text'
@@ -43,7 +56,7 @@ export class AuthenticationService {
       .then(() => this.router.navigate([url]));
     this.router.routeReuseStrategy.shouldReuseRoute = () => {
       location.reload();
-      return false;      
+      return false;
     };
   }
 
@@ -72,5 +85,16 @@ export class AuthenticationService {
     }
     this.theStorageService.setLocalUser(theUser);
     this.onReloadRoute('');
+  }
+
+  onResetPassoword(theFormData: FormData) {
+     return this.http.post(
+      API_CONFIGURATION.baseUrl + "/auth/forgot",
+       theFormData,
+      {
+        observe: 'response',
+        responseType: 'text'
+      }
+    );
   }
 }

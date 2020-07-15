@@ -2,6 +2,7 @@ import { IEntidadeDominioDTO } from './ientidade-dominio-dto';
 
 export interface IEventoDTO extends IEntidadeDominioDTO{
 
+  alerta: boolean;
   classificacao: string;
   descricao: string;
   diaInicio: string;

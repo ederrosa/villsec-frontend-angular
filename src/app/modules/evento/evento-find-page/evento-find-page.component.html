@@ -67,7 +67,6 @@
                                     <tr>
                                         <td mat-cell>
                                             <mat-label><strong>Cidade: </strong> {{ element.cidade }}</mat-label>
-
                                         </td>
                                         <td mat-cell>
                                             <mat-label><strong>Estado: </strong> {{ element.estado }}</mat-label>
@@ -93,6 +92,9 @@
                                     </button>
                                     <button (click)="onDelete(element)" *ngIf="isDelete()" mat-button color="warn">
                                         <mat-icon>clear</mat-icon> Deletar
+                                    </button>
+                                    <button (click)="onAlert(element)" *ngIf="isDelete() && isUpdate && !element.alerta" mat-button color="info">
+                                        <mat-icon>notifications_active</mat-icon> Emitir Alerta
                                     </button>
                                 </div>
                             </div>

@@ -1,8 +1,9 @@
 ﻿import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
-import { IAutenticacaoDTO } from 'src/app/shared/models/domain/iautenticacao-dto';
+import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { AuthenticationService } from '../authentication.service';
 import { Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { UnsubscribeControlService } from '../../services/unsubscribe-control.service';
 
 @Component({
   selector: 'app-login',
@@ -11,58 +12,73 @@ import { Subscription } from 'rxjs';
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
-  theAutenticacao: IAutenticacaoDTO = {
-    id: 0,
-    dtCriacao: "",
-    dtUltimaAlteracao: "",
-    verificationCode: 0,
-    login: "",
-    senha: "",
-    matricula: "",
-    perfil: null,
-    uriImgPerfil: "",
-    nomeImgPerfil: "",
-    tipoUsuario: 0
-  };
+  private theInscricao: Subscription[] = new Array<Subscription>();
+  private theSignInForm: FormGroup;
+  private theResetPasswordForm: FormGroup;
+  
+  constructor(
+    private dialog: MatDialog,
+    private theAuthenticationService: AuthenticationService,
+    private theFormBuilder: FormBuilder,
+    private theUnsubscribeControl: UnsubscribeControlService
+  ) { }
 
-  theInscricao: Subscription;
-  email = new FormControl('', [Validators.required, Validators.email]);
-  senha = new FormControl('', [Validators.required, Validators.minLength(6)]);
-  hide = true;
-
-  constructor(public theAuthenticationService: AuthenticationService) { }
-   
-  getErrorMessageEmail() {
-    return this.email.hasError('required') ? 'Você precisa inserir um Email' :
-      this.email.hasError('email') ? 'Email invalido' : '';
+  getTheSignInForm(): FormGroup {
+    return this.theSignInForm;
   }
 
-  getErrorMessageSenha() {
-    return this.senha.hasError('required') ? 'Você precisa inserir uma Senha' :
-      this.senha.hasError('minLength') ? 'Tamanho minimo da senha é de 6 caracteres!' : '';
+  getTheResetPasswordForm(): FormGroup {
+    return this.theResetPasswordForm;
   }
 
-  logar() {
-    this.theInscricao = this.theAuthenticationService.authenticate(this.theAutenticacao)
-      .subscribe(response => {
-        this.theAuthenticationService.successFulLogin(
-          response.headers.get('Authorization'),
-          response.headers.get('UserType'),
-          response.headers.get('UserUriImgPerfil'),
-          response.headers.get('UserMatricula'));
-      },
-        error => { });
+  logout() {
+    this.theAuthenticationService.logout();
   }
 
   ngOnDestroy() {
-    this.theInscricao.unsubscribe();
+    this.onClear();
+    this.theUnsubscribeControl.unsubscribe(this.theInscricao);
   }
 
   ngOnInit() {
+    this.theSignInForm = this.theFormBuilder.group({
+      login: ['', [Validators.required, Validators.email]],
+      senha: ['', [Validators.required, Validators.minLength(6)]],
+    });
+    this.theResetPasswordForm = this.theFormBuilder.group({
+      email: ['', [Validators.required, Validators.email]]
+    });
+  }
+
+  onClear() {
+    this.getTheSignInForm().reset();
+    this.getTheResetPasswordForm().reset();
+  }
+
+  OnResetPassword() {
+
+  }
+
+  onSignIn() {
+    let theFormData: FormData = new FormData();
+    theFormData.append('login', this.getTheSignInForm().get('login').value);
+    theFormData.append('senha', this.getTheSignInForm().get('senha').value);
+    this.theInscricao.push(this.theAuthenticationService.authenticate(theFormData).subscribe(response => {
+      this.theAuthenticationService.successFulLogin(
+        response.headers.get('Authorization'),
+        response.headers.get('UserType'),
+        response.headers.get('UserUriImgPerfil'),
+        response.headers.get('UserMatricula'));
+    },
+      error => { }));
+  }
+
+  onSignUp() {
+
   }
 
   viewDidEnter() {
-    this.theInscricao = this.theAuthenticationService.refreshToken()
+    this.theInscricao.push(this.theAuthenticationService.refreshToken()
       .subscribe(response => {
         this.theAuthenticationService.successFulLogin(
           response.headers.get('Authorization'),
@@ -70,10 +86,6 @@ export class LoginComponent implements OnInit, OnDestroy {
           response.headers.get('UserUriImgPerfil'),
           response.headers.get('UserMatricula'));
       },
-        error => { });
-  }
-
-  registrar() {
-
-  }
+        error => { }));
+  } 
 }

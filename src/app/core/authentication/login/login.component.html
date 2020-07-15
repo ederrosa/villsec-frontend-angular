@@ -1,33 +1,55 @@
-﻿<div class="logo-login">
-    <mat-card>
-        <mat-card-header>
-            <mat-card-title>Login</mat-card-title>
-            <mat-card-subtitle></mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-            <div class="example-container-login">
-                <wbr>
-                <mat-form-field>
-                    <input [(ngModel)]="theAutenticacao.login" [formControl]="email" matInput placeholder="Digite o seu email" required>
-                    <mat-error *ngIf="email.invalid">{{getErrorMessageEmail()}}</mat-error>
-                </mat-form-field>
-                <wbr>
-                <mat-form-field>
-                    <input [(ngModel)]="theAutenticacao.senha" [formControl]="senha" matInput placeholder="Digite a sua senha" [type]="hide ? 'password' : 'text'" required>
-                    <mat-error *ngIf="senha.invalid">{{getErrorMessageSenha()}}</mat-error>
-                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                    </button>
-                </mat-form-field>
-                <wbr>
-                <button mat-raised-button color="primary" status="primary" shape="semi-round" (click)="logar()">Entrar</button>
-                <wbr>
-                <wbr>
-                <button mat-raised-button color="accent" status="primary" shape="semi-round" (click)="registrar()">Registrar-se</button>
-                <wbr>
-                <wbr>
-            </div>
-            <a mat-raised-button routerLink="/esquecisenha" color="warn">Esqueci Minha Senha ...</a>
-        </mat-card-content>
-    </mat-card>
-</div>
+﻿<mat-card class="example-card mat-elevation-z8">
+    <mat-card-header>
+        <mat-card-title><a routerLink="/" (click)="logout()"><img mat-card-image src="../../../../assets/images/villsec-logo-barra-principal.png"></a></mat-card-title>
+        <mat-card-subtitle>Login</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="example-container">
+            <form class="example-form" [formGroup]="getTheSignInForm()">
+                <wbr />
+                <table>
+                    <tr>
+                        <td>
+                            <app-input formControlName="login"
+                                       id="login"
+                                       label="Login:"
+                                       type="email"
+                                       placeholder="Insira o seu login (Email)."
+                                       hint="v1llsec@v1llsec.com.br...">
+                            </app-input>
+                        </td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <td>
+                            <app-input formControlName="senha"
+                                       id="senha"
+                                       label="Senha:"
+                                       placeholder="Insira sua senha."
+                                       type="password">
+                            </app-input>
+                        </td>
+                    </tr>
+                </table>
+                <table class="example-full-width" cellspacing="5">
+                    <tr>
+                        <td>
+                            <button mat-raised-button color="primary" status="primary" shape="semi-round" (click)="onSignIn()"  class="full-width"><mat-icon>login</mat-icon> Entrar</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button mat-raised-button color="accent" status="primary" shape="semi-round" (click)="onSignUp()" class="full-width"><mat-icon>assignment</mat-icon>Registrar-se</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a mat-raised-button (click)="OnResetPassword()" color="warn" class="half-width">Esqueci Minha Senha ...</a>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </mat-card-content>
+</mat-card>

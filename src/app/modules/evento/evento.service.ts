@@ -25,6 +25,14 @@ export class EventoService {
     this.eventEmitter.emit(this.theIEventoDTO);
   }
 
+  alert(id: number) {
+    return this.http.post(`${this.API}/alertas/${id}`,
+      {
+        observe: 'events',
+        responseType: 'text',
+      });
+  }
+
   delete(id: number) {
     return this.http.delete(`${this.API}/${id}`,
       {

@@ -116,6 +116,35 @@ export class EventoFindPageComponent implements OnInit, OnDestroy, AfterViewInit
     this.dataSource.sort = this.sort;
   }
 
+  onAlert(theIEventoDTO: IEventoDTO) {
+    this.dialog.closeAll();
+    let dialogRef = this.dialog.open(ConfirmationAlertComponent, { disableClose: true, width: '40%' });
+    let instance = dialogRef.componentInstance;
+    instance.title = 'Você deseja realmente avisar aos seguidores desta cidade sobre o evento??';
+    instance.subTitle = 'Confirmar envio de notificações?';
+    instance.classCss = 'color-warning';
+    this.theInscricao.push(dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.theInscricao.push(this.theEventoService.alert(theIEventoDTO.id)
+          .subscribe((event: HttpEvent<Object>) => {
+            if (event.type == HttpEventType.Response) {
+              this.dialog.closeAll();
+              let dialogRef = this.dialog.open(InformativeAlertComponent, { disableClose: true, width: '40%' });
+              let instance = dialogRef.componentInstance;
+              instance.title = "Status: " + event.status;
+              instance.subTitle = 'Avisando, enviando e-mails!...';
+              instance.classCss = 'color-info';
+              instance.message = event.statusText + '!! Todos os seguidores desta cidade foram avisados!';
+              instance.urlNavigate = '/eventos';
+              this.theRouter.navigate(['/']);
+            }
+          }, error => {
+
+          }));
+      }
+    }));
+  }
+  
   onDelete(theIEventoDTO: IEventoDTO) {
     this.dialog.closeAll();
     let dialogRef = this.dialog.open(ConfirmationAlertComponent, { disableClose: true, width: '40%' });

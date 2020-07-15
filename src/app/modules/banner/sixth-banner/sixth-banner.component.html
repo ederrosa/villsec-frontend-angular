@@ -33,7 +33,6 @@
         </div>
         <div class="swiper-slide" data-swiper-autoplay="5000">
             <footer class="android-footer mdl-mega-footer">
-                <a name="rodape-v1llsec"></a>
                 <div class="mdl-mega-footer--top-section">
                     <div class="mdl-mega-footer--left-section">
                         <div class="example-element-img mat-elevation-z8">
@@ -74,10 +73,32 @@
         </div>
         <div class="swiper-slide" data-swiper-autoplay="5000">
             <footer class="android-footer mdl-mega-footer">
-                <div class="mdl-mega-footer--top-section">
-                    <div class="mdl-mega-footer--middle-section">
-                        <iframe [src]="getIProprietarioDTO()?.googleMapsUrl | safe" width="100%" height="100%"></iframe>
-                    </div>
+                <div class="mdl-mega-footer--middle-section">
+                    <iframe [src]="getIProprietarioDTO()?.googleMapsUrl | safe" width="100%" height="100%"></iframe>
+                </div>
+                <div class="mdl-mega-footer--bottom-section">
+                    <table class="example-full-width" cellspacing="0">
+                        <tr>
+                            <td>
+                                <mat-label><strong>CEP: </strong> {{ getIProprietarioDTO()?.cep }}</mat-label>
+                            </td>
+                            <td>
+                                <mat-label><strong>Endereço: </strong> {{ getIProprietarioDTO()?.logradouro }}</mat-label>
+                            </td>
+                            <td>
+                                <mat-label><strong>Bairro: </strong> {{ getIProprietarioDTO()?.bairro }}</mat-label>
+                            </td>
+                            <td>
+                                <mat-label><strong>Cidade: </strong> {{ getIProprietarioDTO()?.cidade }}</mat-label>
+                            </td>
+                            <td>
+                                <mat-label><strong>Estado: </strong> {{ getIProprietarioDTO()?.estado }}</mat-label>
+                            </td>
+                            <td>
+                                <mat-label><strong>Pais: </strong> {{ getIProprietarioDTO()?.pais }}</mat-label>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </footer>
         </div>
