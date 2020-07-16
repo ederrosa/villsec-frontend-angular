@@ -14,15 +14,15 @@
 
 .swiper-container {
     width: 100%;
-    padding-top: 35px;
-    padding-bottom: 35px;
+    padding-top: 2%;
+    padding-bottom: 1%;
 }
 
 .swiper-slide {
     background-position: center;
     background-size: cover;
-    width: 300px;
-    height: 400px;
+    width: 20%;
+    height: 50%;
     /* Center slide text vertically */
     display: -webkit-box;
     display: -ms-flexbox;
@@ -46,8 +46,8 @@
 }
 
 .example-card img {
-    width: 300px;
-    height: 250px;
+    width: 100%;
+    height: 75%;
 }
 
 .example-card mat-card-subtitle {

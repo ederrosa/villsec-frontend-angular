@@ -26,7 +26,7 @@ export class EventoService {
   }
 
   alert(id: number) {
-    return this.http.post(`${this.API}/alertas/${id}`,
+    return this.http.options(`${this.API}/alertas/${id}`,
       {
         observe: 'events',
         responseType: 'text',

@@ -22,9 +22,6 @@ export class SeguidorInsertComponent implements OnInit {
   private readonly optionsGenero: IOptions[] = [
     { value: 'Masculino', option: 'Masculino' },
     { value: 'Feminino', option: 'Feminino' }];
-  private readonly optionsStatus: IOptions[] = [
-    { value: true, option: 'Ativo' },
-    { value: false, option: 'Inativo' }];
   private readonly optionsTipoTelefone: IOptions[] = [
     { value: 1, option: 'Celular' },
     { value: 2, option: 'Corporativo' },
@@ -59,10 +56,6 @@ export class SeguidorInsertComponent implements OnInit {
 
   getOptionsGenero(): IOptions[] {
     return this.optionsGenero;
-  }
-
-  getOptionsStatus(): IOptions[] {
-    return this.optionsStatus;
   }
 
   getOptionsTipoTelefone(): IOptions[] {
@@ -101,7 +94,6 @@ export class SeguidorInsertComponent implements OnInit {
       numeroTelefone1: ['', [Validators.required, Validators.maxLength(20), Validators.minLength(4)]],
       pais: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(1)]],
       senha: ['', [Validators.required, Validators.maxLength(20), Validators.minLength(6)]],
-      status: ['', [Validators.required]],
       tipoTelefone1: ['', [Validators.required]],
     });
   }
@@ -154,7 +146,7 @@ export class SeguidorInsertComponent implements OnInit {
     formData.append('numeroTelefone1', this.getTheForm().get('numeroTelefone1').value);
     formData.append('pais', this.getTheForm().get('pais').value);
     formData.append('senha', this.getTheForm().get('senha').value);
-    formData.append('status', this.getTheForm().get('status').value);
+    formData.append('status', 'true');
     formData.append('tipoTelefone1', this.getTheForm().get('tipoTelefone1').value);
     let dialogRef = this.dialog.open(ProgressSpinnerOverviewComponent, { disableClose: true, width: '350px', height: '350px' });
     this.theInscricao.push(this.theSeguidorService.insert(formData)
@@ -167,6 +159,7 @@ export class SeguidorInsertComponent implements OnInit {
           instance.subTitle = 'OK!...';
           instance.classCss = 'color-success';
           instance.message = event.statusText + '!! O novo Seguidor foi cadastrado com sucesso!';
+          instance.urlNavigate = '/login';
           this.onClear();
         } else if (event.type === HttpEventType.UploadProgress) {
           let instance = dialogRef.componentInstance;

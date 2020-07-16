@@ -1,6 +1,17 @@
 import { Injectable } from '@angular/core';
 
-import Swiper from 'swiper';
+// Import Swiper and modules
+import { Swiper, Autoplay, EffectCoverflow, EffectCube, Keyboard,  Navigation } from 'swiper/js/swiper.esm.js';
+
+// Install modules
+Swiper.use(
+  [
+    Autoplay,
+    EffectCoverflow,
+    EffectCube,    
+    Keyboard,
+    Navigation
+  ]);
 
 @Injectable({
   providedIn: 'root'

@@ -3,10 +3,12 @@ import { Routes, RouterModule } from '@angular/router';
 import { SeguidorUpdateComponent } from './seguidor-update/seguidor-update.component';
 import { SeguidorFindPageComponent } from './seguidor-find-page/seguidor-find-page.component';
 import { Error404Component } from '../error/error404/error404.component';
+import { SeguidorInsertComponent } from './seguidor-insert/seguidor-insert.component';
 
 const routes: Routes = [
-  { path: 'editar/:id', component: SeguidorUpdateComponent},
-  { path: '', component: SeguidorFindPageComponent},
+  { path: 'novo', component: SeguidorInsertComponent },
+  { path: 'editar/:id', component: SeguidorUpdateComponent },
+  { path: '', component: SeguidorFindPageComponent },
   { path: '**', component: Error404Component }
 ];
 

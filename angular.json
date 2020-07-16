@@ -138,5 +138,8 @@
       }
     }
   },
-  "defaultProject": "villsec"
+  "defaultProject": "villsec",
+  "cli": {
+    "analytics": false
+  }
 }

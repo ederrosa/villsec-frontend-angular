@@ -35,7 +35,6 @@ export class AuthenticationService {
   }
 
   authenticate(theFormData: FormData) {
-    console.log(theFormData);
     return this.http.post(
       this.API + "/login",
       theFormData,

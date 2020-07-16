@@ -36,6 +36,10 @@ mat-card {
     opacity: 0.9;
 }
 
+tr.example-element-row:not(.example-expanded-row):hover {
+    cursor: pointer;
+}
+
 body {
     margin: 0;
 }
@@ -209,10 +213,10 @@ a img {
 
 .android-be-together-section {
     position: relative;
-    height: auto;
-    width: auto;
+    height: 100%;
+    width: 100%;
     background-color: mat-color($light);
-    background: url('assets/images/camada1.png') center 40% no-repeat;
+    background: url('assets/images/camada1.png') center 60% no-repeat;
     background-size: cover;
 }
 
@@ -248,6 +252,7 @@ a img {
     position: relative;
     padding-top: 60px;
     padding-bottom: 80px;
+    height: 100%;
 }
 
 .android-screens {
@@ -425,9 +430,6 @@ a img {
 .android-more-section .android-section-title {
     margin-left: 12px;
     padding-bottom: 24px;
-}
-
-.android-card-container {
 }
 
 .android-card-container .mdl-card__media {
