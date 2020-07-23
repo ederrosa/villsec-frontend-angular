@@ -48,7 +48,12 @@
 .example-card img {
     width: 100%;
     height: 75%;
+    padding-right: 4%;
 }
+
+.example-card img:hover{
+    cursor: pointer;
+} 
 
 .example-card mat-card-subtitle {
     color: mat-color($dark);

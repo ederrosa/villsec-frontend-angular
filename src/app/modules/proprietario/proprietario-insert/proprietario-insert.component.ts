@@ -1,4 +1,4 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { HttpEventType, HttpEvent } from '@angular/common/http';
@@ -17,7 +17,7 @@ import { PatternService } from 'src/app/core/services/pattern.service';
   templateUrl: './proprietario-insert.component.html',
   styleUrls: ['./proprietario-insert.component.scss']
 })
-export class ProprietarioInsertComponent implements OnInit {
+export class ProprietarioInsertComponent implements OnInit, OnDestroy {
 
   private format: string;
   private readonly optionsGenero: IOptions[] = [

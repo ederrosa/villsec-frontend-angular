@@ -30,6 +30,7 @@ export class EventoService {
       {
         observe: 'events',
         responseType: 'text',
+        reportProgress: true
       });
   }
 

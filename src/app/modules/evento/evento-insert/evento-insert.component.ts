@@ -21,12 +21,14 @@ export class EventoInsertComponent implements OnInit, OnDestroy {
 
   private format: string;
   private readonly optionsTipoEvento: IOptions[] = [
-    { value: 1, option: 'tipo 1' },
-    { value: 2, option: 'tipo 2' },
-    { value: 3, option: 'tipo 3' },
-    { value: 4, option: 'tipo 4' },
-    { value: 5, option: 'tipo 5' },
-    { value: 6, option: 'tipo 6' }];
+    { value: 1, option: 'Adulto +18' },
+    { value: 2, option: 'Infantil' },
+    { value: 3, option: 'LGBTQ+' },
+    { value: 4, option: 'Live' },
+    { value: 5, option: 'Público' },
+    { value: 6, option: 'Restrito à Convidados' },
+    { value: 7, option: 'Terceira Idade' },
+    { value: 8, option: 'VIP' }];
   private theFile: File;
   private theForm: FormGroup;
   private theInscricao: Subscription[] = new Array<Subscription>();

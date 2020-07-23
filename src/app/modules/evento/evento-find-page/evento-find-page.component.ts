@@ -17,6 +17,7 @@ import { ConfirmationAlertComponent } from 'src/app/shared/components/alerts/con
 import { InformativeAlertComponent } from 'src/app/shared/components/alerts/informative-alert/informative-alert.component';
 import { IEventoDTO } from 'src/app/shared/models/dtos/ievento-dto';
 import { DialogOverviewImageComponent } from 'src/app/shared/components/dialog-overview/dialog-overview-image/dialog-overview-image.component';
+import { ProgressSpinnerOverviewComponent } from 'src/app/shared/components/progress-spinner/progress-spinner-overview/progress-spinner-overview.component';
 
 @Component({
   selector: 'app-evento-find-page',
@@ -114,7 +115,7 @@ export class EventoFindPageComponent implements OnInit, OnDestroy, AfterViewInit
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-  }
+  }  
 
   onAlert(theIEventoDTO: IEventoDTO) {
     this.dialog.closeAll();
@@ -125,18 +126,25 @@ export class EventoFindPageComponent implements OnInit, OnDestroy, AfterViewInit
     instance.classCss = 'color-warning';
     this.theInscricao.push(dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.theInscricao.push(this.theEventoService.alert(theIEventoDTO.id)
+          this.theInscricao.push(this.theEventoService.alert(theIEventoDTO.id)
           .subscribe((event: HttpEvent<Object>) => {
-            if (event.type == HttpEventType.Response) {
+            if (event.type === HttpEventType.Response) {
               this.dialog.closeAll();
               let dialogRef = this.dialog.open(InformativeAlertComponent, { disableClose: true, width: '40%' });
               let instance = dialogRef.componentInstance;
               instance.title = "Status: " + event.status;
-              instance.subTitle = 'Avisando, enviando e-mails!...';
+              instance.subTitle = 'Alertas Enviados com Sucesso!...';
               instance.classCss = 'color-info';
               instance.message = event.statusText + '!! Todos os seguidores desta cidade foram avisados!';
               instance.urlNavigate = '/eventos';
               this.theRouter.navigate(['/']);
+            } else if (!event.type){
+              this.dialog.closeAll();
+              let dialogRef = this.dialog.open(ProgressSpinnerOverviewComponent, { disableClose: true, width: '350px', height: '350px' });
+              let instance = dialogRef.componentInstance;
+              instance.title = 'Enviando Emails!';
+              instance.subTitle = 'Por Favor Aguarde...';
+              instance.mode = 'indeterminate';
             }
           }, error => {
 

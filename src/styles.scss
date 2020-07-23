@@ -220,15 +220,24 @@ a img {
     background-size: cover;
 }
 
+.android-be-together-section-error {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    background-color: mat-color($light);
+    background: url('assets/images/error-bg.jpg') center 65% no-repeat;
+    background-size: cover;
+}
+
 .logo-font {
     font-family: $fontSecondary;
     line-height: 1;
-    color: mat-color($light);
+    color: mat-color($primary);
     font-weight: 500;
 }
 
 .android-slogan {
-    font-size: 60px;
+    font-size: 90px;
     padding-top: 160px;
 }
 
