@@ -74,6 +74,7 @@ export class ErrorInterceptorService implements HttpInterceptor {
     instance.subTitle = 'Unauthorized'
     instance.classCss = 'color-danger';
     instance.message = 'Access Denied! | Acesso Negado!, Login ou Senha incorreta...';
+    instance.urlNavigate = '/401';
   }
 
   handle403() {
@@ -85,7 +86,7 @@ export class ErrorInterceptorService implements HttpInterceptor {
     instance.subTitle = 'Forbidden'
     instance.classCss = 'color-danger';
     instance.message = 'Access Denied! | Acesso Negado!, faça o login e tente novamente...';
-    instance.urlNavigate = '/login';
+    instance.urlNavigate = '/403';
   }
 
   handle422(errorObj) {
@@ -99,6 +100,7 @@ export class ErrorInterceptorService implements HttpInterceptor {
       `Mensagem: ${errorObj.message} 
              Status: ${errorObj.statusText} 
              Objeto do Erro:  ${errorObj.error} `;
+    instance.urlNavigate = '/422';
   }
 
   handleDefaultError(errorObj) {

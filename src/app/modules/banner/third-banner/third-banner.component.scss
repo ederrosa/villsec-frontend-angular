@@ -43,8 +43,12 @@
     padding-left: 4%;
 }
 
-.example-card img:hover{
-  cursor: pointer;
+.example-card img:hover {
+    cursor: pointer;
+}
+
+button:hover {
+    cursor: pointer;
 }
 
 .example-card mat-card-subtitle {

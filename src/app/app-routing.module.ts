@@ -5,6 +5,9 @@ import { Error404Component } from './modules/error/error404/error404.component';
 import { LoginComponent } from './core/authentication/login/login.component';
 import { SeguidorInsertComponent } from './modules/seguidor/seguidor-insert/seguidor-insert.component';
 import { AuthGuard } from './core/guards/can-activate/auth-guard';
+import { Error401Component } from './modules/error/error401/error401.component';
+import { Error403Component } from './modules/error/error403/error403.component';
+import { Error422Component } from './modules/error/error422/error422.component';
 
 const routes: Routes = [
 
@@ -61,6 +64,18 @@ const routes: Routes = [
   {
     path: 'registrar',
     component: SeguidorInsertComponent,
+  },
+  {
+    path: '401',
+    component: Error401Component,
+  },
+  {
+    path: '403',
+    component: Error403Component,
+  },
+  {
+    path: '422',
+    component: Error422Component,
   },
   {
     path: '**',

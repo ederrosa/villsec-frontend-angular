@@ -13,6 +13,7 @@ import { IEventoDTO } from 'src/app/shared/models/dtos/ievento-dto';
 import { DialogOverviewImageComponent } from 'src/app/shared/components/dialog-overview/dialog-overview-image/dialog-overview-image.component';
 import { EventoService } from '../../evento/evento.service';
 import { SwiperService } from 'src/app/core/services/swiper.service';
+import { DialogOverviewIframeComponent } from 'src/app/shared/components/dialog-overview/dialog-overview-iframe/dialog-overview-iframe.component';
 
 
 @Component({
@@ -61,6 +62,15 @@ export class ThirdBannerComponent implements OnInit, OnDestroy, AfterViewInit {
     return this.theObservable;
   }
 
+  getMaps(theIEventoDTO: IEventoDTO) {
+    this.dialog.closeAll();
+    let dialogRef = this.dialog.open(DialogOverviewIframeComponent, {});
+    let instance = dialogRef.componentInstance;
+    instance.title = theIEventoDTO.nome;
+    instance.subtitle = 'V1llsec';
+    instance.url = theIEventoDTO.googleMapsUrl;
+  }
+
   ngAfterViewInit() {
     this.theInscricao.push(this.paginator.page
       .pipe(
@@ -103,12 +113,12 @@ export class ThirdBannerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.theThirdBannerSwiper.update();
   }
 
-  openDialogImage(theIEvenoDTO: IEventoDTO): void {
+  openDialogImage(theIEventoDTO: IEventoDTO): void {
     this.dialog.closeAll();
     let dialogRef = this.dialog.open(DialogOverviewImageComponent, {});
     let instance = dialogRef.componentInstance;
-    instance.title = theIEvenoDTO.nome;
+    instance.title = theIEventoDTO.nome;
     instance.subtitle = 'V1llsec';
-    instance.url = theIEvenoDTO.folderUrl;
+    instance.url = theIEventoDTO.folderUrl;
   }
 }
