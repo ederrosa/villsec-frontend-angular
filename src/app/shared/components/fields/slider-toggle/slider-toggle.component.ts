@@ -1,5 +1,6 @@
 ﻿import { Component, Input, forwardRef } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
+import { MyErrorStateMatcherService } from 'src/app/core/services/my-error-state-matcher.service';
 
 const INPUT_FIELD_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -14,25 +15,31 @@ const INPUT_FIELD_VALUE_ACCESSOR: any = {
   providers: [INPUT_FIELD_VALUE_ACCESSOR]
 })
 export class SliderToggleComponent implements ControlValueAccessor {
-
-  @Input() color: string = 'primary';
-  @Input() checked: boolean = false;
+ 
+  @Input() checked: boolean;
   @Input() classCss: string = 'example-margin';
-  @Input() disabled: boolean = false;
+  @Input() color: string = 'primary';
   @Input() id: string;
+  @Input() isReadOnly: boolean;
   @Input() label: string = '';
-  @Input() isReadOnly: boolean = false;
+  @Input() myFormControl: FormControl;
   @Input() text: string = '';
 
-  private innerValue: any;
+  constructor(
+    private theErrorStateMatcherService: MyErrorStateMatcherService
+  ) { }
+
+  getTheErrorStateMatcherService(): MyErrorStateMatcherService {
+    return this.theErrorStateMatcherService;
+  }
 
   get value() {
-    return this.innerValue;
+    return this.myFormControl.value;
   }
 
   set value(v: any) {
-    if (v !== this.innerValue) {
-      this.innerValue = v;
+    if (v !== this.myFormControl.value) {
+      this.myFormControl.setValue(v);
       this.onChangeCb(v);
     }
   }

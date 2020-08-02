@@ -5,8 +5,8 @@
                 <mat-card-header>
                     <mat-card-title><strong>Título:</strong> {{ element.titulo }}</mat-card-title>
                 </mat-card-header>
-                <video mat-card-image src="{{ element?.arquivoUrl }}" download="w3logo" *ngIf="element?.arquivoUrl != null && element?.arquivoUrl != ''" controls></video> <br />
-                <iframe mat-card-image [src]=" element?.embed | safe " download="w3logo" *ngIf="element?.embed != null && element?.embed != ''"></iframe> <br />
+                <video mat-card-image src="{{ element?.arquivoUrl }}" download="w3logo" *ngIf="element.arquivoUrl && !element.embed" controls></video> <br />
+                <iframe mat-card-image [src]=" element?.embed | safe " download="w3logo" *ngIf="element.embed && !element.arquivoUrl"></iframe> <br />
                 <mat-card-content>
                     <mat-card-subtitle><strong>Comentário:</strong> {{ element.descricao }}</mat-card-subtitle>
                 </mat-card-content>

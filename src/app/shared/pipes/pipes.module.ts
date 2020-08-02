@@ -6,7 +6,6 @@ const PIPES_LIST = [
   SafePipe
 ]
 
-
 @NgModule({
   declarations: [...PIPES_LIST],
   imports: [

@@ -2,15 +2,16 @@
     <mat-card-content>
         <mat-label [attr.for]="id">{{ label }}: {{ (value)? 'Sim' : 'Não'  }}</mat-label>
         <section class="example-section">
-            <mat-slide-toggle [color]="color"
-                              [disabled]="disabled"
+            <mat-slide-toggle [checked]="!!checked"
+                              [color]="color"
+                              [errorStateMatcher]="getTheErrorStateMatcherService()"
+                              [formControl]="myFormControl"
                               [id]="id"
-                              [checked]="checked"
                               [ngClass]="classCss"
-                              [(ngModel)]="value"
                               [readonly]="!!isReadOnly">
                 {{ text }}
             </mat-slide-toggle>
         </section>
+        <mat-error *ngIf="myFormControl?.hasError('required') && myFormControl.touched">ERRO: Este campo é obrigatório!</mat-error>
     </mat-card-content>
 </mat-card>

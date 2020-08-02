@@ -1,17 +1,19 @@
-﻿<mat-form-field [appearance]="appearance">
+﻿<mat-form-field [appearance]="appearance" (click)="darkPicker.open()">
     <mat-label [attr.for]="id">{{ label }}</mat-label>
     <div class="custom-theme-example">
-        <input matInput
-               #input
+        <input aria-label="Custom theme"               
+               [errorStateMatcher]="getTheErrorStateMatcherService()"
+               [formControl]="myFormControl"
                [id]="id"
                [placeholder]="placeholder"
                [readonly]="!!isReadOnly"
-               [(ngModel)]="value"
                [ngClass]="classCss"
-               [disabled]="disabled"
-               aria-label="Custom theme"
-               [ngxTimepicker]="darkPicker">
+               [ngxTimepicker]="darkPicker"
+               matInput
+               #input>
         <ngx-material-timepicker #darkPicker [theme]="darkTheme"></ngx-material-timepicker>
     </div>
+    <mat-error *ngIf="myFormControl?.hasError('required') && myFormControl.touched">ERRO: Este campo é obrigatório!</mat-error>
+    <mat-error *ngIf="myFormControl?.hasError('pattern') && myFormControl.touched">ERRO: Campo inválido, RegExp não condiz com o programado!</mat-error>
 </mat-form-field>
 

@@ -10,6 +10,7 @@ import { ProgressSpinnerOverviewComponent } from 'src/app/shared/components/prog
 import { InformativeAlertComponent } from 'src/app/shared/components/alerts/informative-alert/informative-alert.component';
 import { IOptions } from 'src/app/shared/components/fields/select/select.component';
 import { AlbumService } from '../../album/album.service';
+import { PatternService } from 'src/app/core/services/pattern.service';
 
 @Component({
   selector: 'app-musica-insert',
@@ -34,6 +35,7 @@ export class MusicaInsertComponent implements OnInit, OnDestroy, AfterViewInit {
     private theAlbumService: AlbumService,
     private theFormBuilder: FormBuilder,    
     private theMusicaService: MusicaService,
+    private thePatternService: PatternService,
     private theUnsubscribeControl: UnsubscribeControlService,
   ) { }
 
@@ -77,19 +79,24 @@ export class MusicaInsertComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy() {
     this.onClear();
-    this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+    if (this.theInscricao.length > 0) {
+      this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+    }
+    this.theAlbumForm = null;
+    this.getTheForm = null;
+    this.theInscricao = null;
   }
    
   ngOnInit() {
     this.theForm = this.theFormBuilder.group({
-      autor: ['', [Validators.required]],
+      autor: ['', [Validators.required, Validators.pattern(this.thePatternService.getRegExpOnlyLetters())]],
       bpm: ['', [Validators.required]],
-      coautor: ['', [Validators.required]],
+      coautor: ['', [Validators.required, Validators.pattern(this.thePatternService.getRegExpOnlyLetters())]],
       copyright: ['', [Validators.required]],
       duracao: ['', [Validators.required]],
       faixa: ['', [Validators.required]],
       file: ['', [Validators.required]],
-      idioma: ['', [Validators.required]],
+      idioma: ['', [Validators.required, Validators.pattern(this.thePatternService.getRegExpOnlyLetters())]],
       nome: ['', [Validators.required]],
     });
     this.theAlbumForm = this.theFormBuilder.group({

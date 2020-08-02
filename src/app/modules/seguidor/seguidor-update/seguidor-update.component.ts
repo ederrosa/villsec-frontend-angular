@@ -15,6 +15,7 @@ import { switchMap, map } from 'rxjs/operators';
 import { ISeguidorDTO } from 'src/app/shared/models/dtos/iseguidor-dto';
 import { IOptions } from 'src/app/shared/components/fields/select/select.component';
 import { CepService } from 'src/app/core/services/cep.service';
+import { PatternService } from 'src/app/core/services/pattern.service';
 
 @Component({
   selector: 'app-seguidor-update',
@@ -48,7 +49,8 @@ export class SeguidorUpdateComponent implements OnInit, OnDestroy {
     private theCepService: CepService,
     private theFieldsService: FieldsService,
     private theFormBuilder: FormBuilder,
-    private theSeguidorService: SeguidorService,   
+    private thePatternService: PatternService,
+    private theSeguidorService: SeguidorService,
     private theUnsubscribeControl: UnsubscribeControlService
   ) { }
 
@@ -100,14 +102,14 @@ export class SeguidorUpdateComponent implements OnInit, OnDestroy {
       file: [''],
       bairro: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(1)]],
       cidade: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(1)]],
-      cep: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(8)]],
+      cep: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(8), Validators.pattern(this.thePatternService.getRegExpCep())]],
       dataNascimento: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.maxLength(120), Validators.email]],
       estado: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(1)]],
       genero: ['', [Validators.required]],
       logradouro: ['', [Validators.required, Validators.maxLength(100), Validators.minLength(1)]],
-      nome: ['', [Validators.required, Validators.maxLength(100), Validators.minLength(4)]],
-      numeroTelefone1: ['', [Validators.required, Validators.maxLength(20), Validators.minLength(4)]],
+      nome: ['', [Validators.required, Validators.maxLength(100), Validators.minLength(4), Validators.pattern(this.thePatternService.getRegExpOnlyLetters())]],
+      numeroTelefone1: ['', [Validators.required, Validators.maxLength(15), Validators.minLength(10)]],
       pais: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(1)]],
       senha: ['', [Validators.maxLength(20), Validators.minLength(6)]],
       status: ['', [Validators.required]],
@@ -129,7 +131,7 @@ export class SeguidorUpdateComponent implements OnInit, OnDestroy {
     this.format = null;
     this.theFile = null;
   }
-  
+
   onFormUpdate(theISeguidorDTO: ISeguidorDTO): void {
     this.format = 'image';
     this.url = theISeguidorDTO.urlImgPerfil;

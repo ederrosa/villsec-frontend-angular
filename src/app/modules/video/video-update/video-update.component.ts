@@ -81,10 +81,11 @@ export class VideoUpdateComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit() {
     this.theForm = this.theFormBuilder.group({
-      id: [''],
-      dtCriacao: [''],
+      id: [{ value:'' , disabled: true }],
+      dtCriacao: [{ value: '', disabled: true }],
       descricao: ['', [Validators.required]],
-      embed: ['', [Validators.pattern(this.thePatternService.getRegexUrl())]],
+      embed: ['', [Validators.pattern(this.thePatternService.getRegExpUrl())]],
+      file: [''],
       titulo: ['', [Validators.required]],
     });
     this.theGaleriaForm = this.theFormBuilder.group({

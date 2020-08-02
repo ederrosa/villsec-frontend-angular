@@ -42,11 +42,11 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.theSignInForm = this.theFormBuilder.group({
-      login: ['', [Validators.required, Validators.email]],
-      senha: ['', [Validators.required, Validators.minLength(6)]],
+      login: ['', [Validators.required, Validators.email, Validators.maxLength(120)]],
+      senha: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]],
     });
     this.theResetPasswordForm = this.theFormBuilder.group({
-      email: ['', [Validators.required, Validators.email]]
+      email: ['', [Validators.required, Validators.email, Validators.maxLength(120)]]
     });
   }
 

@@ -8,6 +8,7 @@ import { VideoFindPageModule } from './video-find-page/video-find-page.module';
 import { VideoInsertModule } from './video-insert/video-insert.module';
 import { VideoUpdateModule } from './video-update/video-update.module';
 import { VideoCubeDialogOverviewModule } from './video-cube-dialog-overview/video-cube-dialog-overview.module';
+import { ErrorModule } from '../error/error.module';
 
 const MODULES_LIST = [
   VideoCubeDialogOverviewModule,
@@ -20,6 +21,7 @@ const MODULES_LIST = [
   declarations: [],
   imports: [
     CommonModule,
+    ErrorModule,
     RouterModule,
     VideoRoutingModule,
     ...MODULES_LIST

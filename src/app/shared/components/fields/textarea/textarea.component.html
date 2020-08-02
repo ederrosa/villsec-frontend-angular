@@ -1,15 +1,19 @@
 ﻿<mat-form-field [appearance]="appearance">
     <mat-label [attr.for]="id">{{ label }}</mat-label>
-    <textarea [id]="id"
-              [minlength]="minlength"
-              [maxlength]="maxlength"
+    <textarea [errorStateMatcher]="getTheErrorStateMatcherService()"
+              [formControl]="myFormControl"
+              [id]="id"
+              [maxLength]="maxLength"
+              [minLength]="minLength"
               [placeholder]="placeholder"
               [readonly]="!!isReadOnly"
-              [(ngModel)]="value"
               [ngClass]="classCss"
               matInput
               #textarea>
     </textarea>
-    <mat-hint align="end">{{textarea.value?.length || minlength}}/{{ maxlength }}</mat-hint>
+    <mat-hint align="end">{{textarea.value?.length || minLength}}/{{ maxLength }}</mat-hint>
     <mat-hint align="start"><strong>{{ hint }}</strong> </mat-hint>
+    <mat-error *ngIf="myFormControl?.hasError('required') && myFormControl.touched">ERRO: Este campo é obrigatório!</mat-error>
+    <mat-error *ngIf="myFormControl?.hasError('minlength') && myFormControl.touched">ERRO: Este campo de ter no MÍNIMO {{ minLength }} caracteres!</mat-error>
+    <mat-error *ngIf="myFormControl?.hasError('maxlength') && myFormControl.touched">ERRO: Este campo de ter no MÁXIMO {{ maxLength }} caracteres!</mat-error>
 </mat-form-field>

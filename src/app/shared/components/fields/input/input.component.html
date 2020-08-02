@@ -1,18 +1,23 @@
 ﻿<mat-form-field [appearance]="appearance">
     <mat-label [attr.for]="id">{{ label }}</mat-label>
-    <input [id]="id"
-           [minlength]="minlength"
-           [maxlength]="maxlength"
+    <input (blur)="onBlur()"
+           [errorStateMatcher]="getTheErrorStateMatcherService()"
+           [formControl]="myFormControl"           
+           [id]="id"
+           [readonly]="!!isReadOnly"
+           [maxLength]="maxLength"
+           [minLength]="minLength"
+           [ngClass]="classCss"
            [placeholder]="placeholder"
            [type]="type"
-           [readonly]="!!isReadOnly"
-           [(ngModel)]="value"
-           [ngClass]="classCss"
-           [disabled]="disabled"
-           (blur)="onBlur()"
            matInput
            #input>
-    <mat-hint align="end">{{input.value?.length || minlength}}/{{ maxlength }}</mat-hint>
+    <mat-hint align="end">{{input.value?.length || minLength}}/{{ maxLength }}</mat-hint>
     <mat-hint align="start"><strong>{{ hint }}</strong> </mat-hint>
     <mat-icon matSuffix>{{ icon }}</mat-icon>
+    <mat-error *ngIf="myFormControl?.hasError('email') && !myFormControl?.hasError('required')">ERRO: Emai inválido!</mat-error>
+    <mat-error *ngIf="myFormControl?.hasError('required') && myFormControl.touched">ERRO: Este campo é obrigatório!</mat-error>
+    <mat-error *ngIf="myFormControl?.hasError('minlength') && myFormControl.touched">ERRO: Este campo de ter no MÍNIMO {{ minLength }} caracteres!</mat-error>
+    <mat-error *ngIf="myFormControl?.hasError('maxlength') && myFormControl.touched">ERRO: Este campo de ter no MÁXIMO {{ maxLength }} caracteres!</mat-error>
+    <mat-error *ngIf="myFormControl?.hasError('pattern') && myFormControl.touched">ERRO: Campo inválido, RegExp não condiz com o programado!</mat-error>
 </mat-form-field>

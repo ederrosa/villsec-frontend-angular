@@ -4,7 +4,7 @@ import localePt from '@angular/common/locales/pt';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { registerLocaleData } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http'
-import { MAT_LABEL_GLOBAL_OPTIONS } from '@angular/material/core';
+import { MAT_LABEL_GLOBAL_OPTIONS, ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -59,6 +59,7 @@ const SERVICES_LIST = [
     ...SERVICES_LIST,
     { provide: LOCALE_ID, useValue: "pt" },
     { provide: MAT_LABEL_GLOBAL_OPTIONS, useValue: { float: 'always' } },
+    { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
   ],
   bootstrap: [
     AppComponent

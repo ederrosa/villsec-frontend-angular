@@ -1,6 +1,7 @@
 ﻿import { Component, forwardRef, Input } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl } from '@angular/forms';
 import { NgxMaterialTimepickerTheme } from 'ngx-material-timepicker';
+import { MyErrorStateMatcherService } from 'src/app/core/services/my-error-state-matcher.service';
 
 const INPUT_FIELD_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -18,28 +19,34 @@ export class TimepickerComponent implements ControlValueAccessor {
 
   @Input() appearance: string = 'outline';
   @Input() appendToInput: string;
-  @Input() classCss;
-  @Input() disabled: boolean = false;
+  @Input() classCss: string;
   @Input() defaultTime: string;
   @Input() format: string;
   @Input() id: string;
-  @Input() isReadOnly: boolean = false;
+  @Input() isReadOnly: boolean;
   @Input() label: string = 'Custom theme';
   @Input() min: number;
   @Input() max: number;
+  @Input() myFormControl: FormControl;
   @Input() timepicker: string = 'darkPicker';
   @Input() placeholder: string = 'Escolha o Horário';
   @Input() theme: string = 'darkTheme';
 
-  private innerValue: any;
+  constructor(
+    private theErrorStateMatcherService: MyErrorStateMatcherService
+  ) { }
+
+  getTheErrorStateMatcherService(): MyErrorStateMatcherService {
+    return this.theErrorStateMatcherService;
+  }
 
   get value() {
-    return this.innerValue;
+    return this.myFormControl.value;
   }
 
   set value(v: any) {
-    if (v !== this.innerValue) {
-      this.innerValue = v;
+    if (v !== this.myFormControl.value) {
+      this.myFormControl.setValue(v);
       this.onChangeCb(v);
     }
   }

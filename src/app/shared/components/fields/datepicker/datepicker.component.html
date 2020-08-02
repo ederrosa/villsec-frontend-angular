@@ -1,16 +1,18 @@
-<mat-form-field [appearance]="appearance">
+﻿<mat-form-field [appearance]="appearance" (click)="picker.open()">
     <mat-label [attr.for]="id">{{ label }}</mat-label>
-    <input [id]="id"
+    <input [errorStateMatcher]="getTheErrorStateMatcherService()"
+           [formControl]="myFormControl"
+           [id]="id"
+           [max]="maxDate"
            [matDatepicker]="picker"
+           [min]="minDate"
+           [ngClass]="classCss"
            [placeholder]="placeholder"
            [readonly]="!!isReadOnly"
-           [(ngModel)]="value"
-           [ngClass]="classCss"
-           [disabled]="disabled"
-           [min]="minDate"
-           [max]="maxDate"
            matInput
            #input>
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker [startView]="startView" [startAt]="startDate"></mat-datepicker>
+    <mat-datepicker #picker [startView]="startView" [startAt]="startDate" [disabled]="!!disabledDatepicker"></mat-datepicker>
+    <mat-error *ngIf="myFormControl?.hasError('required') && myFormControl.touched">ERRO: Este campo é obrigatório!</mat-error>
+    <mat-error *ngIf="myFormControl?.hasError('pattern') && myFormControl.touched">ERRO: Campo inválido, RegExp não condiz com o programado!</mat-error>
 </mat-form-field>

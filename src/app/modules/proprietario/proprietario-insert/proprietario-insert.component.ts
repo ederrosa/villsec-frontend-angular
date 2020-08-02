@@ -85,7 +85,11 @@ export class ProprietarioInsertComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.onClear();
-    this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+    if (this.theInscricao.length > 0) {
+      this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+    }
+    this.theForm = null;
+    this.theInscricao = null;
   }
 
   ngOnInit() {
@@ -96,25 +100,25 @@ export class ProprietarioInsertComponent implements OnInit, OnDestroy {
       dataNascimento: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.maxLength(120), Validators.email]],
       estado: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(1)]],
-      facebook: ['', Validators.pattern(this.thePatternService.getRegexUrl())],
+      facebook: ['', Validators.pattern(this.thePatternService.getRegExpUrl())],
       file: ['', [Validators.required]],
       genero: ['', [Validators.required]],
-      googleMapsUrl:[''],
-      instagram: ['', Validators.pattern(this.thePatternService.getRegexUrl())],
+      googleMapsUrl: ['', Validators.pattern(this.thePatternService.getRegExpUrl())],
+      instagram: ['', Validators.pattern(this.thePatternService.getRegExpUrl())],
       logradouro: ['', [Validators.required, Validators.maxLength(100), Validators.minLength(1)]],
-      nome: ['', [Validators.required, Validators.maxLength(100), Validators.minLength(4)]],
+      nome: ['', [Validators.required, Validators.maxLength(100), Validators.minLength(4), Validators.pattern(this.thePatternService.getRegExpOnlyLetters())]],
       numeroTelefone1: ['', [Validators.required, Validators.maxLength(20), Validators.minLength(4)]],
       numeroTelefone2: [''],
       pais: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(1)]],
       senha: ['', [Validators.required, Validators.maxLength(20), Validators.minLength(6)]],
       sobreMim: [''],
-      spotify: ['', Validators.pattern(this.thePatternService.getRegexUrl())],
+      spotify: ['', Validators.pattern(this.thePatternService.getRegExpUrl())],
       status: ['', [Validators.required]],
       tipoTelefone1: ['', [Validators.required]],
       tipoTelefone2: [''],
-      twitter: ['', Validators.pattern(this.thePatternService.getRegexUrl())],
-      twitch: ['', Validators.pattern(this.thePatternService.getRegexUrl())],
-      youtube: ['', Validators.pattern(this.thePatternService.getRegexUrl())],
+      twitter: ['', Validators.pattern(this.thePatternService.getRegExpUrl())],
+      twitch: ['', Validators.pattern(this.thePatternService.getRegExpUrl())],
+      youtube: ['', Validators.pattern(this.thePatternService.getRegExpUrl())],
     });
   }
 
@@ -164,7 +168,7 @@ export class ProprietarioInsertComponent implements OnInit, OnDestroy {
     formData.append('genero', this.getTheForm().get('genero').value);
     if (this.getTheForm().get('googleMapsUrl').value != null && this.getTheForm().get('googleMapsUrl').value != '') {
       formData.append('googleMapsUrl', this.getTheForm().get('googleMapsUrl').value);
-    }    
+    }
     formData.append('instagram', this.getTheForm().get('instagram').value);
     formData.append('logradouro', this.getTheForm().get('logradouro').value);
     formData.append('nome', this.getTheForm().get('nome').value);
@@ -182,7 +186,7 @@ export class ProprietarioInsertComponent implements OnInit, OnDestroy {
     formData.append('twitter', this.getTheForm().get('twitter').value);
     formData.append('twitch', this.getTheForm().get('twitch').value);
     formData.append('youtube', this.getTheForm().get('youtube').value);
-    
+
     let dialogRef = this.dialog.open(ProgressSpinnerOverviewComponent, { disableClose: true, width: '350px', height: '350px' });
     this.theInscricao.push(this.theProprietarioService.insert(formData)
       .subscribe((event: HttpEvent<Object>) => {
@@ -204,5 +208,5 @@ export class ProprietarioInsertComponent implements OnInit, OnDestroy {
       }, error => {
 
       }));
-  }  
+  }
 }

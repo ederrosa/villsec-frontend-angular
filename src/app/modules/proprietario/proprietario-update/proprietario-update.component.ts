@@ -92,33 +92,33 @@ export class ProprietarioUpdateComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.theForm = this.theFormBuilder.group({
-      id: [''],
-      dtCriacao: [''],
+      id: [{value:'', disabled: true}],
+      dtCriacao: [{ value: '', disabled: true }],
       file: [''],
       bairro: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(1)]],
       cidade: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(1)]],
-      cep: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(8)]],
+      cep: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(8), Validators.pattern(this.thePatternService.getRegExpCep())]],
       dataNascimento: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.maxLength(120), Validators.email]],
       estado: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(1)]],
-      facebook: [''],
+      facebook: ['', Validators.pattern(this.thePatternService.getRegExpUrl())],
       genero: ['', [Validators.required]],
-      googleMapsUrl: [''],
-      instagram: [''],
+      googleMapsUrl: ['', Validators.pattern(this.thePatternService.getRegExpUrl())],
+      instagram: ['', Validators.pattern(this.thePatternService.getRegExpUrl())],
       logradouro: ['', [Validators.required, Validators.maxLength(100), Validators.minLength(1)]],
-      nome: ['', [Validators.required, Validators.maxLength(100), Validators.minLength(4)]],
+      nome: ['', [Validators.required, Validators.maxLength(100), Validators.minLength(4), Validators.pattern(this.thePatternService.getRegExpOnlyLetters())]],
       numeroTelefone1: ['', [Validators.required, Validators.maxLength(20), Validators.minLength(4)]],
       numeroTelefone2: [''],
       pais: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(1)]],
       senha: ['', [Validators.maxLength(20), Validators.minLength(6)]],
       sobreMim: [''],
-      spotify: [''],
+      spotify: ['', Validators.pattern(this.thePatternService.getRegExpUrl())],
       status: ['', [Validators.required]],
       tipoTelefone1: ['', [Validators.required]],
       tipoTelefone2: [''],
-      twitter: [''],
-      twitch: [''],
-      youtube: [''],
+      twitter: ['', Validators.pattern(this.thePatternService.getRegExpUrl())],
+      twitch: ['', Validators.pattern(this.thePatternService.getRegExpUrl())],
+      youtube: ['', Validators.pattern(this.thePatternService.getRegExpUrl())],
     });
     if (this.theProprietarioService.getIProprietarioDTO() == null) {
       this.theActivatedRoute.params.pipe(
@@ -132,7 +132,11 @@ export class ProprietarioUpdateComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.onClear();
-    this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+    if (this.theInscricao.length > 0) {
+      this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+    }
+    this.theForm = null;
+    this.theInscricao = null;
   }
 
   onClear() {

@@ -107,7 +107,11 @@ export class ProprietarioFindPageComponent implements OnInit, OnDestroy, AfterVi
   ngOnDestroy() {
     this.dataSource = null;
     this.expandedElement = null;
-    this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+    if (this.theInscricao.length > 0) {
+      this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+    }
+    this.theInscricao = null;
+    this.pageEvent = null;
   }
 
   ngOnInit() {

@@ -7,9 +7,6 @@
                 </button>
             </div>
         </mat-card-title>
-        <mat-card-subtitle>
-          
-        </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
         <mat-form-field>
@@ -30,32 +27,36 @@
                              [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
                             <div class="example-element-diagram">
                                 <div class="example-element-img mat-elevation-z8">
-                                    <img class="example-element-img" src="{{ element.uriImgPerfil }}">
+                                    <img class="example-element-img" src="{{ element.urlImgPerfil }}">
                                 </div>
                             </div>
                             <div class="example-element-description">
                                 <table class="example-full-width" cellspacing="0">
                                     <tr>
                                         <td mat-cell>
-                                            <mat-label><strong>Nome: </strong> {{ element.nome }}</mat-label>
+                                            <mat-label><strong>Nome: </strong>{{ element.nome }}</mat-label>
                                         </td>
+                                        <td></td>
                                         <td mat-cell>
-                                            <mat-label><strong>Email: </strong> {{ element.email }}</mat-label>
+                                            <mat-label><strong>Email: </strong>{{ element.email }}</mat-label>
                                         </td>
+                                    </tr>                                  
+                                    <tr>
                                         <td mat-cell>
                                             <mat-label><strong>Data de Nascimento: </strong> {{ element.dataNascimento  | date: 'mediumDate'}}</mat-label>
                                         </td>
-                                    </tr>
-                                    <tr>
                                         <td mat-cell>
                                             <mat-label><strong>Status: </strong>{{ (element.status)? 'Ativo' : 'Inativo' }}</mat-label>
                                         </td>
                                         <td mat-cell>
                                             <mat-label><strong>Gênero: </strong>{{ element.genero }}</mat-label>
                                         </td>
+                                    </tr>
+                                    <tr>
                                         <td mat-cell>
                                             <mat-label><strong>Telefone 1.: </strong> {{ element.numeroTelefone1 }} - {{ element.tipoTelefone1 }}</mat-label>
                                         </td>
+                                        <td></td>
                                         <td mat-cell>
                                             <mat-label><strong>Telefone 2.: </strong> {{ element?.numeroTelefone2 }} - {{ element?.tipoTelefone2 }}</mat-label>
                                         </td>
@@ -85,23 +86,33 @@
                                     <tr>
                                         <td mat-cell>
                                             <mat-label><strong>Quem sou: </strong>{{ element?.sobriMin }}</mat-label>
-                                        </td>                                       
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td mat-cell>
                                             <mat-label><strong>Instagram: </strong>{{ element?.instagram }}</mat-label>
                                         </td>
+                                        <td mat-cell></td>
+                                    </tr>
+                                    <tr>
                                         <td mat-cell>
                                             <mat-label><strong>Facebook: </strong>{{ element?.facebook }}</mat-label>
                                         </td>
+                                        <td mat-cell></td>
+                                    </tr>
+                                    <tr>
                                         <td mat-cell>
                                             <mat-label><strong>Spotify: </strong>{{ element?.spotify }}</mat-label>
                                         </td>
+                                        <td mat-cell></td>
                                     </tr>
                                     <tr>
                                         <td mat-cell>
                                             <mat-label><strong>Twitter: </strong> {{ element?.twitter }}</mat-label>
                                         </td>
+                                        <td mat-cell></td>
+                                    </tr>
+                                    <tr>
                                         <td mat-cell>
                                             <mat-label><strong>Twitch: </strong> {{ element?.twitch }}</mat-label>
                                         </td>

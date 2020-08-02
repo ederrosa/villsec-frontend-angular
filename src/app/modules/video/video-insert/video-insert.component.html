@@ -35,10 +35,11 @@
                                 <td>
                                     <p>
                                         <app-input formControlName="embed"
+                                                   hint="Use esse campo caso o vídeo for muito pesado, colocando apenas no link para armazenamento!"
                                                    id="embed"
                                                    label="Url do arquivo"
+                                                   [myFormControl]="getTheForm().get('embed')"
                                                    placeholder="Informe a url"
-                                                   hint="Use esse campo caso o vídeo for muito pesado, colocando apenas no link para armazenamento!"
                                                    (theBlur)="setUrl()"
                                                    type="url">
                                         </app-input>
@@ -50,7 +51,9 @@
                                     <app-textarea formControlName="descricao"
                                                   id="descricao"
                                                   label="Descrição do Vídeo"
-                                                  maxlength="255"
+                                                  [myFormControl]="getTheForm().get('descricao')"
+                                                  maxLength="255"
+                                                  minLength="1"
                                                   placeholder="Insira uma descrição do vídeo">
                                     </app-textarea>
                                 </td>
@@ -60,8 +63,9 @@
                                     <app-input formControlName="titulo"
                                                id="titulo"
                                                label="Título para o Vídeo"
-                                               minlength="1"
-                                               maxlength="255"
+                                               [myFormControl]="getTheForm().get('titulo')"
+                                               maxLength="255"
+                                               minLength="1"
                                                placeholder="Informe um título para o vídeo">
                                     </app-input>
                                 </td>

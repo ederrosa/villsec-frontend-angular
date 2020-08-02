@@ -34,12 +34,13 @@
                             <tr>
                                 <td>
                                     <app-input formControlName="nome"
+                                               hint="Ex.: Blaster"
                                                id="nome"
                                                label="Nome da Música"
-                                               minlength="1"
-                                               maxlength="100"
-                                               placeholder="Insira o nome da música."
-                                               hint="Ex.: Blaster">
+                                               maxLength="100"
+                                               minLength="1"
+                                               [myFormControl]="getTheForm().get('nome')"
+                                               placeholder="Insira o nome da música.">
                                     </app-input>
                                 </td>
                             </tr>
@@ -48,24 +49,26 @@
                             <tr>
                                 <td>
                                     <app-input formControlName="autor"
+                                               hint="Ex.: David Guetta"
                                                id="autor"
                                                label="Autor da Música"
-                                               minlength="1"
-                                               maxlength="100"
-                                               placeholder="Insira o nome do autor da música."
-                                               hint="Ex.: David Guetta">
+                                               maxLength="100"
+                                               minLength="1"
+                                               [myFormControl]="getTheForm().get('autor')"
+                                               placeholder="Insira o nome do autor da música.">
                                     </app-input>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <app-input formControlName="coautor"
+                                               hint="Ex.: David Guetta"
                                                id="coautor"
                                                label="Coautor da Música"
-                                               minlength="1"
-                                               maxlength="100"
-                                               placeholder="Insira o nome do coautor da música."
-                                               hint="Ex.: David Guetta">
+                                               maxLength="100"
+                                               minLength="1"
+                                               [myFormControl]="getTheForm().get('coautor')"
+                                               placeholder="Insira o nome do coautor da música.">
                                     </app-input>
                                 </td>
                             </tr>
@@ -76,8 +79,9 @@
                                     <app-input formControlName="bpm"
                                                id="bpm"
                                                label="BPM"
-                                               minlength="1"
-                                               maxlength="4"
+                                               maxLength="4"
+                                               minLength="1"
+                                               [myFormControl]="getTheForm().get('bpm')"
                                                placeholder="Informe o BPM">
                                     </app-input>
                                 </td>
@@ -85,15 +89,16 @@
                                     <app-input formControlName="duracao"
                                                id="duracao"
                                                label="Duração da Música"
-                                               type="time"
-                                               placeholder="Informe a duração da música ">
+                                               [myFormControl]="getTheForm().get('duracao')"
+                                               placeholder="Informe a duração da música">
                                     </app-input>
                                 </td>
                                 <td>
                                     <app-select formControlName="copyright"
+                                                hint="Selecione..."
                                                 id="copyright"
                                                 label="Copyright"
-                                                hint="Selecione..."
+                                                [myFormControl]="getTheForm().get('copyright')"
                                                 [options]="getOptionsCopyright()">
                                     </app-select>
                                 </td>
@@ -105,8 +110,9 @@
                                     <app-input formControlName="idioma"
                                                id="idioma"
                                                label="Idioma"
-                                               minlength="1"
-                                               maxlength="100"
+                                               maxLength="100"
+                                               minLength="1"
+                                               [myFormControl]="getTheForm().get('idioma')"
                                                placeholder="Informe o idioma.">
                                     </app-input>
                                 </td>
@@ -114,7 +120,8 @@
                                     <app-input formControlName="faixa"
                                                id="faixa"
                                                label="Faixa"
-                                               maxlength="2"
+                                               maxLength="2"
+                                               [myFormControl]="getTheForm().get('faixa')"
                                                type="number">
                                     </app-input>
                                 </td>

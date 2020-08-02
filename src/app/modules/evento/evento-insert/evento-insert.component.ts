@@ -93,7 +93,7 @@ export class EventoInsertComponent implements OnInit, OnDestroy {
       googleMapsUrl: [''],
       horaInicio: ['', [Validators.required]],
       horaTermino: ['', [Validators.required]],
-      ingressoUrl: ['', Validators.pattern(this.thePatternService.getRegexUrl())],
+      ingressoUrl: ['', Validators.pattern(this.thePatternService.getRegExpUrl())],
       nome: ['', [Validators.required]],
       tipoEvento: ['', [Validators.required]],
       logradouro: ['', [Validators.required]],

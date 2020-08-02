@@ -2,18 +2,19 @@
     <mat-card-content>
         <mat-label [attr.for]="id">{{ label }}: {{ value }}</mat-label>
         <mat-slider [color]="color"
-                    [disabled]="disabled"
+                    [errorStateMatcher]="getTheErrorStateMatcherService()"
+                    [formControl]="myFormControl"
                     [id]="id"
-                    [invert]="invert"
+                    [invert]="!!invert"
                     [max]="max"
                     [min]="min"
                     [ngClass]="classCss"
-                    [(ngModel)]="value"
                     [readonly]="!!isReadOnly"
                     [step]="step"
                     [thumbLabel]="thumbLabel"
                     [tickInterval]="getSliderTickInterval()"
-                    [vertical]="vertical">
+                    [vertical]="!!vertical">
         </mat-slider>
+        <mat-error *ngIf="myFormControl?.hasError('required') && myFormControl.touched">ERRO: Este campo é obrigatório!</mat-error>
     </mat-card-content>
 </mat-card>

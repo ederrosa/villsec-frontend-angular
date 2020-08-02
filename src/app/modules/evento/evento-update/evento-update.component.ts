@@ -17,7 +17,6 @@ import { IOptions } from 'src/app/shared/components/fields/select/select.compone
 import { CepService } from 'src/app/core/services/cep.service';
 import { PatternService } from 'src/app/core/services/pattern.service';
 
-
 @Component({
   selector: 'app-evento-update',
   templateUrl: './evento-update.component.html',
@@ -103,7 +102,7 @@ export class EventoUpdateComponent implements OnInit, OnDestroy {
       googleMapsUrl: [''],
       horaInicio: ['', [Validators.required]],
       horaTermino: ['', [Validators.required]],
-      ingressoUrl: ['', Validators.pattern(this.thePatternService.getRegexUrl())],
+      ingressoUrl: ['', Validators.pattern(this.thePatternService.getRegExpUrl())],
       nome: ['', [Validators.required]],
       tipoEvento: ['', [Validators.required]],
       logradouro: ['', [Validators.required]],

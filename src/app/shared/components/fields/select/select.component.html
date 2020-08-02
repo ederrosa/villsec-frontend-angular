@@ -1,9 +1,10 @@
 ﻿<mat-form-field [appearance]="appearance">
     <mat-label>{{ label }}</mat-label>
-    <select matNativeControl
+    <select [errorStateMatcher]="getTheErrorStateMatcherService()"
+            [formControl]="myFormControl"
             [id]="id"
+            matNativeControl
             [readonly]="!!isReadOnly"
-            [(ngModel)]="value"
             [ngClass]="classCss">
         <option disabled label="--Escolha uma opção--"></option>
         <option *ngFor="let option of options" [ngValue]="option.value">
@@ -11,4 +12,5 @@
         </option>
     </select>
     <mat-hint><strong>{{ hint }}</strong></mat-hint>
+    <mat-error *ngIf="myFormControl?.hasError('required') && myFormControl.touched">ERRO: Este campo é obrigatório!</mat-error>
 </mat-form-field>

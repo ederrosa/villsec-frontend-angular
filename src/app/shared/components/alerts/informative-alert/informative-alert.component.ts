@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class InformativeAlertComponent implements OnInit {
 
-    @Input() classCss;
+    @Input() classCss: string = '';
     @Input() title: string = '';
     @Input() message: string = '';
     @Input() subTitle: string = '';

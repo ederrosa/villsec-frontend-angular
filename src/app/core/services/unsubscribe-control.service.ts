@@ -13,7 +13,6 @@ export class UnsubscribeControlService {
            inscricao.unsubscribe();
         }
         this.delete(theSubscriptionList);
-        theSubscriptionList = null;
     }
 
     private delete(theSubscriptionList: Subscription[]): void {

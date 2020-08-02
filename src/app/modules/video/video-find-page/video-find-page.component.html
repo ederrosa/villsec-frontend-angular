@@ -1,15 +1,9 @@
 ﻿<mat-card class="example-card">
-    <mat-card-header>
-        <mat-card-title>
-            <h6>Lista de Vídeo</h6>
-        </mat-card-title>
-        <mat-card-subtitle>V1LLSEC</mat-card-subtitle>
-    </mat-card-header>
     <mat-card-content>
         <mat-horizontal-stepper [linear]="getLinear()" #stepper>
             <mat-step [stepControl]="getTheGaleriaForm()">
                 <form>
-                    <ng-template matStepLabel>Selecione o Galeria.</ng-template>
+                    <ng-template matStepLabel>Selecione a Galeria.</ng-template>
                     <app-galeria-table></app-galeria-table>
                 </form>
             </mat-step>
@@ -40,8 +34,8 @@
                                      [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
                                     <div class="example-element-diagram">
                                         <div class="example-element-img mat-elevation-z8">
-                                            <video class="example-element-img" src="{{ element.arquivoUrl }}" *ngIf="element.arquivoUrl != ''" controls (click)="openDialogVideo(element)"></video> <br />
-                                            <iframe class="example-element-img" [src]=" element.embed | safe " *ngIf="element.embed != ''" (click)="openDialogIframe(element)"></iframe> <br />
+                                            <video class="example-element-img" src="{{ element.arquivoUrl }}" *ngIf="element.arquivoUrl" controls (click)="openDialogVideo(element)"></video> <br />
+                                            <iframe class="example-element-img" [src]=" element.embed | safe " *ngIf="element.embed  && !element.arquivoUrl" (click)="openDialogIframe(element)"></iframe> <br />
                                         </div>
                                     </div>
                                     <div class="example-element-description">

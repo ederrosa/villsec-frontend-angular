@@ -24,11 +24,13 @@
                     <tr>
                         <td>
                             <app-input formControlName="email"
+                                       hint="v1llsec@v1llsec.com"
                                        id="email"
                                        label="Email"
-                                       maxlength="120"
-                                       placeholder="Insira o seu Email."
-                                       hint="v1llsec@v1llsec.com"
+                                       maxLength="120"
+                                       minLength="6"
+                                       [myFormControl]="getTheForm().get('email')"
+                                       placeholder="Insira o seu Email."                                       
                                        type="email">
                             </app-input>
                         </td>
@@ -38,27 +40,30 @@
                     <tr>
                         <td>
                             <app-input formControlName="senha"
+                                       hint="Por questão de segurança evite muitos numeros em sequência e data de aniversario."
                                        id="senha"
                                        label="Senha"
-                                       minlength="6"
-                                       maxlength="20"
+                                       [myFormControl]="getTheForm().get('senha')"
+                                       maxLength="20"
+                                       minLength="6"
                                        placeholder="Insira a sua senha."
-                                       type="password"
-                                       hint="Por questão de segurança evite muitos numeros em sequência e data de aniversario.">
+                                       type="password">
                             </app-input>
                         </td>
                         <td>
                             <app-datepicker formControlName="dataNascimento"
                                             id="dataNascimento"
-                                            startView="year"
-                                            label="Data de Nascimento">
+                                            label="Data de Nascimento"
+                                            [myFormControl]="getTheForm().get('dataNascimento')"
+                                            startView="year">
                             </app-datepicker>
                         </td>
                         <td>
                             <app-select formControlName="genero"
+                                        hint="Selecione o genero."
                                         id="genero"
                                         label="Genero"
-                                        hint="Selecione o genero."
+                                        [myFormControl]="getTheForm().get('genero')"
                                         [options]="getOptionsGenero()">
                             </app-select>
                         </td>
@@ -71,26 +76,25 @@
                             <app-input formControlName="nome"
                                        id="nome"
                                        label="Nome"
-                                       minlength="4"
-                                       maxlength="100"
+                                       maxLength="100"
+                                       minLength="4"
+                                       [myFormControl]="getTheForm().get('nome')"
                                        placeholder="Insira o nome.">
                             </app-input>
                         </td>
                     </tr>
                 </table>
-                <table class="example-full-width" cellspacing="0">
+                <table class="example-full-width" cellspacing="0" width="35%">
                     <tr>
                         <td>
-                           
-                        </td>
-                        <td>
                             <app-input formControlName="cep"
+                                       hint="Ex.: 01311920"
                                        id="cep"
                                        label="CEP"
-                                       minlength="8"
-                                       maxlength="10"
-                                       placeholder="Informe o CEP, sem pontuação."
-                                       hint="Ex.: 01311920"
+                                       maxLength="10"
+                                       minLength="8"
+                                       [myFormControl]="getTheForm().get('cep')"
+                                       placeholder="Informe o CEP."
                                        (theBlur)="consultaCEP()">
                             </app-input>
                         </td>
@@ -100,12 +104,13 @@
                     <tr>
                         <td>
                             <app-input formControlName="logradouro"
+                                       hint="Ex.: Avenida Paulista"
                                        id="logradouro"
                                        label="Logradouro"
-                                       minlength="1"
-                                       maxlength="100"
-                                       placeholder="Informe o logradouro."
-                                       hint="Ex.: Avenida Paulista">
+                                       maxLength="100"
+                                       minLength="1"
+                                       [myFormControl]="getTheForm().get('logradouro')"
+                                       placeholder="Informe o logradouro.">
                             </app-input>
                         </td>
                     </tr>
@@ -114,22 +119,24 @@
                     <tr>
                         <td>
                             <app-input formControlName="bairro"
+                                       hint="Ex.: Bela Vista"
                                        id="bairro"
                                        label="Bairro"
-                                       minlength="1"
-                                       maxlength="50"
-                                       placeholder="Informe o bairro."
-                                       hint="Ex.: Bela Vista">
+                                       maxLength="50"
+                                       minLength="1"
+                                       [myFormControl]="getTheForm().get('bairro')"
+                                       placeholder="Informe o bairro.">
                             </app-input>
                         </td>
                         <td>
                             <app-input formControlName="cidade"
+                                       hint="Ex.: São Paulo"
                                        id="cidade"
                                        label="Cidade"
-                                       minlength="1"
-                                       maxlength="50"
-                                       placeholder="Informe a cidade"
-                                       hint="Ex.: São Paulo">
+                                       maxLength="50"
+                                       minLength="1"
+                                       [myFormControl]="getTheForm().get('cidade')"
+                                       placeholder="Informe a cidade">
                             </app-input>
                         </td>
                     </tr>
@@ -138,22 +145,24 @@
                     <tr>
                         <td>
                             <app-input formControlName="estado"
+                                       hint="Ex.: São Paulo"
                                        id="estado"
                                        label="Estado"
-                                       minlength="1"
-                                       maxlength="50"
-                                       placeholder="Informe o estado."
-                                       hint="Ex.: São Paulo">
+                                       maxLength="50"
+                                       minLength="1"
+                                       [myFormControl]="getTheForm().get('estado')"
+                                       placeholder="Informe o estado.">
                             </app-input>
                         </td>
                         <td>
                             <app-input formControlName="pais"
+                                       hint="Ex.: Brasil"
                                        id="pais"
                                        label="Pais"
-                                       minlength="1"
-                                       maxlength="50"
-                                       placeholder="Informe o pais."
-                                       hint="Ex.: Brasil">
+                                       maxLength="50"
+                                       minLength="1"
+                                       [myFormControl]="getTheForm().get('pais')"
+                                       placeholder="Informe o pais.">
                             </app-input>
                         </td>
                     </tr>
@@ -162,24 +171,27 @@
                     <tr>
                         <td>
                             <app-input formControlName="numeroTelefone1"
+                                       hint="Ex.: 1199119221 | (11) 99999-9999 ..."
                                        id="numeroTelefone1"
                                        label="Numero do Telefone"
-                                       minlength="3"
-                                       maxlength="20"
-                                       placeholder="Insira o numero do telefone com DDD sem pontuação."
-                                       hint="Ex.: 1199119221">
+                                       maxLength="15"
+                                       minLength="8"
+                                       [myFormControl]="getTheForm().get('numeroTelefone1')"
+                                       pattern="(\(?\d{2}\)?\s?)?(\d{4,5}\-?\d{4})"
+                                       placeholder="Insira o numero do telefone com DDD sem pontuação.">
                             </app-input>
                         </td>
                         <td>
                             <app-select formControlName="tipoTelefone1"
+                                        hint="Selecione um dos tipos de telefone."
                                         id="tipoTelefone1"
                                         label="Tipo do telefone"
-                                        hint="Selecione um dos tipos de telefone."
+                                        [myFormControl]="getTheForm().get('tipoTelefone1')"
                                         [options]="getOptionsTipoTelefone()">
                             </app-select>
                         </td>
-                    </tr>                    
-                </table>                
+                    </tr>
+                </table>
                 <wbr />
                 <table class="example-full-width" cellspacing="0">
                     <tr>
@@ -190,7 +202,7 @@
                             <button class="full-width" mat-button color="accent" status="primary" (click)="onClear()"><mat-icon>clear</mat-icon>Limpar</button>
                         </td>
                         <td>
-                            <button class="full-width" mat-button color="warn" status="warn" routerLink="/seguidores"><mat-icon>keyboard_return</mat-icon>Voltar</button>
+                            <button class="full-width" mat-button color="warn" status="warn" routerLink="/login"><mat-icon>keyboard_return</mat-icon>Voltar</button>
                         </td>
                     </tr>
                 </table>

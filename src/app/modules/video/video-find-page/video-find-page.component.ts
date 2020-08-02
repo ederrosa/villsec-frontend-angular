@@ -37,7 +37,7 @@ export class VideoFindPageComponent implements OnInit, OnDestroy, AfterViewInit 
 
   private delete: boolean;
   private insert: boolean;
-  private readonly linear: boolean = true;
+  private linear: boolean = true;
   private theGaleriaForm: FormGroup;  
   private theInscricao: Subscription[] = new Array<Subscription>();
   private theLocalUser: ILocalUser;
@@ -138,7 +138,11 @@ export class VideoFindPageComponent implements OnInit, OnDestroy, AfterViewInit 
   ngOnDestroy() {
     this.dataSource = null;
     this.expandedElement = null;
-    this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+    if (this.theInscricao.length > 0) {
+      this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+    }
+    this.theInscricao = null;
+    this.getTheGaleriaForm = null;
   }
 
   ngOnInit() {

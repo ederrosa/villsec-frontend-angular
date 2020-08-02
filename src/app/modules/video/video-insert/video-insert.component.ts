@@ -19,7 +19,7 @@ import { PatternService } from 'src/app/core/services/pattern.service';
 export class VideoInsertComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private format: string;
-  private readonly linear: boolean = true;
+  private linear: boolean = true;
   private theGaleriaForm: FormGroup;
   private theForm: FormGroup;
   private theFile: File;
@@ -71,13 +71,19 @@ export class VideoInsertComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy() {
     this.onClear();
-    this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+    if (this.theInscricao.length > 0) {
+      this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+    }
+    this.theInscricao = null;
+    this.theGaleriaForm = null;
+    this.theForm = null;
   }
 
   ngOnInit() {
     this.theForm = this.theFormBuilder.group({
       descricao: ['', [Validators.required]],
-      embed: ['', [Validators.pattern(this.thePatternService.getRegexUrl())]],
+      embed: ['', [Validators.pattern(this.thePatternService.getRegExpUrl())]],
+      file: [''],
       titulo: ['', [Validators.required]],
     });
     this.theGaleriaForm = this.theFormBuilder.group({

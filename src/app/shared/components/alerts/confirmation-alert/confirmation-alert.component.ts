@@ -9,7 +9,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class ConfirmationAlertComponent implements OnInit {
 
-    @Input() classCss;
+    @Input() classCss: string = '';
     @Input() title: string = '';
     @Input() message: string = '';
     @Input() subTitle: string = '';
