@@ -92,13 +92,17 @@ export class SeguidorUpdateComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.onClear();
-    this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+    if (this.theInscricao.length > 0) {
+      this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+    }
+    this.getTheForm = null;
+    this.theInscricao = null;
   }
 
   ngOnInit() {
     this.theForm = this.theFormBuilder.group({
-      id: [''],
-      dtCriacao: [''],
+      id: [{ value: '', disabled: true }],
+      dtCriacao: [{ value: '', disabled: true }],
       file: [''],
       bairro: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(1)]],
       cidade: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(1)]],
@@ -219,6 +223,7 @@ export class SeguidorUpdateComponent implements OnInit, OnDestroy {
               instance.classCss = 'color-success';
               instance.message = event.statusText + '!! O Seguidor foi alterado com sucesso!';
               instance.urlNavigate = '/seguidores';
+              FormData = null;
             } else if (event.type === HttpEventType.UploadProgress) {
               this.dialog.closeAll();
               let dialogRef = this.dialog.open(ProgressSpinnerOverviewComponent, { disableClose: true, width: '350px', height: '350px' });

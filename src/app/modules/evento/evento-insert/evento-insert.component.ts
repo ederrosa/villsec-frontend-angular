@@ -80,7 +80,11 @@ export class EventoInsertComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.onClear();
-    this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+    if (this.theInscricao.length > 0) {
+      this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+    }
+    this.theForm = null;
+    this.theInscricao = null
   }
 
   ngOnInit() {
@@ -90,14 +94,14 @@ export class EventoInsertComponent implements OnInit, OnDestroy {
       diaInicio: ['', [Validators.required]],
       diaTermino: ['', [Validators.required]],
       descricao: ['', [Validators.required]],
-      googleMapsUrl: [''],
+      googleMapsUrl: ['', Validators.pattern(this.thePatternService.getRegExpUrl())],
       horaInicio: ['', [Validators.required]],
       horaTermino: ['', [Validators.required]],
       ingressoUrl: ['', Validators.pattern(this.thePatternService.getRegExpUrl())],
       nome: ['', [Validators.required]],
       tipoEvento: ['', [Validators.required]],
       logradouro: ['', [Validators.required]],
-      cep: ['', [Validators.required]],
+      cep: ['', [Validators.required, Validators.pattern(this.thePatternService.getRegExpCep())]],
       bairro: ['', [Validators.required]],
       cidade: ['', [Validators.required]],
       estado: ['', [Validators.required]],
@@ -138,6 +142,7 @@ export class EventoInsertComponent implements OnInit, OnDestroy {
           instance.classCss = 'color-success';
           instance.message = event.statusText + '!! O novo Evento foi cadastrado com sucesso!';
           this.onClear();
+          formData = null;
         } else if (event.type === HttpEventType.UploadProgress) {
           let instance = dialogRef.componentInstance;
           instance.title = 'Salvando o novo registro!';

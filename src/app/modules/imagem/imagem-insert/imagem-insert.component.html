@@ -30,12 +30,13 @@
                         </table>
                         <wbr />
                         <table>
-                           <tr>
+                            <tr>
                                 <td>
                                     <app-textarea formControlName="descricao"
                                                   id="descricao"
                                                   label="Descrição da Imagem"
                                                   maxlength="255"
+                                                  [myFormControl]="getTheForm().get('descricao')"
                                                   placeholder="Insira uma descrição para a Imagem">
                                     </app-textarea>
                                 </td>
@@ -45,8 +46,9 @@
                                     <app-input formControlName="titulo"
                                                id="titulo"
                                                label="Título para a Imagem"
-                                               minlength="1"
                                                maxlength="255"
+                                               minlength="1"
+                                               [myFormControl]="getTheForm().get('titulo')"
                                                placeholder="Informe um título para a imagem">
                                     </app-input>
                                 </td>

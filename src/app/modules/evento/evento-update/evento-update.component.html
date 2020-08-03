@@ -20,18 +20,18 @@
                         </td>
                         <td>
                             <app-input formControlName="id"
-                                       id="id"
-                                       label="Codígo"
                                        hint="Codígo"
+                                       id="id"
                                        isReadyOnly="false"
-                                       disabled="true">
+                                       label="Codígo"
+                                       [myFormControl]="getTheForm().get('id')">
                             </app-input>
                             <app-input formControlName="dtCriacao"
-                                       id="dtCriacao"
-                                       label="Data de Cadastro no Sistema"
                                        hint="Data de realização do cadastro!"
+                                       id="dtCriacao"
                                        isReadyOnly="false"
-                                       disabled="true">
+                                       label="Data de Cadastro no Sistema"
+                                       [myFormControl]="getTheForm().get('dtCriacao')">
                             </app-input>
                         </td>
                     </tr>
@@ -41,12 +41,13 @@
                     <tr>
                         <td>
                             <app-input formControlName="nome"
+                                       hint="Ex.: Tomorrowland"
                                        id="nome"
                                        label="Nome do Evento"
-                                       minlength="1"
                                        maxlength="100"
-                                       placeholder="Insira o nome do Evento."
-                                       hint="Ex.: Tomorrowland">
+                                       minlength="1"
+                                       [myFormControl]="getTheForm().get('nome')"
+                                       placeholder="Insira o nome do Evento.">
                             </app-input>
                         </td>
                     </tr>
@@ -58,6 +59,7 @@
                                           id="descricao"
                                           label="Descrição do Evento"
                                           maxlength="50"
+                                          [myFormControl]="getTheForm().get('descricao')"
                                           placeholder="Insira uma descrição do Evento">
                             </app-textarea>
                         </td>
@@ -67,8 +69,9 @@
                             <app-input formControlName="ingressoUrl"
                                        id="ingressoUrl"
                                        label="Link para o site de compra dos ingressos"
-                                       type="url"
-                                       placeholder="Link para adquirir o ingresso.">
+                                       [myFormControl]="getTheForm().get('ingressoUrl')"
+                                       placeholder="Link para adquirir o ingresso."
+                                       type="url">
                             </app-input>
                         </td>
                     </tr>
@@ -76,24 +79,24 @@
                 <table>
                     <tr>
                         <td>
-                            <app-input formControlName="classificacao"
-                                       id="classificacao"
-                                       label="Classificação"
-                                       minlength="1"
-                                       maxlength="100"
-                                       placeholder="Informe a classificação do evento"
-                                       hint="Ex.: Livre | 18 anos | etc...">
-                            </app-input>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
                             <app-select formControlName="tipoEvento"
+                                        hint="Selecione um dos tipos."
                                         id="tipoEvento"
                                         label="Tipo do Evento"
-                                        hint="Selecione um dos tipos."
+                                        [myFormControl]="getTheForm().get('tipoEvento')"
                                         [options]="getOptionsTipoEvento()">
                             </app-select>
+                        </td>
+                        <td>
+                            <app-input formControlName="classificacao"
+                                       hint="Ex.: Livre | 18 anos | etc..."
+                                       id="classificacao"
+                                       label="Classificação"
+                                       maxlength="100"
+                                       minlength="1"
+                                       [myFormControl]="getTheForm().get('classificacao')"
+                                       placeholder="Informe a classificação do evento">
+                            </app-input>
                         </td>
                     </tr>
                 </table>
@@ -102,15 +105,17 @@
                         <td>
                             <app-datepicker formControlName="diaInicio"
                                             id="diaInicio"
-                                            startView="year"
                                             label="Dia do Início do Evento"
-                                            placeholder="Informe a data de início do evento">
+                                            [myFormControl]="getTheForm().get('diaInicio')"
+                                            placeholder="Informe a data de início do evento"
+                                            startView="year">
                             </app-datepicker>
                         </td>
                         <td>
                             <app-timepicker formControlName="horaInicio"
                                             id="horaInicio"
                                             label="Hora do Início Evento"
+                                            [myFormControl]="getTheForm().get('horaInicio')"
                                             placeholder="Horário de início do evento">
                             </app-timepicker>
                         </td>
@@ -119,15 +124,17 @@
                         <td>
                             <app-datepicker formControlName="diaTermino"
                                             id="diaTermino"
-                                            startView="year"
                                             label="Dia do Termino do Evento"
-                                            placeholder="Dia de Termíno do evento">
+                                            [myFormControl]="getTheForm().get('diaTermino')"
+                                            placeholder="Dia de Termíno do evento"
+                                            startView="year">
                             </app-datepicker>
                         </td>
                         <td>
                             <app-timepicker formControlName="horaTermino"
                                             id="horaTermino"
                                             label="Hora do Termino Evento"
+                                            [myFormControl]="getTheForm().get('horaTermino')"
                                             placeholder="Horário de termíno do evento">
                             </app-timepicker>
                         </td>
@@ -137,23 +144,25 @@
                     <tr>
                         <td>
                             <app-input formControlName="cep"
+                                       hint="Ex.: 01311920"
                                        id="cep"
                                        label="CEP"
-                                       minlength="8"
                                        maxlength="10"
+                                       minlength="8"
+                                       [myFormControl]="getTheForm().get('cep')"
                                        placeholder="Insira o CEP, sem pontuação."
-                                       hint="Ex.: 01311920"
                                        (theBlur)="onConsultaCEP()">
                             </app-input>
                         </td>
                         <td>
                             <app-input formControlName="logradouro"
+                                       hint="Ex.: Avenida Paulista, 1000"
                                        id="logradouro"
                                        label="Logradouro"
-                                       minlength="1"
                                        maxlength="100"
-                                       placeholder="Insira o logradouro"
-                                       hint="Ex.: Avenida Paulista, 1000">
+                                       minlength="1"
+                                       [myFormControl]="getTheForm().get('logradouro')"
+                                       placeholder="Insira o logradouro">
                             </app-input>
                         </td>
                     </tr>
@@ -162,22 +171,24 @@
                     <tr>
                         <td>
                             <app-input formControlName="cidade"
+                                       hint="Ex.: São Paulo"
                                        id="cidade"
                                        label="Cidade"
-                                       minlength="1"
                                        maxlength="50"
-                                       placeholder="Insira a cidade"
-                                       hint="Ex.: São Paulo">
+                                       minlength="1"
+                                       [myFormControl]="getTheForm().get('cidade')"
+                                       placeholder="Insira a cidade">
                             </app-input>
                         </td>
                         <td>
                             <app-input formControlName="bairro"
+                                       hint="Ex.: Bela Vista"
                                        id="bairro"
                                        label="Bairro"
-                                       minlength="1"
                                        maxlength="50"
-                                       placeholder="Insira a cidade"
-                                       hint="Ex.: Bela Vista">
+                                       minlength="1"
+                                       [myFormControl]="getTheForm().get('bairro')"
+                                       placeholder="Insira o bairro">
                             </app-input>
                         </td>
                     </tr>
@@ -186,22 +197,24 @@
                     <tr>
                         <td>
                             <app-input formControlName="estado"
+                                       hint="Ex.: São Paulo"
                                        id="estado"
                                        label="Estado"
-                                       minlength="1"
                                        maxlength="50"
-                                       placeholder="Insira o estado."
-                                       hint="Ex.: São Paulo">
+                                       minlength="1"
+                                       [myFormControl]="getTheForm().get('estado')"
+                                       placeholder="Insira o estado.">
                             </app-input>
                         </td>
                         <td>
                             <app-input formControlName="pais"
+                                       hint="Ex.: Brasil"
                                        id="pais"
                                        label="Pais"
-                                       minlength="1"
                                        maxlength="50"
-                                       placeholder="Insira o pais."
-                                       hint="Ex.: Brasil">
+                                       minlength="1"
+                                       [myFormControl]="getTheForm().get('pais')"
+                                       placeholder="Insira o pais.">
                             </app-input>
                         </td>
                     </tr>
@@ -212,6 +225,7 @@
                             <app-input formControlName="googleMapsUrl"
                                        id="googleMapsUrl"
                                        label="Google Maps Embed"
+                                       [myFormControl]="getTheForm().get('googleMapsUrl')"
                                        placeholder="Incorpore o google maps aqui."
                                        type="url">
                             </app-input>

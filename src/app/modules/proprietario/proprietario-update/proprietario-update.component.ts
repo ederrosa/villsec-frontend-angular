@@ -257,6 +257,7 @@ export class ProprietarioUpdateComponent implements OnInit, OnDestroy {
               instance.classCss = 'color-success';
               instance.message = event.statusText + '!! O Proprietario foi alterado com sucesso!';
               instance.urlNavigate = '/proprietarios';
+              FormData = null;
             } else if (event.type === HttpEventType.UploadProgress) {
               this.dialog.closeAll();
               let dialogRef = this.dialog.open(ProgressSpinnerOverviewComponent, { disableClose: true, width: '350px', height: '350px' });

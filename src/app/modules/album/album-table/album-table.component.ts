@@ -83,7 +83,10 @@ export class AlbumTableComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnDestroy() {
     this.dataSource = null;
     this.expandedElement = null;
-    this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+    if (this.theInscricao.length > 0) {
+      this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+    }
+    this.theInscricao = null;
   }
 
   ngOnInit() {
@@ -102,7 +105,7 @@ export class AlbumTableComponent implements OnInit, OnDestroy, AfterViewInit {
         this.dataSource = new MatTableDataSource(x['content']);
       })
     ));
-  } 
+  }
 
   onSelected(theIAlbumDTO: IAlbumDTO): void {
     this.theAlbumService.setIAlbumDTO(theIAlbumDTO);

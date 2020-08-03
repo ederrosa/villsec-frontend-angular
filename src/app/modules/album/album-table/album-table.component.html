@@ -39,11 +39,10 @@
                                         <td mat-cell>
                                             <mat-label><strong>Nome: </strong> {{ element.nome }}</mat-label>
                                         </td>
+                                    </tr>
+                                    <tr>
                                         <td mat-cell>
                                             <mat-label><strong>Genero: </strong> {{ element.genero }}</mat-label>
-                                        </td>
-                                        <td mat-cell>
-                                            <mat-label><strong>Ano de Lançamento: </strong> {{ element.ano | date: 'mediumDate' }}</mat-label>
                                         </td>
                                     </tr>
                                     <tr>
@@ -53,6 +52,11 @@
                                         <td mat-cell>
                                             <mat-label><strong>Data de Cadastro: </strong> {{ element.dtCriacao }}</mat-label>
                                         </td>
+                                    </tr>
+                                    <tr>
+                                        <td mat-cell>
+                                            <mat-label><strong>Ano de Lançamento: </strong> {{ element.ano | date: 'mediumDate' }}</mat-label>
+                                        </td>
                                         <td mat-cell>
                                             <mat-label><strong>Data da Ultima Alteração no Sistema: </strong> {{ element.dtUltimaAlteracao }}</mat-label>
                                         </td>
@@ -61,6 +65,7 @@
                                         <td mat-cell>
                                             <mat-label><strong>Descrição: </strong> {{ element.descricao }}</mat-label>
                                         </td>
+
                                     </tr>
                                 </table>
                                 <div class="example-button-row">

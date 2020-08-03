@@ -149,6 +149,7 @@ export class MusicaInsertComponent implements OnInit, OnDestroy, AfterViewInit {
           instance.classCss = 'color-success';
           instance.message = event.statusText + '!! A nova música foi armazenada com sucesso!';
           this.onClear();
+          FormData = null;
         } else if (event.type === HttpEventType.UploadProgress) {
           let instance = dialogRef.componentInstance;
           instance.title = 'Salvando o novo registro!';

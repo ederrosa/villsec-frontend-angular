@@ -29,10 +29,10 @@ export class GaleriaUpdateComponent implements OnInit {
     { value: false, option: 'Inativo' }];
 
   constructor(
-    private dialog: MatDialog,    
+    private dialog: MatDialog,
     private theActivatedRoute: ActivatedRoute,
-    private theFieldsService: FieldsService,    
-    private theFormBuilder: FormBuilder,    
+    private theFieldsService: FieldsService,
+    private theFormBuilder: FormBuilder,
     private theGaleriaService: GaleriaService,
     private theUnsubscribeControl: UnsubscribeControlService
   ) { }
@@ -47,7 +47,11 @@ export class GaleriaUpdateComponent implements OnInit {
 
   ngOnDestroy() {
     this.onClear();
-    this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+    if (this.theInscricao.length > 0) {
+      this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+    }
+    this.theForm = null;
+    this.theInscricao = null;
   }
 
   onClear() {
@@ -56,8 +60,8 @@ export class GaleriaUpdateComponent implements OnInit {
 
   ngOnInit() {
     this.theForm = this.theFormBuilder.group({
-      id: [''],
-      dtCriacao: [''],
+      id: [{ value: '', disabled: true }],
+      dtCriacao: [{ value: '', disabled: true }],
       descricao: ['', [Validators.required]],
       status: ['', [Validators.required]],
       titulo: ['', [Validators.required]]
@@ -80,7 +84,7 @@ export class GaleriaUpdateComponent implements OnInit {
       status: this.theFieldsService.getItemOfSelect(this.optionsStatus, theIGaleriaDTO.status),
       titulo: theIGaleriaDTO.titulo,
     });
-  } 
+  }
 
   onSave() {
     this.dialog.closeAll();
@@ -106,6 +110,7 @@ export class GaleriaUpdateComponent implements OnInit {
               instance.classCss = 'color-success';
               instance.message = event.statusText + '!! A Galeria foi alterada com sucesso!';
               instance.urlNavigate = '/galerias';
+              formData = null;
             } else if (event.type === HttpEventType.UploadProgress) {
               this.dialog.closeAll();
               let dialogRef = this.dialog.open(ProgressSpinnerOverviewComponent, { disableClose: true, width: '350px', height: '350px' });
@@ -119,5 +124,5 @@ export class GaleriaUpdateComponent implements OnInit {
           }));
       }
     }));
-  } 
+  }
 }

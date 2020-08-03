@@ -22,10 +22,10 @@ import { GaleriaService } from '../../galeria/galeria.service';
 export class ImagemUpdateComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private format: string;
-  private readonly linear: boolean = true;
-  private theGaleriaForm: FormGroup;
+  private linear: boolean = true;
   private theForm: FormGroup;
   private theFile: File;
+  private theGaleriaForm: FormGroup;
   private theInscricao: Subscription[] = new Array<Subscription>();
   private url: any;
 
@@ -74,13 +74,18 @@ export class ImagemUpdateComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy() {
     this.onClear();
-    this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+    if (this.theInscricao.length > 0) {
+      this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+    }
+    this.theGaleriaForm = null;
+    this.theForm = null;
+    this.theInscricao = null;
   }
 
   ngOnInit() {
     this.theForm = this.theFormBuilder.group({
-      id: [''],
-      dtCriacao: [''],
+      id: [{ value: '', disabled: true }],
+      dtCriacao: [{ value: '', disabled: true }],
       descricao: ['', [Validators.required]],
       titulo: ['', [Validators.required]],
     });
@@ -106,7 +111,7 @@ export class ImagemUpdateComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onFormUpdate(theIImagemDTO: IImagemDTO): void {
     this.format = 'image';
-    this.url = theIImagemDTO.arquivoUrl;   
+    this.url = theIImagemDTO.arquivoUrl;
     this.getTheForm().patchValue({
       id: theIImagemDTO.id,
       dtCriacao: theIImagemDTO.dtCriacao,
@@ -155,6 +160,7 @@ export class ImagemUpdateComponent implements OnInit, OnDestroy, AfterViewInit {
               instance.classCss = 'color-success';
               instance.message = event.statusText + '!! A Imagem foi alterada com sucesso!';
               instance.urlNavigate = '/imagens';
+              FormData = null;
             } else if (event.type === HttpEventType.UploadProgress) {
               this.dialog.closeAll();
               let dialogRef = this.dialog.open(ProgressSpinnerOverviewComponent, { disableClose: true, width: '350px', height: '350px' });
@@ -166,7 +172,9 @@ export class ImagemUpdateComponent implements OnInit, OnDestroy, AfterViewInit {
           }, error => {
 
           }));
+        FormData = null;
       }
+
     }));
   }
 }

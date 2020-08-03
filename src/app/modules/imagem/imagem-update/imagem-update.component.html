@@ -21,20 +21,20 @@
                             <tr>
                                 <td>
                                     <app-input formControlName="id"
-                                               id="id"
-                                               label="Codígo"
                                                hint="Codígo"
+                                               id="id"
                                                isReadyOnly="false"
-                                               disabled="true">
+                                               label="Codígo"
+                                               [myFormControl]="getTheForm().get('id')">
                                     </app-input>
                                 </td>
                                 <td>
                                     <app-input formControlName="dtCriacao"
-                                               id="dtCriacao"
-                                               label="Data de Cadastro no Sistema"
                                                hint="Data de realização do cadastro!"
+                                               id="dtCriacao"
                                                isReadyOnly="false"
-                                               disabled="true">
+                                               label="Data de Cadastro no Sistema"
+                                               [myFormControl]="getTheForm().get('dtCriacao')">
                                     </app-input>
                                 </td>
                             </tr>
@@ -58,6 +58,7 @@
                                                   id="descricao"
                                                   label="Descrição da Imagem"
                                                   maxlength="255"
+                                                  [myFormControl]="getTheForm().get('descricao')"
                                                   placeholder="Insira uma descrição da imagem">
                                     </app-textarea>
                                 </td>
@@ -67,8 +68,9 @@
                                     <app-input formControlName="titulo"
                                                id="titulo"
                                                label="Título para a imagem"
-                                               minlength="1"
                                                maxlength="255"
+                                               minlength="1"
+                                               [myFormControl]="getTheForm().get('titulo')"
                                                placeholder="Informe um título para a imagem">
                                     </app-input>
                                 </td>

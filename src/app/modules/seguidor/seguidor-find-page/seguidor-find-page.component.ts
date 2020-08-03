@@ -107,7 +107,10 @@ export class SeguidorFindPageComponent implements OnInit, OnDestroy, AfterViewIn
   ngOnDestroy() {
     this.dataSource = null;
     this.expandedElement = null;
-    this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+    if (this.theInscricao.length > 0) {
+      this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+    }
+    this.theInscricao = null;
   }
 
   ngOnInit() {

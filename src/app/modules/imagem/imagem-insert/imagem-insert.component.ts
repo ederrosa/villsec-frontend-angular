@@ -18,7 +18,7 @@ import { GaleriaService } from '../../galeria/galeria.service';
 export class ImagemInsertComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private format: string;
-  private readonly linear: boolean = true;
+  private linear: boolean = true;
   private theGaleriaForm: FormGroup;
   private theForm: FormGroup; 
   private theFile: File;
@@ -69,7 +69,12 @@ export class ImagemInsertComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy() {
     this.onClear();
-    this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+    if (this.theInscricao.length > 0) {
+      this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+    }
+    this.theForm = null;
+    this.theGaleriaForm = null;
+    this.theInscricao = null;   
   }
    
   ngOnInit() {
@@ -123,6 +128,7 @@ export class ImagemInsertComponent implements OnInit, OnDestroy, AfterViewInit {
           instance.classCss = 'color-success';
           instance.message = event.statusText + '!! A nova imagem foi armazenada com sucesso!';
           this.onClear();
+          FormData = null;
         } else if (event.type === HttpEventType.UploadProgress) {
           let instance = dialogRef.componentInstance;
           instance.title = 'Salvando o novo registro!';

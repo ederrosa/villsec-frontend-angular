@@ -74,11 +74,15 @@ export class ImagemCubeDialogOverviewComponent implements OnInit, OnDestroy, Aft
   }
 
   ngOnDestroy() {
-    this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+    if (this.theInscricao.length > 0) {
+      this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+    }    
     this.dataSource.disconnect();
     this.dataSource = null;   
     this.theImagemCubeDialogOverviewSwiper.destroy(true, true);
     this.theImagemCubeDialogOverviewSwiper = null;
+    this.theObservable = null;
+    this.theInscricao = null;
   }
 
   ngOnInit() {

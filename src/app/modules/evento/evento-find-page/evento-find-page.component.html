@@ -36,10 +36,13 @@
                                     <tr>
                                         <td mat-cell>
                                             <mat-label><strong>Nome: </strong> {{ element.nome }}</mat-label>
-                                        </td>
+                                        </td>                                        
+                                    </tr>
+                                    <tr>
                                         <td mat-cell>
                                             <mat-label><strong>Tipo do Evento: </strong> {{ element.tipoEvento }}</mat-label>
                                         </td>
+                                        <td></td>
                                         <td mat-cell>
                                             <mat-label><strong>Classificação: </strong> {{ element.classificacao }}</mat-label>
                                         </td>
@@ -48,10 +51,10 @@
                                         <td mat-cell>
                                             <mat-label><strong>Data de Início do Evento: </strong> {{ element.diaInicio | date: 'mediumDate' }} às {{ element.horaInicio }}</mat-label>
                                         </td>
+                                        <td></td>
                                         <td mat-cell>
                                             <mat-label><strong>Data de Termíno do Evento: </strong> {{ element.diaTermino | date: 'mediumDate' }} às {{ element.horaTermino }}</mat-label>
                                         </td>
-                                        <td></td>
                                     </tr>
                                     <tr>
                                         <td mat-cell>
@@ -83,6 +86,10 @@
                                     <tr *ngIf="element.ingressoUrl != null && element.ingressoUrl != ''">
                                         <td mat-cell>
                                             <mat-label><strong><a href="{{ element?.ingressoUrl }}">Link para o Ingresso!!</a> </strong></mat-label>
+                                        </td>
+                                        <td></td>
+                                        <td mat-cell>
+                                            <mat-label><strong>Localização: </strong>  <button (click)="getMaps(element)"><mat-icon class="example-icon">location_on</mat-icon></button></mat-label>
                                         </td>
                                     </tr>
                                 </table>

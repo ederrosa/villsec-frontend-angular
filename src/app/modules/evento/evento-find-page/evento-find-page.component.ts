@@ -18,6 +18,7 @@ import { InformativeAlertComponent } from 'src/app/shared/components/alerts/info
 import { IEventoDTO } from 'src/app/shared/models/dtos/ievento-dto';
 import { DialogOverviewImageComponent } from 'src/app/shared/components/dialog-overview/dialog-overview-image/dialog-overview-image.component';
 import { ProgressSpinnerOverviewComponent } from 'src/app/shared/components/progress-spinner/progress-spinner-overview/progress-spinner-overview.component';
+import { DialogOverviewIframeComponent } from 'src/app/shared/components/dialog-overview/dialog-overview-iframe/dialog-overview-iframe.component';
 
 @Component({
   selector: 'app-evento-find-page',
@@ -85,6 +86,15 @@ export class EventoFindPageComponent implements OnInit, OnDestroy, AfterViewInit
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  getMaps(theIEventoDTO: IEventoDTO) {
+    this.dialog.closeAll();
+    let dialogRef = this.dialog.open(DialogOverviewIframeComponent, {});
+    let instance = dialogRef.componentInstance;
+    instance.title = theIEventoDTO.nome;
+    instance.subtitle = 'V1llsec';
+    instance.url = theIEventoDTO.googleMapsUrl;
   }
 
   isDelete(): boolean {

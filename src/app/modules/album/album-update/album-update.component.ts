@@ -19,7 +19,7 @@ import { IAlbumDTO } from 'src/app/shared/models/dtos/ialbum-dto';
   styleUrls: ['./album-update.component.scss']
 })
 export class AlbumUpdateComponent implements OnInit {
-   
+
   private format: string;
   private theFile: File;
   private theForm: FormGroup;
@@ -27,10 +27,10 @@ export class AlbumUpdateComponent implements OnInit {
   private url: any;
 
   constructor(
-    private dialog: MatDialog,    
+    private dialog: MatDialog,
     private theActivatedRoute: ActivatedRoute,
     private theAlbumService: AlbumService,
-    private theFormBuilder: FormBuilder,    
+    private theFormBuilder: FormBuilder,
     private theUnsubscribeControl: UnsubscribeControlService
   ) { }
 
@@ -52,7 +52,10 @@ export class AlbumUpdateComponent implements OnInit {
 
   ngOnDestroy() {
     this.onClear();
-    this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+    if (this.theInscricao.length > 0) {
+      this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+    }
+    this.theInscricao = null;
   }
 
   onClear() {
@@ -64,8 +67,8 @@ export class AlbumUpdateComponent implements OnInit {
 
   ngOnInit() {
     this.theForm = this.theFormBuilder.group({
-      id: [''],
-      dtCriacao: [''],
+      id: [{ value: '', disabled: true }],
+      dtCriacao: [{ value: '', disabled: true }],
       file: [''],
       nome: ['', [Validators.required]],
       descricao: ['', [Validators.required]],
@@ -94,7 +97,7 @@ export class AlbumUpdateComponent implements OnInit {
       ano: new Date(theIAlbumDTO.ano.toString()),
       genero: theIAlbumDTO.genero,
     });
-  } 
+  }
 
   onSave() {
     this.dialog.closeAll();

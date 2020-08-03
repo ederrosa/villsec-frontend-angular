@@ -47,7 +47,11 @@ export class AlbumInsertComponent implements OnInit {
 
   ngOnDestroy() {
     this.onClear();
-    this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+    if (this.theInscricao.length > 0) {
+      this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+    }
+    this.theForm = null;
+    this.theInscricao = null;
   }
 
   ngOnInit() {
@@ -86,6 +90,7 @@ export class AlbumInsertComponent implements OnInit {
           instance.classCss = 'color-success';
           instance.message = event.statusText + '!! O novo Album foi cadastrado com sucesso!';
           this.onClear();
+          formData = null;
         } else if (event.type === HttpEventType.UploadProgress) {
           let instance = dialogRef.componentInstance;
           instance.title = 'Salvando o novo registro!';

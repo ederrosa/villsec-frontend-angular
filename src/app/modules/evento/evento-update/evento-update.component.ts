@@ -39,7 +39,7 @@ export class EventoUpdateComponent implements OnInit, OnDestroy {
   private theInscricao: Subscription[] = new Array<Subscription>();
   private url: any;
 
-  constructor(    
+  constructor(
     private dialog: MatDialog,
     private theActivatedRoute: ActivatedRoute,
     private theCepService: CepService,
@@ -92,21 +92,21 @@ export class EventoUpdateComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.theForm = this.theFormBuilder.group({
-      id: [''],
-      dtCriacao: [''],
+      id: [{ value: '', disabled: true }],
+      dtCriacao: [{ value: '', disabled: true }],
       file: [''],
       classificacao: ['', [Validators.required]],
       diaInicio: ['', [Validators.required]],
       diaTermino: ['', [Validators.required]],
       descricao: ['', [Validators.required]],
-      googleMapsUrl: [''],
+      googleMapsUrl: ['', Validators.pattern(this.thePatternService.getRegExpUrl())],
       horaInicio: ['', [Validators.required]],
       horaTermino: ['', [Validators.required]],
       ingressoUrl: ['', Validators.pattern(this.thePatternService.getRegExpUrl())],
       nome: ['', [Validators.required]],
       tipoEvento: ['', [Validators.required]],
       logradouro: ['', [Validators.required]],
-      cep: ['', [Validators.required]],
+      cep: ['', [Validators.required, Validators.pattern(this.thePatternService.getRegExpCep())]],
       bairro: ['', [Validators.required]],
       cidade: ['', [Validators.required]],
       estado: ['', [Validators.required]],
@@ -147,7 +147,7 @@ export class EventoUpdateComponent implements OnInit, OnDestroy {
       pais: theIEventoDTO.pais
     });
   }
-  
+
   onSave() {
     this.dialog.closeAll();
     let dialogRef = this.dialog.open(ConfirmationAlertComponent, { disableClose: true, width: '40%' });
@@ -171,14 +171,14 @@ export class EventoUpdateComponent implements OnInit, OnDestroy {
         }
         if (this.getTheForm().get('googleMapsUrl').value != null && this.getTheForm().get('googleMapsUrl').value != '') {
           formData.append('googleMapsUrl', this.getTheForm().get('googleMapsUrl').value);
-        } 
+        }
         formData.append('horaInicio', this.getTheForm().get('horaInicio').value);
         formData.append('horaTermino', this.getTheForm().get('horaTermino').value);
         formData.append('ingressoUrl', this.getTheForm().get('ingressoUrl').value);
         formData.append('logradouro', this.getTheForm().get('logradouro').value);
         formData.append('nome', this.getTheForm().get('nome').value);
         formData.append('pais', this.getTheForm().get('pais').value);
-        formData.append('tipoEvento', this.getTheForm().get('tipoEvento').value);       
+        formData.append('tipoEvento', this.getTheForm().get('tipoEvento').value);
         this.theInscricao.push(this.theEventoService.update(formData, this.getTheForm().get('id').value)
           .subscribe((event: HttpEvent<Object>) => {
             if (event.type === HttpEventType.Response) {
@@ -190,6 +190,7 @@ export class EventoUpdateComponent implements OnInit, OnDestroy {
               instance.classCss = 'color-success';
               instance.message = event.statusText + '!! O Evento foi alterado com sucesso!';
               instance.urlNavigate = '/eventos';
+              formData = null;
             } else if (event.type === HttpEventType.UploadProgress) {
               this.dialog.closeAll();
               let dialogRef = this.dialog.open(ProgressSpinnerOverviewComponent, { disableClose: true, width: '350px', height: '350px' });

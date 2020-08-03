@@ -165,6 +165,7 @@ export class VideoUpdateComponent implements OnInit, OnDestroy, AfterViewInit {
               instance.classCss = 'color-success';
               instance.message = event.statusText + '!! A Video foi alterado com sucesso!';
               instance.urlNavigate = '/videos';
+              FormData = null;
             } else if (event.type === HttpEventType.UploadProgress) {
               this.dialog.closeAll();
               let dialogRef = this.dialog.open(ProgressSpinnerOverviewComponent, { disableClose: true, width: '350px', height: '350px' });
@@ -175,7 +176,7 @@ export class VideoUpdateComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           }, error => {
 
-          }));
+          }));        
       }
     }));
   }

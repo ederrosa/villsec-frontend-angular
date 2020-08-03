@@ -193,6 +193,7 @@ export class MusicaUpdateComponent implements OnInit, OnDestroy, AfterViewInit {
               instance.classCss = 'color-success';
               instance.message = event.statusText + '!! A Musica foi alterada com sucesso!';
               instance.urlNavigate = '/musicas';
+              FormData = null;
             } else if (event.type === HttpEventType.UploadProgress) {
               this.dialog.closeAll();
               let dialogRef = this.dialog.open(ProgressSpinnerOverviewComponent, { disableClose: true, width: '350px', height: '350px' });

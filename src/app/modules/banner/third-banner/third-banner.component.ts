@@ -85,11 +85,15 @@ export class ThirdBannerComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy() {
-    this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+    if (this.theInscricao.length > 0) {
+      this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+    }
     this.dataSource.disconnect();
     this.dataSource = null;
     this.theThirdBannerSwiper.destroy(true, true);
     this.theThirdBannerSwiper = null;
+    this.theInscricao = null;
+    this.theObservable = null;
   }
 
   ngOnInit() {

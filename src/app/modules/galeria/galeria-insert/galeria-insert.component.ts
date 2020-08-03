@@ -16,7 +16,7 @@ import { IOptions } from 'src/app/shared/components/fields/select/select.compone
   styleUrls: ['./galeria-insert.component.scss']
 })
 export class GaleriaInsertComponent implements OnInit {
-    
+
   private theForm: FormGroup;
   private theInscricao: Subscription[] = new Array<Subscription>();
   private readonly optionsStatus: IOptions[] = [
@@ -40,7 +40,11 @@ export class GaleriaInsertComponent implements OnInit {
 
   ngOnDestroy() {
     this.onClear();
-    this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+    if (this.theInscricao.length > 0) {
+      this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+    }
+    this.theForm = null;
+    this.theInscricao = null;
   }
 
   ngOnInit() {
@@ -53,7 +57,6 @@ export class GaleriaInsertComponent implements OnInit {
 
   onClear() {
     this.getTheForm().reset();
-  
   }
 
   onSave() {
@@ -73,6 +76,7 @@ export class GaleriaInsertComponent implements OnInit {
           instance.classCss = 'color-success';
           instance.message = event.statusText + '!! A nova Galeria foi cadastrada com sucesso!';
           this.onClear();
+          FormData = null;
         } else if (event.type === HttpEventType.UploadProgress) {
           let instance = dialogRef.componentInstance;
           instance.title = 'Salvando o novo registro!';
@@ -82,5 +86,5 @@ export class GaleriaInsertComponent implements OnInit {
       }, error => {
 
       }));
-  }  
+  }
 }

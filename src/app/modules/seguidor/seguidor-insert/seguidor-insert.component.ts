@@ -78,7 +78,7 @@ export class SeguidorInsertComponent implements OnInit {
 
   ngOnDestroy() {
     this.onClear();
-    if (this.theInscricao.length < 1) {
+    if (this.theInscricao.length > 0) {
       this.theUnsubscribeControl.unsubscribe(this.theInscricao);
     }    
     this.theInscricao = null;
@@ -167,6 +167,7 @@ export class SeguidorInsertComponent implements OnInit {
           instance.message = event.statusText + '!! O novo Seguidor foi cadastrado com sucesso!';
           instance.urlNavigate = '/login';
           this.onClear();
+          FormData = null;
         } else if (event.type === HttpEventType.UploadProgress) {
           let instance = dialogRef.componentInstance;
           instance.title = 'Salvando o novo registro!';

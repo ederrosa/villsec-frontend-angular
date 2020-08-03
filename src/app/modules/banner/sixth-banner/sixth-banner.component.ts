@@ -41,9 +41,12 @@ export class SixthBannerComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy() {
-    this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+    if (this.theInscricao.length > 0) {
+      this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+    }    
     this.theFooterSwiper.destroy(true, true);
     this.theFooterSwiper = null;
+    this.theInscricao = null;
   }
 
   ngOnInit() {

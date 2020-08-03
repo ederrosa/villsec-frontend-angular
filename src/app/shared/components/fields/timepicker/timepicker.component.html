@@ -9,6 +9,7 @@
                [readonly]="!!isReadOnly"
                [ngClass]="classCss"
                [ngxTimepicker]="darkPicker"
+               onkeydown="return false"
                matInput
                #input>
         <ngx-material-timepicker #darkPicker [theme]="darkTheme"></ngx-material-timepicker>

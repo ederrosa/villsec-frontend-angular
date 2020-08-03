@@ -133,6 +133,7 @@ export class VideoInsertComponent implements OnInit, OnDestroy, AfterViewInit {
           instance.classCss = 'color-success';
           instance.message = event.statusText + '!! O novo vídeo foi armazenado com sucesso!';
           this.onClear();
+          FormData = null;
         } else if (event.type === HttpEventType.UploadProgress) {
           let instance = dialogRef.componentInstance;
           instance.title = 'Salvando o novo registro!';

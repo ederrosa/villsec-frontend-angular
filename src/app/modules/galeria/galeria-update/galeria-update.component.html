@@ -10,20 +10,20 @@
             <form class="example-form" [formGroup]="getTheForm()">
                 <table class="example-full-width" cellspacing="0">
                     <tr>
-                       <td>
+                        <td>
                             <app-input formControlName="id"
-                                       id="id"
-                                       label="Codígo"
                                        hint="Codígo"
+                                       id="id"
                                        isReadyOnly="false"
-                                       disabled="true">
+                                       label="Codígo"
+                                       [myFormControl]="getTheForm().get('id')">
                             </app-input>
                             <app-input formControlName="dtCriacao"
-                                       id="dtCriacao"
-                                       label="Data de Cadastro no Sistema"
                                        hint="Data de realização do cadastro!"
+                                       id="dtCriacao"
                                        isReadyOnly="false"
-                                       disabled="true">
+                                       label="Data de Cadastro no Sistema"
+                                       [myFormControl]="getTheForm().get('dtCriacao')">
                             </app-input>
                         </td>
                     </tr>
@@ -33,12 +33,13 @@
                     <tr>
                         <td>
                             <app-input formControlName="titulo"
+                                       hint="Ex.: festiva Lotus Azul hehehehe"
                                        id="titulo"
                                        label="Título da Galeria"
-                                       minlength="1"
                                        maxlength="100"
-                                       placeholder="Insira o titulo para sua galeria."
-                                       hint="Ex.: festiva Lotus Azul hehehehe">
+                                       minlength="1"
+                                       [myFormControl]="getTheForm().get('titulo')"
+                                       placeholder="Insira o titulo para sua galeria.">
                             </app-input>
                         </td>
                     </tr>
@@ -50,6 +51,7 @@
                                           id="descricao"
                                           label="Descrição da Galeria"
                                           maxlength="255"
+                                          [myFormControl]="getTheForm().get('descricao')"
                                           placeholder="Insira uma descrição para sua galeria">
                             </app-textarea>
                         </td>
@@ -59,12 +61,13 @@
                     <tr>
                         <td>
                             <app-select formControlName="status"
+                                        hint="Selecione um dos status."
                                         id="status"
                                         label="Status"
-                                        hint="Selecione um dos status."
+                                        [myFormControl]="getTheForm().get('status')"
                                         [options]="getOptionsStatus()">
                             </app-select>
-                        </td>                        
+                        </td>
                     </tr>
                 </table>
                 <table class="example-full-width" cellspacing="0">
