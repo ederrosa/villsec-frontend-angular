@@ -106,7 +106,7 @@ export class SeguidorUpdateComponent implements OnInit, OnDestroy {
       file: [''],
       bairro: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(1)]],
       cidade: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(1)]],
-      cep: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(8), Validators.pattern(this.thePatternService.getRegExpCep())]],
+      cep: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(8)]],
       dataNascimento: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.maxLength(120), Validators.email]],
       estado: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(1)]],
@@ -139,6 +139,8 @@ export class SeguidorUpdateComponent implements OnInit, OnDestroy {
   onFormUpdate(theISeguidorDTO: ISeguidorDTO): void {
     this.format = 'image';
     this.url = theISeguidorDTO.urlImgPerfil;
+    console.log(this.getUrl());
+    console.log(theISeguidorDTO.urlImgPerfil);
     this.getTheForm().patchValue({
       id: theISeguidorDTO.id,
       dtCriacao: theISeguidorDTO.dtCriacao,

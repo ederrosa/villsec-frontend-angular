@@ -103,7 +103,7 @@ export class ProprietarioInsertComponent implements OnInit, OnDestroy {
       facebook: ['', Validators.pattern(this.thePatternService.getRegExpUrl())],
       file: ['', [Validators.required]],
       genero: ['', [Validators.required]],
-      googleMapsUrl: ['', Validators.pattern(this.thePatternService.getRegExpUrl())],
+      googleMapsUrl: [''],
       instagram: ['', Validators.pattern(this.thePatternService.getRegExpUrl())],
       logradouro: ['', [Validators.required, Validators.maxLength(100), Validators.minLength(1)]],
       nome: ['', [Validators.required, Validators.maxLength(100), Validators.minLength(4), Validators.pattern(this.thePatternService.getRegExpOnlyLetters())]],

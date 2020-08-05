@@ -6,30 +6,30 @@ import { StorageService } from '../services/storage.service';
 import { API_CONFIGURATION } from 'src/configurations/api.configuration';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
-export class AuthInterceptorService implements HttpInterceptor{
-    
-    constructor(private theStorageService: StorageService) { }
+export class AuthInterceptorService implements HttpInterceptor {
 
-    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  constructor(private theStorageService: StorageService) { }
 
-      if (req.method != 'GET') {
-        let localUser = this.theStorageService.getLocalUser();
-        let N = API_CONFIGURATION.baseUrl.length;
-        let requestToAPI = req.url.substring(0, N) == API_CONFIGURATION.baseUrl;
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-        if (localUser && requestToAPI) {
-          const authReq = req.clone({ headers: req.headers.set('Authorization', 'Bearer ' + localUser.theToken) });
-          return next.handle(authReq);
-        }       
+    if (this.theStorageService.getLocalUser() != null) {
+      let localUser = this.theStorageService.getLocalUser();
+      let N = API_CONFIGURATION.baseUrl.length;
+      let requestToAPI = req.url.substring(0, N) == API_CONFIGURATION.baseUrl;
+      if (localUser && requestToAPI) {
+        const authReq = req.clone({ headers: req.headers.set('Authorization', 'Bearer ' + localUser.theToken) });
+        return next.handle(authReq);
       } 
-      return next.handle(req);    
+    } else {
+      return next.handle(req);
     }
+  }
 }
 
 export const AuthInterceptorProvider = {
-    provide: HTTP_INTERCEPTORS,
-    useClass: AuthInterceptorService,
-    multi: true,
+  provide: HTTP_INTERCEPTORS,
+  useClass: AuthInterceptorService,
+  multi: true,
 };

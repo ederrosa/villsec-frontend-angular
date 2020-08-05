@@ -89,7 +89,7 @@ export class SeguidorInsertComponent implements OnInit {
     this.theForm = this.theFormBuilder.group({
       bairro: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(1)]],
       cidade: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(1)]],
-      cep: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(8), Validators.pattern(this.thePatternService.getRegExpCep())]],
+      cep: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(8)]],
       dataNascimento: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.maxLength(120), Validators.email]],
       estado: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(1)]],

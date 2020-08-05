@@ -45,6 +45,10 @@ export class AuthenticationService {
     );
   }
 
+  get401(route: string) {
+    this.onReloadRoute(route);
+  }
+
   logout() {
     this.theStorageService.setLocalUser(null);
     this.onReloadRoute('');

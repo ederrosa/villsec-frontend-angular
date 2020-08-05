@@ -17,6 +17,7 @@ import { AuthenticationService } from './core/authentication/authentication.serv
 import { ErrorInterceptorProvider } from './core/interceptors/error-interceptor.service';
 import { AuthInterceptorProvider } from './core/interceptors/auth-interceptor.service';
 import { BannerModule } from './modules/banner/banner.module';
+import { AuthGuardChild } from './core/guards/can-activate-child/auth-guard-child';
 
 registerLocaleData(localePt);
 
@@ -37,6 +38,7 @@ const MODULES_LIST = [
 
 const SERVICES_LIST = [
   AuthGuard,
+  AuthGuardChild,
   AuthenticationService,
   AuthInterceptorProvider,
   ErrorInterceptorProvider,

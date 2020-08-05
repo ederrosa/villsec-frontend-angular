@@ -90,6 +90,15 @@ export class ProprietarioUpdateComponent implements OnInit, OnDestroy {
     return this.url;
   }
 
+  ngOnDestroy() {
+    this.onClear();
+    if (this.theInscricao.length > 0) {
+      this.theUnsubscribeControl.unsubscribe(this.theInscricao);
+    }
+    this.theForm = null;
+    this.theInscricao = null;
+  }
+
   ngOnInit() {
     this.theForm = this.theFormBuilder.group({
       id: [{value:'', disabled: true}],
@@ -97,13 +106,13 @@ export class ProprietarioUpdateComponent implements OnInit, OnDestroy {
       file: [''],
       bairro: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(1)]],
       cidade: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(1)]],
-      cep: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(8), Validators.pattern(this.thePatternService.getRegExpCep())]],
+      cep: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(8)]],
       dataNascimento: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.maxLength(120), Validators.email]],
       estado: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(1)]],
       facebook: ['', Validators.pattern(this.thePatternService.getRegExpUrl())],
       genero: ['', [Validators.required]],
-      googleMapsUrl: ['', Validators.pattern(this.thePatternService.getRegExpUrl())],
+      googleMapsUrl: [''],
       instagram: ['', Validators.pattern(this.thePatternService.getRegExpUrl())],
       logradouro: ['', [Validators.required, Validators.maxLength(100), Validators.minLength(1)]],
       nome: ['', [Validators.required, Validators.maxLength(100), Validators.minLength(4), Validators.pattern(this.thePatternService.getRegExpOnlyLetters())]],
@@ -128,15 +137,6 @@ export class ProprietarioUpdateComponent implements OnInit, OnDestroy {
     } else {
       this.onFormUpdate(this.theProprietarioService.getIProprietarioDTO());
     }
-  }
-
-  ngOnDestroy() {
-    this.onClear();
-    if (this.theInscricao.length > 0) {
-      this.theUnsubscribeControl.unsubscribe(this.theInscricao);
-    }
-    this.theForm = null;
-    this.theInscricao = null;
   }
 
   onClear() {

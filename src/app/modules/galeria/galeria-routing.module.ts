@@ -5,10 +5,11 @@ import { GaleriaInsertComponent } from './galeria-insert/galeria-insert.componen
 import { GaleriaUpdateComponent } from './galeria-update/galeria-update.component';
 import { GaleriaFindPageComponent } from './galeria-find-page/galeria-find-page.component';
 import { Error404Component } from '../error/error404/error404.component';
+import { AuthGuardChild } from 'src/app/core/guards/can-activate-child/auth-guard-child';
 
 const routes: Routes = [
-  { path: 'novo', component:GaleriaInsertComponent},
-  { path: 'editar/:id', component:GaleriaUpdateComponent},
+  { path: 'novo', component: GaleriaInsertComponent, canActivate: [AuthGuardChild]},
+  { path: 'editar/:id', component: GaleriaUpdateComponent, canActivate: [AuthGuardChild]},
   { path: '', component:GaleriaFindPageComponent},
   { path: '**', component: Error404Component }
 ];

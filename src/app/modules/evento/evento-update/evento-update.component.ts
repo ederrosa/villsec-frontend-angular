@@ -99,7 +99,7 @@ export class EventoUpdateComponent implements OnInit, OnDestroy {
       diaInicio: ['', [Validators.required]],
       diaTermino: ['', [Validators.required]],
       descricao: ['', [Validators.required]],
-      googleMapsUrl: ['', Validators.pattern(this.thePatternService.getRegExpUrl())],
+      googleMapsUrl: [''],
       horaInicio: ['', [Validators.required]],
       horaTermino: ['', [Validators.required]],
       ingressoUrl: ['', Validators.pattern(this.thePatternService.getRegExpUrl())],

@@ -7,7 +7,7 @@
         <div class="example-container">
             <form class="example-form" [formGroup]="getTheSignInForm()">
                 <wbr />
-                <table>
+                <table class="full-width">
                     <tr>
                         <td>
                             <app-input formControlName="login"
@@ -23,7 +23,7 @@
                         </td>
                     </tr>
                 </table>
-                <table>
+                <table class="full-width">
                     <tr>
                         <td>
                             <app-input formControlName="senha"
@@ -38,7 +38,7 @@
                         </td>
                     </tr>
                 </table>
-                <table class="example-full-width" cellspacing="5">
+                <table class="full-width" cellspacing="5">
                     <tr>
                         <td>
                             <button mat-raised-button color="primary" status="primary" shape="semi-round" (click)="onSignIn()"  class="full-width"><mat-icon>login</mat-icon> Entrar</button>

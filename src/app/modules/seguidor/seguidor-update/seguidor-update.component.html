@@ -1,7 +1,7 @@
 ﻿<mat-card class="example-card">
     <mat-card-header>
         <mat-card-title>
-            <h5>Formulario de alteração do seguidor.</h5>
+            <h5>Formulario de alteração do seguidor(a).</h5>
         </mat-card-title>
         <mat-card-subtitle>V1LLSEC</mat-card-subtitle>
     </mat-card-header>
@@ -20,18 +20,18 @@
                         </td>
                         <td>
                             <app-input formControlName="id"
-                                       id="id"
-                                       label="Codígo"
                                        hint="Codígo"
+                                       id="id"
                                        isReadyOnly="false"
-                                       disabled="true">
+                                       label="Codígo"
+                                       [myFormControl]="getTheForm().get('id')">
                             </app-input>
                             <app-input formControlName="dtCriacao"
-                                       id="dtCriacao"
-                                       label="Data de Cadastro no Sistema"
                                        hint="Data de realização do cadastro!"
+                                       id="dtCriacao"
                                        isReadyOnly="false"
-                                       disabled="true">
+                                       label="Data de Cadastro no Sistema"
+                                       [myFormControl]="getTheForm().get('dtCriacao')">
                             </app-input>
                         </td>
                     </tr>

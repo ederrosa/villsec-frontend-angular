@@ -24,17 +24,17 @@
                         </button>
                     </mat-menu>
                     <mat-menu #midias="matMenu">
-                        <button routerLink="/albuns" mat-menu-item>
-                            <mat-icon class="example-icon">album</mat-icon>Álbuns
-                        </button>
-                        <button routerLink="/elementos" mat-menu-item>
-                            <mat-icon class="example-icon">folder_open</mat-icon>Elementos
-                        </button>
                         <button routerLink="/eventos" mat-menu-item>
                             <mat-icon class="example-icon">event_note</mat-icon>Eventos
                         </button>
+                        <button routerLink="/imagens" mat-menu-item>
+                            <mat-icon class="example-icon">photo_library</mat-icon> Fotos
+                        </button>
                         <button routerLink="/musicas" mat-menu-item>
                             <mat-icon class="example-icon">audiotrack</mat-icon>Músicas
+                        </button>
+                        <button routerLink="/videos" mat-menu-item>
+                            <mat-icon class="example-icon">video_library</mat-icon> Vídeos
                         </button>
                     </mat-menu>
                 </nav>
@@ -60,16 +60,16 @@
                 <mat-icon class="example-icon">fingerprint</mat-icon> Meus Dados
             </span>
             <a class="mdl-navigation__link" routerLink="/albuns">
-                <mat-icon class="example-icon">album</mat-icon> Álbuns
+                <mat-icon class="example-icon">event_note</mat-icon>Eventos
             </a>
             <a class="mdl-navigation__link" routerLink="/elementos">
-                <mat-icon class="example-icon">folder_open</mat-icon> Elementos
+                <mat-icon class="example-icon">photo_library</mat-icon> Fotos
             </a>
             <a class="mdl-navigation__link" routerLink="/eventos">
-                <mat-icon class="example-icon">event_note</mat-icon> Eventos
+                <mat-icon class="example-icon">audiotrack</mat-icon>Músicas
             </a>
             <a class="mdl-navigation__link" routerLink="/musicas">
-                <mat-icon class="example-icon">audiotrack</mat-icon> Músicas
+                <mat-icon class="example-icon">video_library</mat-icon> Vídeos
             </a>
             <div class="android-drawer-separator"></div>
             <span class="mdl-navigation__link" routerLink="/" (click)="logout()">
