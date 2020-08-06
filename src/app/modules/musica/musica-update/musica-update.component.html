@@ -17,7 +17,7 @@
                 <div class="example-container mat-elevation-z8">
                     <form class="example-form" [formGroup]="getTheForm()">
                         <ng-template matStepLabel>PASSO 2: Dados da Música.</ng-template>
-                        <table class="example-full-width" cellspacing="0">
+                        <table class="full-width" cellspacing="0">
                             <tr>
                                 <td>
                                     <br />
@@ -27,7 +27,7 @@
                                         <input formControlName="file" type='file' (change)="onSelectFile($event)" accept=".mp3" />
                                     </p>
                                 </td>
-                                <td>
+                                <td class="low-width">
                                     <app-input formControlName="id"
                                                hint="Codígo"
                                                id="id"
@@ -46,7 +46,7 @@
                             </tr>
                         </table>
                         <wbr />
-                        <table>
+                        <table class="full-width">
                             <tr>
                                 <td>
                                     <app-input formControlName="nome"
@@ -61,7 +61,7 @@
                                 </td>
                             </tr>
                         </table>
-                        <table>
+                        <table class="full-width">
                             <tr>
                                 <td>
                                     <app-input formControlName="autor"
@@ -89,7 +89,7 @@
                                 </td>
                             </tr>
                         </table>
-                        <table>
+                        <table class="full-width">
                             <tr>
                                 <td>
                                     <app-input formControlName="bpm"
@@ -120,7 +120,7 @@
                                 </td>
                             </tr>
                         </table>
-                        <table>
+                        <table class="half-width">
                             <tr>
                                 <td>
                                     <app-input formControlName="idioma"
@@ -143,7 +143,7 @@
                                 </td>
                             </tr>
                         </table>
-                        <table class="example-full-width" cellspacing="0">
+                        <table class="full-width" cellspacing="0">
                             <tr>
                                 <td>
                                     <button class="full-width" mat-button color="primary" status="primary" [disabled]="getTheForm().invalid" (click)="onSave()"><mat-icon>save</mat-icon>Salvar</button>

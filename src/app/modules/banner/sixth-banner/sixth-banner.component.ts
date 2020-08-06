@@ -37,7 +37,7 @@ export class SixthBannerComponent implements OnInit, OnDestroy, AfterViewInit {
         'vertical'
       );
     this.theFooterSwiper.update();
-    //  this.theFooterSwiper.autoplay.start();
+    this.theFooterSwiper.autoplay.start();
   }
 
   ngOnDestroy() {

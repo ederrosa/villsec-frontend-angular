@@ -71,6 +71,7 @@ export class EventoInsertComponent implements OnInit, OnDestroy {
   }
 
   onConsultaCEP() {
+    console.log('aqui');
     const cep = this.getTheForm().get('cep').value;
     if (cep != null && cep !== '') {
       this.theInscricao.push(this.theCepService.consultaCEP(cep)
@@ -101,7 +102,7 @@ export class EventoInsertComponent implements OnInit, OnDestroy {
       nome: ['', [Validators.required]],
       tipoEvento: ['', [Validators.required]],
       logradouro: ['', [Validators.required]],
-      cep: ['', [Validators.required, Validators.pattern(this.thePatternService.getRegExpCep())]],
+      cep: ['', [Validators.required]],
       bairro: ['', [Validators.required]],
       cidade: ['', [Validators.required]],
       estado: ['', [Validators.required]],
@@ -172,7 +173,6 @@ export class EventoInsertComponent implements OnInit, OnDestroy {
     this.getTheForm().patchValue({
       logradouro: dados.logradouro,
       cep: dados.cep,
-      complemento: dados.complemento,
       bairro: dados.bairro,
       cidade: dados.localidade,
       estado: dados.uf,

@@ -89,14 +89,14 @@ export class MusicaInsertComponent implements OnInit, OnDestroy, AfterViewInit {
    
   ngOnInit() {
     this.theForm = this.theFormBuilder.group({
-      autor: ['', [Validators.required, Validators.pattern(this.thePatternService.getRegExpOnlyLetters())]],
+      autor: ['', [Validators.required]],
       bpm: ['', [Validators.required]],
-      coautor: ['', [Validators.required, Validators.pattern(this.thePatternService.getRegExpOnlyLetters())]],
+      coautor: ['', [Validators.required]],
       copyright: ['', [Validators.required]],
       duracao: ['', [Validators.required]],
       faixa: ['', [Validators.required]],
       file: ['', [Validators.required]],
-      idioma: ['', [Validators.required, Validators.pattern(this.thePatternService.getRegExpOnlyLetters())]],
+      idioma: ['', [Validators.required]],
       nome: ['', [Validators.required]],
     });
     this.theAlbumForm = this.theFormBuilder.group({

@@ -34,6 +34,7 @@ import { DialogOverviewIframeComponent } from 'src/app/shared/components/dialog-
 })
 export class EventoFindPageComponent implements OnInit, OnDestroy, AfterViewInit {
 
+  private alert: boolean;
   private delete: boolean;
   private insert: boolean;
   private theInscricao: Subscription[] = new Array<Subscription>();
@@ -66,6 +67,7 @@ export class EventoFindPageComponent implements OnInit, OnDestroy, AfterViewInit
           this.delete = true;
           this.insert = true;
           this.update = true;
+          this.alert = true;
           break;
       }
     }
@@ -95,6 +97,10 @@ export class EventoFindPageComponent implements OnInit, OnDestroy, AfterViewInit
     instance.title = theIEventoDTO.nome;
     instance.subtitle = 'V1llsec';
     instance.url = theIEventoDTO.googleMapsUrl;
+  }
+
+  isAlert(): boolean {
+    return this.alert;
   }
 
   isDelete(): boolean {

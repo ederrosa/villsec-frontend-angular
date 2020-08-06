@@ -106,7 +106,7 @@ export class EventoUpdateComponent implements OnInit, OnDestroy {
       nome: ['', [Validators.required]],
       tipoEvento: ['', [Validators.required]],
       logradouro: ['', [Validators.required]],
-      cep: ['', [Validators.required, Validators.pattern(this.thePatternService.getRegExpCep())]],
+      cep: ['', [Validators.required]],
       bairro: ['', [Validators.required]],
       cidade: ['', [Validators.required]],
       estado: ['', [Validators.required]],

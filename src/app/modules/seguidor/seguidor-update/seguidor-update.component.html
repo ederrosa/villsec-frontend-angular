@@ -9,7 +9,7 @@
         <div class="example-container mat-elevation-z8">
             <form class="example-form" [formGroup]="getTheForm()">
                 <wbr />
-                <table class="example-full-width" cellspacing="0">
+                <table class="full-width" cellspacing="0">
                     <tr>
                         <td>
                             <img [src]="getUrl()" *ngIf="getFormat()==='image' && getUrl()" width="426px" height="240px"> <br />
@@ -36,7 +36,7 @@
                         </td>
                     </tr>
                 </table>
-                <table class="example-full-width" cellspacing="0">
+                <table class="full-width" cellspacing="0">
                     <tr>
                         <td>
                             <app-input formControlName="email"
@@ -52,7 +52,7 @@
                         </td>
                     </tr>
                 </table>
-                <table class="example-full-width" cellspacing="0">
+                <table class="full-width" cellspacing="0">
                     <tr>
                         <td>
                             <app-input formControlName="senha"
@@ -86,7 +86,7 @@
                     </tr>
                 </table>
                 <wbr />
-                <table>
+                <table class="full-width">
                     <tr>
                         <td>
                             <app-input formControlName="nome"
@@ -100,7 +100,7 @@
                         </td>
                     </tr>
                 </table>
-                <table class="example-full-width" cellspacing="0" width="30%">
+                <table class="low-width" cellspacing="0">
                     <tr>
                         <td>
                             <app-input formControlName="cep"
@@ -110,13 +110,14 @@
                                        maxLength="10"
                                        minLength="8"
                                        [myFormControl]="getTheForm().get('cep')"
+                                       pattern="(\d{5}\-?\d{3})"
                                        placeholder="Informe o CEP, sem pontuação."
                                        (theBlur)="consultaCEP()">
                             </app-input>
                         </td>
                     </tr>
                 </table>
-                <table>
+                <table class="full-width">
                     <tr>
                         <td>
                             <app-input formControlName="logradouro"
@@ -131,7 +132,7 @@
                         </td>
                     </tr>
                 </table>
-                <table class="example-full-width" cellspacing="0">
+                <table class="full-width" cellspacing="0">
                     <tr>
                         <td>
                             <app-input formControlName="bairro"
@@ -157,7 +158,7 @@
                         </td>
                     </tr>
                 </table>
-                <table class="example-full-width" cellspacing="0">
+                <table class="full-width" cellspacing="0">
                     <tr>
                         <td>
                             <app-input formControlName="estado"
@@ -183,7 +184,7 @@
                         </td>
                     </tr>
                 </table>
-                <table class="example-full-width" cellspacing="0">
+                <table class="full-width" cellspacing="0">
                     <tr>
                         <td>
                             <app-input formControlName="numeroTelefone1"
@@ -209,7 +210,7 @@
                     </tr>
                 </table>
                 <wbr />
-                <table class="example-full-width" cellspacing="0">
+                <table class="full-width" cellspacing="0">
                     <tr>
                         <td>
                             <button class="full-width" mat-button color="primary" status="primary" [disabled]="getTheForm().invalid" (click)="onSave()"><mat-icon>save</mat-icon>Salvar</button>
@@ -221,6 +222,7 @@
                             <button class="full-width" mat-button color="warn" status="warn" routerLink="/seguidores"><mat-icon>keyboard_return</mat-icon>Voltar</button>
                         </td>
                     </tr>
+                    <wbr />
                 </table>
                 <wbr />
             </form>

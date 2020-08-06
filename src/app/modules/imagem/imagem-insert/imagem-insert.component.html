@@ -17,7 +17,8 @@
                 <div class="example-container mat-elevation-z8">
                     <form class="example-form" [formGroup]="getTheForm()">
                         <ng-template matStepLabel>PASSO 2: Dados do Imagens.</ng-template>
-                        <table class="example-full-width" cellspacing="0">
+                        <wbr />
+                        <table class="full-width" cellspacing="0">
                             <tr>
                                 <td>
                                     <img [src]="getUrl()" *ngIf="getFormat()==='image' && getUrl()" width="640px" height="360px"> <br />
@@ -29,7 +30,7 @@
                             </tr>
                         </table>
                         <wbr />
-                        <table>
+                        <table class="full-width">
                             <tr>
                                 <td>
                                     <app-textarea formControlName="descricao"
@@ -54,7 +55,7 @@
                                 </td>
                             </tr>
                         </table>
-                        <table class="example-full-width" cellspacing="0">
+                        <table class="full-width" cellspacing="0">
                             <tr>
                                 <td>
                                     <button class="full-width" mat-button color="primary" status="primary" [disabled]="getTheForm().invalid" (click)="onSave()"><mat-icon>save</mat-icon>Salvar</button>
@@ -66,6 +67,7 @@
                                     <button class="full-width" mat-button color="warn" status="warn" routerLink="/imagens"><mat-icon>keyboard_return</mat-icon>Voltar</button>
                                 </td>
                             </tr>
+                            <wbr />
                         </table>
                         <wbr />
                     </form>

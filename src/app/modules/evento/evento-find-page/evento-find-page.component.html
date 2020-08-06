@@ -100,7 +100,7 @@
                                     <button (click)="onDelete(element)" *ngIf="isDelete()" mat-button color="warn">
                                         <mat-icon>clear</mat-icon> Deletar
                                     </button>
-                                    <button (click)="onAlert(element)" *ngIf="isDelete() && isUpdate && !element.alerta" mat-button color="info">
+                                    <button (click)="onAlert(element)" *ngIf="isAlert() && !element.alerta" mat-button color="info">
                                         <mat-icon>notifications_active</mat-icon> Emitir Alerta
                                     </button>
                                 </div>

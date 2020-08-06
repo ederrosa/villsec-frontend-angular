@@ -11,16 +11,16 @@
     width: auto;
     left: 19%;
     right: 5%;
-    height: 90%;
+    height: auto;
     overflow: auto;
 }
 
 .example-form {
-    width: 95%;
+    width: 100%;
 }
 
 .full-width {
-    width: 95%;
+    width: 100%;
 }
 
 .half-width {
@@ -33,5 +33,5 @@
 
 .example-button-row button,
 .example-button-row a {
-    margin: 2px;
+    margin: 5px;
 }

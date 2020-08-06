@@ -17,7 +17,7 @@
                 <div class="example-container mat-elevation-z8">
                     <form class="example-form" [formGroup]="getTheForm()">
                         <ng-template matStepLabel>PASSO 2: Dados do Vídeo.</ng-template>
-                        <table class="example-full-width" cellspacing="0">
+                        <table class="full-width" cellspacing="0">
                             <tr>
                                 <td>
                                     <video [src]="getUrl()" *ngIf="getFormat()==='video' && getUrl()" width="640px" height="360px" controls></video> <br />
@@ -30,7 +30,7 @@
                             </tr>
                         </table>
                         <wbr />
-                        <table>
+                        <table class="full-width">
                             <tr>
                                 <td>
                                     <p>
@@ -71,7 +71,7 @@
                                 </td>
                             </tr>
                         </table>
-                        <table class="example-full-width" cellspacing="0">
+                        <table class="full-width" cellspacing="0">
                             <tr>
                                 <td>
                                     <button class="full-width" mat-button color="primary" status="primary" [disabled]="getTheForm().invalid" (click)="onSave()"><mat-icon>save</mat-icon>Salvar</button>

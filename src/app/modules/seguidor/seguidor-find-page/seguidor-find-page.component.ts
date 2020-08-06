@@ -59,6 +59,9 @@ export class SeguidorFindPageComponent implements OnInit, OnDestroy, AfterViewIn
           this.insert = true;
           this.update = true;
           break;
+        case 2:
+          this.delete = true;
+          break;
         case 3:
           this.delete = true;
           this.update = true;

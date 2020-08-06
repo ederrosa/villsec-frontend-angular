@@ -8,7 +8,7 @@
     <mat-card-content>
         <div class="example-container mat-elevation-z8">
             <form class="example-form" [formGroup]="getTheForm()">
-                <table class="example-full-width" cellspacing="0">
+                <table class="full-width" cellspacing="0">
                     <tr>
                         <td>
                             <img [src]="getUrl()" *ngIf="getFormat()==='image' && getUrl()" width="640px" height="360px"> <br />
@@ -20,7 +20,7 @@
                     </tr>
                 </table>
                 <wbr />
-                <table>
+                <table class="full-width">
                     <tr>
                         <td>
                             <app-input formControlName="nome"
@@ -35,7 +35,7 @@
                         </td>
                     </tr>
                 </table>
-                <table>
+                <table class="full-width">
                     <tr>
                         <td>
                             <app-textarea formControlName="descricao"
@@ -59,7 +59,7 @@
                         </td>
                     </tr>
                 </table>
-                <table>
+                <table class="full-width">
                     <tr>
                         <td>
                             <app-select formControlName="tipoEvento"
@@ -83,9 +83,9 @@
                         </td>
                     </tr>
                 </table>
-                <table>
+                <table class="half-width">
                     <tr>
-                        <td>
+                        <td class="low-width">
                             <app-datepicker formControlName="diaInicio"
                                             id="diaInicio"
                                             label="Dia do Início do Evento"
@@ -94,7 +94,7 @@
                                             startView="year">
                             </app-datepicker>
                         </td>
-                        <td>
+                        <td class="low-width">
                             <app-timepicker formControlName="horaInicio"
                                             id="horaInicio"
                                             label="Hora do Início Evento"
@@ -104,7 +104,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>
+                        <td class="low-width">
                             <app-datepicker formControlName="diaTermino"
                                             id="diaTermino"
                                             label="Dia do Termino do Evento"
@@ -113,7 +113,7 @@
                                             startView="year">
                             </app-datepicker>
                         </td>
-                        <td>
+                        <td class="low-width">
                             <app-timepicker formControlName="horaTermino"
                                             id="horaTermino"
                                             label="Hora do Termino Evento"
@@ -123,9 +123,9 @@
                         </td>
                     </tr>
                 </table>
-                <table class="example-full-width" cellspacing="0">
+                <table class="full-width" cellspacing="0">
                     <tr>
-                        <td>
+                        <td class="low-width">
                             <app-input formControlName="cep"
                                        hint="Ex.: 01311920"
                                        id="cep"
@@ -133,6 +133,7 @@
                                        maxlength="10"
                                        minlength="8"
                                        [myFormControl]="getTheForm().get('cep')"
+                                       pattern="(\d{5}\-?\d{3})"
                                        placeholder="Insira o CEP, sem pontuação."
                                        (theBlur)="onConsultaCEP()">
                             </app-input>
@@ -150,7 +151,7 @@
                         </td>
                     </tr>
                 </table>
-                <table class="example-full-width" cellspacing="0">
+                <table class="full-width" cellspacing="0">
                     <tr>
                         <td>
                             <app-input formControlName="cidade"
@@ -176,7 +177,7 @@
                         </td>
                     </tr>
                 </table>
-                <table class="example-full-width" cellspacing="0">
+                <table class="full-width" cellspacing="0">
                     <tr>
                         <td>
                             <app-input formControlName="estado"
@@ -202,7 +203,7 @@
                         </td>
                     </tr>
                 </table>
-                <table>
+                <table class="full-width">
                     <tr>
                         <td>
                             <app-input formControlName="googleMapsUrl"
@@ -215,15 +216,15 @@
                         </td>
                     </tr>
                 </table>
-                <table class="example-full-width" cellspacing="0">
+                <table class="full-width" cellspacing="0">
                     <tr>
-                        <td>
+                        <td class="low-width">
                             <button class="full-width" mat-button color="primary" status="primary" [disabled]="getTheForm().invalid" (click)="onSave()"><mat-icon>save</mat-icon>Salvar</button>
                         </td>
-                        <td>
+                        <td class="low-width">
                             <button class="full-width" mat-button color="accent" status="primary" (click)="onClear()"><mat-icon>clear</mat-icon>Limpar</button>
                         </td>
-                        <td>
+                        <td class="low-width">
                             <button class="full-width" mat-button color="warn" status="warn" routerLink="/eventos"><mat-icon>keyboard_return</mat-icon>Voltar</button>
                         </td>
                     </tr>

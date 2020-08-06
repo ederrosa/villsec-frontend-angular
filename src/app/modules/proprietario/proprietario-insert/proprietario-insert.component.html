@@ -9,7 +9,7 @@
         <div class="example-container mat-elevation-z8">
             <form class="example-form" [formGroup]="getTheForm()">
                 <wbr />
-                <table class="example-full-width" cellspacing="0">
+                <table class="full-width" cellspacing="0">
                     <tr>
                         <td>
                             <img [src]="getUrl()" *ngIf="getFormat()==='image' && getUrl()" width="426px" height="240px"> <br />
@@ -20,7 +20,7 @@
                         </td>
                     </tr>
                 </table>
-                <table class="example-full-width" cellspacing="0">
+                <table class="full-width" cellspacing="0">
                     <tr>
                         <td>
                             <app-input formControlName="email"
@@ -36,7 +36,7 @@
                         </td>
                     </tr>
                 </table>
-                <table class="example-full-width" cellspacing="0">
+                <table class="full-width" cellspacing="0">
                     <tr>
                         <td>
                             <app-input formControlName="senha"
@@ -70,7 +70,7 @@
                     </tr>
                 </table>
                 <wbr />
-                <table>
+                <table class="full-width">
                     <tr>
                         <td>
                             <app-input formControlName="nome"
@@ -84,7 +84,7 @@
                         </td>
                     </tr>
                 </table>
-                <table class="example-full-width" cellspacing="0">
+                <table class="half-width" cellspacing="0">
                     <tr>
                         <td>
                             <app-select formControlName="status"
@@ -110,7 +110,7 @@
                         </td>
                     </tr>
                 </table>
-                <table>
+                <table class="full-width">
                     <tr>
                         <td>
                             <app-input formControlName="logradouro"
@@ -125,7 +125,7 @@
                         </td>
                     </tr>
                 </table>
-                <table class="example-full-width" cellspacing="0">
+                <table class="full-width" cellspacing="0">
                     <tr>
                         <td>
                             <app-input formControlName="bairro"
@@ -151,7 +151,7 @@
                         </td>
                     </tr>
                 </table>
-                <table class="example-full-width" cellspacing="0">
+                <table class="full-width" cellspacing="0">
                     <tr>
                         <td>
                             <app-input formControlName="estado"
@@ -177,7 +177,7 @@
                         </td>
                     </tr>
                 </table>
-                <table>
+                <table class="full-width">
                     <tr>
                         <td>
                             <app-input formControlName="googleMapsUrl"
@@ -190,7 +190,7 @@
                         </td>
                     </tr>
                 </table>
-                <table class="example-full-width" cellspacing="0">
+                <table class="half-width" cellspacing="0">
                     <tr>
                         <td>
                             <app-input formControlName="numeroTelefone1"
@@ -238,7 +238,7 @@
                         </td>
                     </tr>
                 </table>
-                <table>
+                <table class="full-width">
                     <tr>
                         <td>
                             <app-input formControlName="facebook"
@@ -251,7 +251,7 @@
                         </td>
                     </tr>
                 </table>
-                <table>
+                <table class="full-width">
                     <tr>
                         <td>
                             <app-input formControlName="instagram"
@@ -264,7 +264,7 @@
                         </td>
                     </tr>
                 </table>
-                <table>
+                <table class="full-width">
                     <tr>
                         <td>
                             <app-input formControlName="spotify"
@@ -277,7 +277,7 @@
                         </td>
                     </tr>
                 </table>
-                <table>
+                <table class="full-width">
                     <tr>
                         <td>
                             <app-input formControlName="twitter"
@@ -290,7 +290,7 @@
                         </td>
                     </tr>
                 </table>
-                <table>
+                <table class="full-width">
                     <tr>
                         <td>
                             <app-input formControlName="twitch"
@@ -303,7 +303,7 @@
                         </td>
                     </tr>
                 </table>
-                <table>
+                <table class="full-width">
                     <tr>
                         <td>
                             <app-input formControlName="youtube"
@@ -316,7 +316,7 @@
                         </td>
                     </tr>
                 </table>
-                <table>
+                <table class="full-width">
                     <tr>
                         <td>
                             <app-textarea formControlName="sobreMim"
@@ -329,7 +329,7 @@
                     </tr>
                 </table>
                 <wbr />
-                <table class="example-full-width" cellspacing="0">
+                <table class="full-width" cellspacing="0">
                     <tr>
                         <td>
                             <button class="full-width" mat-button color="primary" status="primary" [disabled]="getTheForm().invalid" (click)="onSave()"><mat-icon>save</mat-icon>Salvar</button>

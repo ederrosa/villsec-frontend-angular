@@ -60,8 +60,8 @@ export class ProprietarioFindPageComponent implements OnInit, OnDestroy, AfterVi
           this.update = true;
           break;
         case 2:
-          this.delete = true;
-          this.insert = true;
+          this.delete = false;
+          this.insert = false;
           this.update = true;
           break;
       }
