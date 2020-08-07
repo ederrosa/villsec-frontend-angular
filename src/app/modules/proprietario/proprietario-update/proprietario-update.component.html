@@ -59,8 +59,8 @@
                                        hint="Por questão de segurança evite muitos numeros em sequência e data de aniversario."
                                        id="senha"
                                        label="Senha"
-                                       maxlength="20"
-                                       minlength="6"
+                                       maxLength="20"
+                                       minLength="6"
                                        [myFormControl]="getTheForm().get('senha')"
                                        placeholder="Insira a sua senha."
                                        type="password">
@@ -92,8 +92,8 @@
                             <app-input formControlName="nome"
                                        id="nome"
                                        label="Nome"
-                                       maxlength="100"
-                                       minlength="4"
+                                       maxLength="100"
+                                       minLength="4"
                                        [myFormControl]="getTheForm().get('nome')"
                                        placeholder="Insira o nome.">
                             </app-input>
@@ -116,8 +116,8 @@
                                        id="cep"
                                        hint="Ex.: 01311920 ou 01311-920"
                                        label="CEP"
-                                       maxlength="10"
-                                       minlength="8"
+                                       maxLength="10"
+                                       minLength="8"
                                        [myFormControl]="getTheForm().get('cep')"
                                        pattern="(\d{5}\-?\d{3})"
                                        placeholder="Informe o CEP, sem pontuação."
@@ -133,8 +133,8 @@
                                        hint="Ex.: Avenida Paulista"
                                        id="logradouro"
                                        label="Logradouro"
-                                       maxlength="100"
-                                       minlength="1"
+                                       maxLength="100"
+                                       minLength="1"
                                        [myFormControl]="getTheForm().get('logradouro')"
                                        placeholder="Informe o logradouro.">
                             </app-input>
@@ -148,8 +148,8 @@
                                        hint="Ex.: Bela Vista"
                                        id="bairro"
                                        label="Bairro"
-                                       maxlength="50"
-                                       minlength="1"
+                                       maxLength="50"
+                                       minLength="1"
                                        [myFormControl]="getTheForm().get('bairro')"
                                        placeholder="Informe o bairro.">
                             </app-input>
@@ -159,8 +159,8 @@
                                        hint="Ex.: São Paulo"
                                        id="cidade"
                                        label="Cidade"
-                                       maxlength="50"
-                                       minlength="1"
+                                       maxLength="50"
+                                       minLength="1"
                                        [myFormControl]="getTheForm().get('cidade')"
                                        placeholder="Informe a cidade">
                             </app-input>
@@ -174,8 +174,8 @@
                                        hint="Ex.: São Paulo"
                                        id="estado"
                                        label="Estado"
-                                       maxlength="50"
-                                       minlength="1"
+                                       maxLength="50"
+                                       minLength="1"
                                        [myFormControl]="getTheForm().get('estado')"
                                        placeholder="Informe o estado.">
                             </app-input>
@@ -185,8 +185,8 @@
                                        hint="Ex.: Brasil"
                                        id="pais"
                                        label="Pais"
-                                       maxlength="50"
-                                       minlength="1"
+                                       maxLength="50"
+                                       minLength="1"
                                        [myFormControl]="getTheForm().get('pais')"
                                        placeholder="Informe o pais.">
                             </app-input>
@@ -213,8 +213,8 @@
                                        hint="Ex.: 1199119221 ou (11) 99999-9999"
                                        id="numeroTelefone1"
                                        label="Numero do Telefone"
-                                       maxlength="20"
-                                       minlength="3"
+                                       maxLength="20"
+                                       minLength="3"
                                        [myFormControl]="getTheForm().get('numeroTelefone1')"
                                        pattern="(\(?\d{2}\)?\s?)?(\d{4,5}\-?\d{4})"
                                        placeholder="Insira o numero do telefone com DDD sem pontuação.">
@@ -236,8 +236,8 @@
                                        hint="Ex.: 1199119221 ou (11) 99999-9999"
                                        id="numeroTelefone2"
                                        label="Numero do Telefone Alternativo"
-                                       maxlength="20"
-                                       minlength="3"
+                                       maxLength="20"
+                                       minLength="3"
                                        [myFormControl]="getTheForm().get('numeroTelefone2')"
                                        pattern="(\(?\d{2}\)?\s?)?(\d{4,5}\-?\d{4})"
                                        placeholder="Insira o numero do telefone com DDD sem pontuação.">

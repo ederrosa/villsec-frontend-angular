@@ -16,8 +16,8 @@
                                        hint="Ex.: festiva Lotus Azul hehehehe"
                                        id="titulo"
                                        label="Título da Galeria"
-                                       maxlength="100"
-                                       minlength="1"
+                                       maxLength="100"
+                                       minLength="1"
                                        [myFormControl]="getTheForm().get('titulo')"
                                        placeholder="Insira o titulo para sua galeria.">
                             </app-input>
@@ -30,7 +30,7 @@
                             <app-textarea formControlName="descricao"
                                           id="descricao"
                                           label="Descrição da Galeria"
-                                          maxlength="255"
+                                          maxLength="255"
                                           [myFormControl]="getTheForm().get('descricao')"
                                           placeholder="Insira uma descrição para sua galeria">
                             </app-textarea>

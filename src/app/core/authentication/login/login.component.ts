@@ -4,6 +4,7 @@ import { AuthenticationService } from '../authentication.service';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { UnsubscribeControlService } from '../../services/unsubscribe-control.service';
+import { DialogOverviewForgetPasswordComponent } from '../dialog-overview-forget-password/dialog-overview-forget-password.component';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   private theInscricao: Subscription[] = new Array<Subscription>();
   private theSignInForm: FormGroup;
-  private theResetPasswordForm: FormGroup;
   
   constructor(
     private dialog: MatDialog,
@@ -25,10 +25,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   getTheSignInForm(): FormGroup {
     return this.theSignInForm;
-  }
-
-  getTheResetPasswordForm(): FormGroup {
-    return this.theResetPasswordForm;
   }
 
   logout() {
@@ -45,18 +41,15 @@ export class LoginComponent implements OnInit, OnDestroy {
       login: ['', [Validators.required, Validators.email, Validators.maxLength(120)]],
       senha: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]],
     });
-    this.theResetPasswordForm = this.theFormBuilder.group({
-      email: ['', [Validators.required, Validators.email, Validators.maxLength(120)]]
-    });
   }
 
   onClear() {
     this.getTheSignInForm().reset();
-    this.getTheResetPasswordForm().reset();
   }
 
   OnResetPassword() {
-
+    this.dialog.closeAll();
+    let dialogRef = this.dialog.open(DialogOverviewForgetPasswordComponent, { });
   }
 
   onSignIn() {

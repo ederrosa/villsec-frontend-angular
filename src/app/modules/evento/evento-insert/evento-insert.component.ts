@@ -37,7 +37,7 @@ export class EventoInsertComponent implements OnInit, OnDestroy {
   constructor(
     private dialog: MatDialog,
     private theCepService: CepService,
-    private theEventoService: EventoService,   
+    private theEventoService: EventoService,
     private theFormBuilder: FormBuilder,
     private thePatternService: PatternService,
     private theUnsubscribeControl: UnsubscribeControlService
@@ -94,7 +94,7 @@ export class EventoInsertComponent implements OnInit, OnDestroy {
       classificacao: ['', [Validators.required]],
       diaInicio: ['', [Validators.required]],
       diaTermino: ['', [Validators.required]],
-      descricao: ['', [Validators.required]],
+      descricao: ['', [Validators.required, Validators.maxLength(255)]],
       googleMapsUrl: [''],
       horaInicio: ['', [Validators.required]],
       horaTermino: ['', [Validators.required]],
@@ -123,7 +123,7 @@ export class EventoInsertComponent implements OnInit, OnDestroy {
     formData.append('file', this.getTheFile(), this.getTheFile().name);
     if (this.getTheForm().get('googleMapsUrl').value != null && this.getTheForm().get('googleMapsUrl').value != '') {
       formData.append('googleMapsUrl', this.getTheForm().get('googleMapsUrl').value);
-    } 
+    }
     formData.append('horaInicio', this.getTheForm().get('horaInicio').value);
     formData.append('horaTermino', this.getTheForm().get('horaTermino').value);
     formData.append('ingressoUrl', this.getTheForm().get('ingressoUrl').value);

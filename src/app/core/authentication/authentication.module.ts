@@ -6,9 +6,10 @@ import { MaterialModule } from '../configurations/material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { DialogOverviewForgetPasswordComponent } from './dialog-overview-forget-password/dialog-overview-forget-password.component';
 
 @NgModule({
-  declarations: [LoginComponent],
+  declarations: [LoginComponent, DialogOverviewForgetPasswordComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -18,7 +19,11 @@ import { SharedModule } from 'src/app/shared/shared.module';
     SharedModule
   ],
   exports: [
+    DialogOverviewForgetPasswordComponent,
     LoginComponent
+  ],
+  entryComponents: [
+    DialogOverviewForgetPasswordComponent
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

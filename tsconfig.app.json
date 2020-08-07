@@ -1,8 +1,11 @@
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "./out-tsc/app",
-    "types": []
+    "outDir": "./dist" /* Redirect output structure to the directory. */,
+    "rootDir": "./src" /* Specify the root directory of input files. Use to control the output directory structure with --outDir. */,
+    "types": [],
+    "experimentalDecorators": true, /* Enables experimental support for ES7 decorators. */
+    "allowJs": true
   },
   "files": [
     "src/main.ts",

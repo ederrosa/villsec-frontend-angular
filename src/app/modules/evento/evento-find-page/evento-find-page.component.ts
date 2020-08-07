@@ -48,7 +48,7 @@ export class EventoFindPageComponent implements OnInit, OnDestroy, AfterViewInit
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(   
+  constructor(
     private dialog: MatDialog,
     private theActivatedRoute: ActivatedRoute,
     private theEventoService: EventoService,

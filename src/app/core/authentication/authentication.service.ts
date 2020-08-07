@@ -36,7 +36,7 @@ export class AuthenticationService {
 
   authenticate(theFormData: FormData) {
     return this.http.post(
-      this.API + "/login",
+      this.API + '/login',
       theFormData,
       {
         observe: 'response',
@@ -65,7 +65,7 @@ export class AuthenticationService {
 
   refreshToken() {
     return this.http.post(
-      API_CONFIGURATION.baseUrl + "/auth/refresh_token",
+      API_CONFIGURATION.baseUrl + '/auth/refresh_token',
       {},
       {
         observe: 'response',
@@ -74,7 +74,7 @@ export class AuthenticationService {
     );
   }
 
-  successFulLogin(theAutorizationValue: String,
+  successFulLogin(theAutorizationValue: string,
     tipoUsuario: string,
     uriImgPerfil: string,
     matricula: string) {
@@ -92,11 +92,12 @@ export class AuthenticationService {
 
   onResetPassoword(theFormData: FormData) {
      return this.http.post(
-      API_CONFIGURATION.baseUrl + "/auth/forgot",
+      API_CONFIGURATION.baseUrl + '/auth/forgot',
        theFormData,
       {
         observe: 'response',
-        responseType: 'text'
+        responseType: 'text',
+        reportProgress: true
       }
     );
   }

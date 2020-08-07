@@ -7,9 +7,6 @@
                 </button>
             </div>
         </mat-card-title>
-        <mat-card-subtitle>
-            <h5>Lista de Eventos</h5>
-        </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
         <mat-form-field>
@@ -36,8 +33,10 @@
                                     <tr>
                                         <td mat-cell>
                                             <mat-label><strong>Nome: </strong> {{ element.nome }}</mat-label>
-                                        </td>                                        
+                                        </td>
                                     </tr>
+                                </table>
+                                <table class="example-full-width" cellspacing="0">
                                     <tr>
                                         <td mat-cell>
                                             <mat-label><strong>Tipo do Evento: </strong> {{ element.tipoEvento }}</mat-label>
@@ -56,6 +55,8 @@
                                             <mat-label><strong>Data de Termíno do Evento: </strong> {{ element.diaTermino | date: 'mediumDate' }} às {{ element.horaTermino }}</mat-label>
                                         </td>
                                     </tr>
+                                </table>
+                                <table class="example-full-width" cellspacing="0">
                                     <tr>
                                         <td mat-cell>
                                             <mat-label><strong>Endereço: </strong> {{ element.logradouro }}</mat-label>
@@ -78,6 +79,8 @@
                                             <mat-label><strong>Pais: </strong> {{ element.pais }}</mat-label>
                                         </td>
                                     </tr>
+                                </table>
+                                <table class="example-full-width" cellspacing="0">
                                     <tr>
                                         <td mat-cell>
                                             <mat-label><strong>Descrição: </strong> {{ element.descricao }}</mat-label>
@@ -87,7 +90,8 @@
                                         <td mat-cell>
                                             <mat-label><strong><a href="{{ element?.ingressoUrl }}">Link para o Ingresso!!</a> </strong></mat-label>
                                         </td>
-                                        <td></td>
+                                    </tr>
+                                    <tr>
                                         <td mat-cell>
                                             <mat-label><strong>Localização: </strong>  <button (click)="getMaps(element)"><mat-icon class="example-icon">location_on</mat-icon></button></mat-label>
                                         </td>
