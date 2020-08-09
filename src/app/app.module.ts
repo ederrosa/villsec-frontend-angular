@@ -21,10 +21,6 @@ import { AuthGuardChild } from './core/guards/can-activate-child/auth-guard-chil
 
 registerLocaleData(localePt);
 
-const COMPONENTS_LIST = [
-
-]
-
 const MATERIAL_MODULES_LIST = [
   MaterialModule,
 ]
@@ -45,10 +41,7 @@ const SERVICES_LIST = [
 ]
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    ...COMPONENTS_LIST,
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -59,7 +52,7 @@ const SERVICES_LIST = [
   ],
   providers: [
     ...SERVICES_LIST,
-    { provide: LOCALE_ID, useValue: "pt" },
+    { provide: LOCALE_ID, useValue: 'pt' },
     { provide: MAT_LABEL_GLOBAL_OPTIONS, useValue: { float: 'always' } },
     { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
   ],

@@ -15,9 +15,6 @@ import { PipesModule } from 'src/app/shared/pipes/pipes.module';
   exports: [
     MusicaDialogOverviewComponent
   ],
-  entryComponents: [
-    MusicaDialogOverviewComponent
-  ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ]

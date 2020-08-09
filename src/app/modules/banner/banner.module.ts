@@ -27,9 +27,6 @@ const MODULES_LIST = [
   exports: [
     ...MODULES_LIST
   ],
-  providers: [
-
-  ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ]

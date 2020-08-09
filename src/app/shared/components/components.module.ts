@@ -21,7 +21,6 @@ const COMPONENSTS_MODULES_LIST = [
   imports: [
     CommonModule,
     ...COMPONENSTS_MODULES_LIST,
-   
   ],
   exports: [
     ...COMPONENSTS_MODULES_LIST

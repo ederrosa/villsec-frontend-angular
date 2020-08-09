@@ -16,9 +16,6 @@ const PROGRESS_SPINNERS_COMPONENTS_LIST = [
     ],
     exports: [
         ...PROGRESS_SPINNERS_COMPONENTS_LIST
-    ],
-    entryComponents: [
-        ProgressSpinnerOverviewComponent
     ]
 })
 export class ProgressSpinnerModule { }

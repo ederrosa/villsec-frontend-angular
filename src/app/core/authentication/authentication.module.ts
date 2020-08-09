@@ -22,9 +22,6 @@ import { DialogOverviewForgetPasswordComponent } from './dialog-overview-forget-
     DialogOverviewForgetPasswordComponent,
     LoginComponent
   ],
-  entryComponents: [
-    DialogOverviewForgetPasswordComponent
-  ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ]

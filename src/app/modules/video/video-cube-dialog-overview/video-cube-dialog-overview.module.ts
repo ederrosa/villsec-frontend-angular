@@ -16,8 +16,6 @@ import { RouterModule } from '@angular/router';
   exports: [
     VideoCubeDialogOverviewComponent
   ],
-  providers: [
-  ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ]

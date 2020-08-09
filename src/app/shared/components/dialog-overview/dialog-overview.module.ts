@@ -26,9 +26,6 @@ const DIALOG_OVERVIEW_COMPONENTS_LIST = [
   exports: [
     ...DIALOG_OVERVIEW_COMPONENTS_LIST
   ],
-  entryComponents: [
-    ...DIALOG_OVERVIEW_COMPONENTS_LIST
-  ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ]

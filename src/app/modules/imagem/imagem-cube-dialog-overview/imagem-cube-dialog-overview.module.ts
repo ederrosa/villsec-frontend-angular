@@ -16,8 +16,6 @@ import { RouterModule } from '@angular/router';
   exports: [
     ImagemCubeDialogOverviewComponent
   ],
-  providers: [
-  ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ]

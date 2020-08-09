@@ -17,10 +17,6 @@ const ALERTS_COMPONENTS_LIST = [
     ],
     exports: [
         ...ALERTS_COMPONENTS_LIST
-    ],
-    entryComponents: [
-        InformativeAlertComponent,
-        ConfirmationAlertComponent
-    ],
+    ]
 })
 export class AlertsModule { }

@@ -10,7 +10,7 @@ import { ProprietarioModule } from '../../proprietario/proprietario.module';
   declarations: [SixthBannerComponent],
   imports: [
     CommonModule,
-    MaterialModule,    
+    MaterialModule,
     PipesModule,
     ProprietarioModule,
     RouterModule,
