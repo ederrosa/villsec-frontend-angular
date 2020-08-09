@@ -1,14 +1,13 @@
-const EXPRESS = require('express');
-const { response } = require('express');
-const APP = EXPRESS();
-const PORT = process.env.PORT || 8081;
+const express = require('express');
+const app = express();
+const PORT = process.env.PORT || 8082;
 
-APP.use(EXPRESS.static.apply(_dirname + '/dist/villsec'));
+app.use(express.static.apply(_dirname + '/dist/villsec'));
 
-APP.get('/*', (request, response) => {
+app.get('/*', (request, response) => {
     response.sendFile(_dirname + '/dist/v1llse/index.html');
 });
 
-APP.listen(PORT, () => {
+app.listen(PORT, () => {
     console.log('Servidor iniciado na porta: ' + PORT);
 });
