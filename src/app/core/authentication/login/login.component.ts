@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   private theInscricao: Subscription[] = new Array<Subscription>();
   private theSignInForm: FormGroup;
-  
+
   constructor(
     private dialog: MatDialog,
     private theAuthenticationService: AuthenticationService,
@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   OnResetPassword() {
     this.dialog.closeAll();
-    let dialogRef = this.dialog.open(DialogOverviewForgetPasswordComponent, { });
+    this.dialog.open(DialogOverviewForgetPasswordComponent, { });
   }
 
   onSignIn() {

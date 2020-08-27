@@ -35,7 +35,7 @@ export class AlbumFindPageComponent implements OnInit, OnDestroy, AfterViewInit 
   private insert: boolean;
   private theInscricao: Subscription[] = new Array<Subscription>();
   private theLocalUser: ILocalUser;
-  private update: boolean; 
+  private update: boolean;
 
   columnsToDisplay = ['codigo', 'nome', 'genero'];
   dataSource: MatTableDataSource<IAlbumDTO> = new MatTableDataSource();
@@ -45,9 +45,9 @@ export class AlbumFindPageComponent implements OnInit, OnDestroy, AfterViewInit 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(
-    private dialog: MatDialog,  
+    private dialog: MatDialog,
     private theActivatedRoute: ActivatedRoute,
-    private theAlbumService: AlbumService,      
+    private theAlbumService: AlbumService,
     private theRouter: Router,
     private theUnsubscribeControl: UnsubscribeControlService
   ) {
@@ -57,12 +57,12 @@ export class AlbumFindPageComponent implements OnInit, OnDestroy, AfterViewInit 
         case 1:
           this.delete = true;
           this.insert = true;
-          this.update = true;         
+          this.update = true;
           break;
         case 2:
           this.delete = true;
           this.insert = true;
-          this.update = true;          
+          this.update = true;
           break;
       }
     }
@@ -95,7 +95,7 @@ export class AlbumFindPageComponent implements OnInit, OnDestroy, AfterViewInit 
 
   isUpdate(): boolean {
     return this.update;
-  }  
+  }
 
   ngAfterViewInit() {
     this.theInscricao.push(this.paginator.page
@@ -117,7 +117,7 @@ export class AlbumFindPageComponent implements OnInit, OnDestroy, AfterViewInit 
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-    
+
   onDelete(theIAlbumDTO: IAlbumDTO) {
     this.dialog.closeAll();
     let dialogRef = this.dialog.open(ConfirmationAlertComponent, { disableClose: true, width: '40%' });
@@ -166,5 +166,5 @@ export class AlbumFindPageComponent implements OnInit, OnDestroy, AfterViewInit 
       ['editar', theIAlbumDTO.id],
       { relativeTo: this.theActivatedRoute }
     );
-  }  
+  }
 }

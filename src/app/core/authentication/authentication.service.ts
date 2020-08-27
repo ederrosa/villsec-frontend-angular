@@ -18,7 +18,7 @@ export class AuthenticationService {
   eventEmitter = new EventEmitter<IAutenticacaoDTO>();
   private theIAutenticacaoDTO: IAutenticacaoDTO;
   private theJwtHelper: JwtHelperService = new JwtHelperService();
-   
+
   constructor(
     private http: HttpClient,
     private theStorageService: StorageService,
