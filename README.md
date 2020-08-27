@@ -3,7 +3,7 @@
 ![V1LLSEC](https://github.com/ederrosa/villsec-frontend-angular/blob/master/src/assets/images/villsec-logo-barra-principal.png)
 
 <h2 align="left">Telas</h2>
-![V1LLSEC](https://github.com/ederrosa/villsec-frontend-angular/blob/master/src/assets/images/anigif.gif)
+<img src="https://github.com/ederrosa/villsec-frontend-angular/blob/master/src/assets/images/anigif.gif">
 
 <h2 align="left">Descrição do Projeto</h2>
 <p align="justify">Esta é a camada de visualização do projeto V1LLSEC desenvolvida em ANGULAR, tem como objetivo prover as interfaces gráficas necessárias para as interações dos usuários com aplicação, bem como as formatações, tabelas, construções de telas e validações iniciais dos dados que serão enviados para o backend.</p>
